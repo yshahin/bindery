@@ -32,6 +32,7 @@ function App() {
     useOptimalSheets,
     handleRangeStartChange,
     handleRangeEndChange,
+    handleResetRange,
   } = useBookletState()
 
   const generateBookletPdf = useBookletPdfGenerator(pdfData, layout)
@@ -89,6 +90,7 @@ function App() {
               onPagesPerSheetChange={handlePagesPerSheetChange}
               onRangeStartChange={handleRangeStartChange}
               onRangeEndChange={handleRangeEndChange}
+              onResetRange={handleResetRange}
               onTextDirectionChange={handleTextDirectionChange}
               onSheetsPerBookletChange={handleSheetsPerBookletChange}
               onOptimize={useOptimalSheets}

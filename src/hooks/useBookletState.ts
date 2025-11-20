@@ -44,6 +44,7 @@ export interface BookletState {
   useOptimalSheets: () => void
   handleRangeStartChange: (value: string) => void
   handleRangeEndChange: (value: string) => void
+  handleResetRange: () => void
 }
 
 export function useBookletState(): BookletState {
@@ -237,6 +238,13 @@ export function useBookletState(): BookletState {
     applyRangeLayout({ rangeEnd: boundedEnd })
   }, [applyRangeLayout, rangeStart, totalPages])
 
+  const handleResetRange = useCallback((): void => {
+    if (totalPages <= 0) return
+    setRangeStart(1)
+    setRangeEnd(totalPages)
+    applyRangeLayout({ rangeStart: 1, rangeEnd: totalPages })
+  }, [applyRangeLayout, totalPages])
+
   return {
     // State
     pdfFile,
@@ -265,5 +273,6 @@ export function useBookletState(): BookletState {
     useOptimalSheets,
     handleRangeStartChange,
     handleRangeEndChange,
+    handleResetRange,
   }
 }

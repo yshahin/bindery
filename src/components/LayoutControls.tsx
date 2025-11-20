@@ -35,6 +35,7 @@ interface PrintRangeControlProps {
   selectedPageCount: number
   onRangeStartChange: (value: string) => void
   onRangeEndChange: (value: string) => void
+  onResetRange: () => void
 }
 
 function PrintRangeControl({
@@ -43,7 +44,8 @@ function PrintRangeControl({
   totalPages,
   selectedPageCount,
   onRangeStartChange,
-  onRangeEndChange
+  onRangeEndChange,
+  onResetRange
 }: PrintRangeControlProps) {
   return (
     <div className="control-group">
@@ -69,6 +71,15 @@ function PrintRangeControl({
           onChange={(e) => onRangeEndChange(e.target.value)}
           className="number-input"
         />
+        <button
+          type="button"
+          onClick={onResetRange}
+          className="optimize-button"
+          title="Reset to full page range"
+          disabled={rangeStart === 1 && rangeEnd === totalPages}
+        >
+          🔄 Reset
+        </button>
       </div>
       <div className="range-hint">
         Printing {selectedPageCount} page{selectedPageCount === 1 ? '' : 's'} from {rangeStart} to {rangeEnd}
@@ -188,6 +199,7 @@ interface LayoutControlsProps {
   onPagesPerSheetChange: (value: number) => void
   onRangeStartChange: (value: string) => void
   onRangeEndChange: (value: string) => void
+  onResetRange: () => void
   onTextDirectionChange: (direction: TextDirection) => void
   onSheetsPerBookletChange: (value: string) => void
   onOptimize: () => void
@@ -206,6 +218,7 @@ export default function LayoutControls({
   onPagesPerSheetChange,
   onRangeStartChange,
   onRangeEndChange,
+  onResetRange,
   onTextDirectionChange,
   onSheetsPerBookletChange,
   onOptimize
@@ -226,6 +239,7 @@ export default function LayoutControls({
         selectedPageCount={selectedPageCount}
         onRangeStartChange={onRangeStartChange}
         onRangeEndChange={onRangeEndChange}
+        onResetRange={onResetRange}
       />
 
       <TextDirectionControl
