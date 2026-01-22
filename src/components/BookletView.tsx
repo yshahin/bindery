@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { type BookletLayout, type Booklet, type PageNumber } from '../utils/bookletCalculator'
 
 interface SheetCardProps {
@@ -99,8 +100,26 @@ interface BookletViewProps {
 }
 
 export default function BookletView({ layout, layoutRangeStart }: BookletViewProps) {
+  const [showAllBooklets, setShowAllBooklets] = useState(false)
+
   if (!layout?.booklets || layout.booklets.length === 0) {
     return null
+  }
+
+  const booklets = layout.booklets
+  const totalBooklets = booklets.length
+
+  // Determine which booklets to show
+  let bookletsToDisplay: Booklet[]
+  let hiddenCount = 0
+
+  if (totalBooklets <= 2 || showAllBooklets) {
+    // Show all if there are 2 or fewer, or if expanded
+    bookletsToDisplay = booklets
+  } else {
+    // Show first and last only
+    bookletsToDisplay = [booklets[0], booklets[totalBooklets - 1]]
+    hiddenCount = totalBooklets - 2
   }
 
   return (
@@ -114,14 +133,64 @@ export default function BookletView({ layout, layoutRangeStart }: BookletViewPro
         </p>
       </div>
       <div className="booklets-container">
-        {layout.booklets.map((booklet) => (
-          <BookletCard
-            key={booklet.index}
-            booklet={booklet}
-            layout={layout}
-            layoutRangeStart={layoutRangeStart}
-          />
-        ))}
+        {!showAllBooklets && totalBooklets > 2 ? (
+          <>
+            <BookletCard
+              booklet={booklets[0]}
+              layout={layout}
+              layoutRangeStart={layoutRangeStart}
+            />
+            <div className="booklets-hidden-indicator">
+              <button
+                type="button"
+                onClick={() => setShowAllBooklets(true)}
+                className="show-booklets-button"
+              >
+                Show {hiddenCount} hidden booklet{hiddenCount === 1 ? '' : 's'}
+              </button>
+            </div>
+            <BookletCard
+              booklet={booklets[totalBooklets - 1]}
+              layout={layout}
+              layoutRangeStart={layoutRangeStart}
+            />
+          </>
+        ) : totalBooklets > 2 ? (
+          <>
+            <BookletCard
+              key={booklets[0].index}
+              booklet={booklets[0]}
+              layout={layout}
+              layoutRangeStart={layoutRangeStart}
+            />
+            <div className="booklets-hidden-indicator">
+              <button
+                type="button"
+                onClick={() => setShowAllBooklets(false)}
+                className="show-booklets-button"
+              >
+                Hide {totalBooklets - 2} booklet{totalBooklets - 2 === 1 ? '' : 's'}
+              </button>
+            </div>
+            {booklets.slice(1).map((booklet) => (
+              <BookletCard
+                key={booklet.index}
+                booklet={booklet}
+                layout={layout}
+                layoutRangeStart={layoutRangeStart}
+              />
+            ))}
+          </>
+        ) : (
+          bookletsToDisplay.map((booklet) => (
+            <BookletCard
+              key={booklet.index}
+              booklet={booklet}
+              layout={layout}
+              layoutRangeStart={layoutRangeStart}
+            />
+          ))
+        )}
       </div>
     </div>
   )
