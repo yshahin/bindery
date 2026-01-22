@@ -73,6 +73,26 @@ The algorithm calculates:
 - How many blank pages are required at the end of the job to fill the last booklet
 - The optimal sheet count per booklet to minimize waste
 
+## Documentation for Developers & AI Agents
+
+**📖 [START HERE: Documentation Index](docs/DOCS_INDEX.md)** - Complete guide to all documentation
+
+This project includes comprehensive documentation for future development:
+
+- **[docs/DOCS_INDEX.md](docs/DOCS_INDEX.md)** - Navigation guide to all documentation (START HERE)
+- **[docs/QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md)** - Fast reference guide with key concepts and common tasks
+- **[docs/AGENT_DOCS.md](docs/AGENT_DOCS.md)** - Complete technical documentation with architecture and algorithms
+- **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Visual diagrams showing component structure and data flow
+- **[docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Guide for adding features and modifying code
+- **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Solutions to common issues and debugging guides
+
+### Quick Start for Agents
+1. Read [docs/DOCS_INDEX.md](docs/DOCS_INDEX.md) to find the right documentation
+2. For fast context: [docs/QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md) (10 minutes)
+3. For deep understanding: [docs/AGENT_DOCS.md](docs/AGENT_DOCS.md) (30 minutes)
+4. To make changes: [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
+5. To fix issues: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
+
 ## License
 
 MIT
