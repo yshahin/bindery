@@ -4,6 +4,7 @@ import ResultsDisplay from './components/ResultsDisplay'
 import BookletView from './components/BookletView'
 import { useBookletState } from './hooks/useBookletState'
 import { useBookletPdfGenerator, downloadPdfBlob } from './hooks/usePdfGeneration'
+import GithubCorner from 'react-github-corner'
 import './App.css'
 
 function App() {
@@ -64,6 +65,13 @@ function App() {
 
   return (
     <div className="app">
+      <GithubCorner
+        href="https://github.com/yshahin/bookletapp"
+        bannerColor="#151513"
+        octoColor="#fff"
+        size={80}
+        direction="right"
+      />
       <div className="container">
         <header className="header">
           <h1>📚 Booklet Layout Optimizer</h1>
