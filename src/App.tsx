@@ -1,147 +1,30 @@
-import FileUpload from './components/FileUpload'
-import LayoutControls from './components/LayoutControls'
-import ResultsDisplay from './components/ResultsDisplay'
-import BookletView from './components/BookletView'
-import { useBookletState } from './hooks/useBookletState'
-import { useBookletPdfGenerator, downloadPdfBlob } from './hooks/usePdfGeneration'
-import GithubCorner from 'react-github-corner'
-import { Book } from 'lucide-react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Layout from './components/Layout'
+import BookletTool from './pages/BookletTool'
+import Home from './pages/Home'
+import Tutorials from './pages/Tutorials'
+import Articles from './pages/Articles'
+import ArticleDetail from './pages/ArticleDetail'
+import Gallery from './pages/Gallery'
 
 function App() {
-  const {
-    pdfFile,
-    totalPages,
-    sheetsPerBooklet,
-    pagesPerSheet,
-    pdfData,
-    textDirection,
-    detectedDirection,
-    layout,
-    error,
-    loading,
-    detecting,
-    exporting,
-    rangeStart,
-    rangeEnd,
-    selectedPageCount,
-    hasCover,
-    coverPages,
-    setError,
-    setExporting,
-    handleFileUpload,
-    handleSheetsPerBookletChange,
-    handleTextDirectionChange,
-    handlePagesPerSheetChange,
-    useOptimalSheets,
-    handleRangeStartChange,
-    handleRangeEndChange,
-    handleResetRange,
-    handleHasCoverChange,
-    handleCoverPagesChange,
-  } = useBookletState()
-
-  const generateBookletPdf = useBookletPdfGenerator(pdfData, layout)
-
-  const handlePrint = async () => {
-    if (!layout || !pdfData) {
-      setError('Upload a PDF and generate a layout before exporting.')
-      return
-    }
-
-    setExporting(true)
-    try {
-      const pdfBytes = await generateBookletPdf()
-      const baseName = pdfFile?.name?.replace(/\.pdf$/i, '') || 'booklet'
-      downloadPdfBlob(pdfBytes, `${baseName}-booklet.pdf`)
-    } catch (err) {
-      console.error(err)
-      setError(`Unable to generate booklet PDF: ${err instanceof Error ? err.message : 'Unknown error'}`)
-    } finally {
-      setExporting(false)
-    }
-  }
-
-  const layoutRangeStart = layout?.rangeStart ?? 1
-
   return (
-    <div className="app">
-      <GithubCorner
-        href="https://github.com/yshahin/bindery"
-        bannerColor="#5d4037"
-        octoColor="#f9f5f1"
-        size={80}
-        direction="right"
-      />
-      <div className="max-w-4xl mx-auto px-4 py-12 relative w-full">
-        <div className="absolute top-0 left-0 w-full h-full texture-overlay opacity-50 z-[-1]" />
-        <header className="text-center space-y-4 mb-12">
-          <div className="flex items-center justify-center gap-3 text-stone-800 mb-2">
-            <Book size={32} />
-            <h1 className="serif-font text-4xl font-bold">The Bindery Tool</h1>
-          </div>
-          <p className="text-xl text-stone-600 font-light max-w-2xl mx-auto">
-            Calculate optimal signature layouts and generate imposition proofs for hand-bookbinding.
-          </p>
-        </header>
-
-        <main className="space-y-8 animate-fade-in">
-          <FileUpload
-            pdfFile={pdfFile}
-            totalPages={totalPages}
-            loading={loading}
-            onFileUpload={handleFileUpload}
-          />
-
-          {error && (
-            <div className="bg-red-50 text-red-800 p-4 rounded-lg border border-red-100 font-medium">
-              {error}
-            </div>
-          )}
-
-          {totalPages > 0 && (
-            <div className="space-y-8">
-              <LayoutControls
-                pagesPerSheet={pagesPerSheet}
-                rangeStart={rangeStart}
-                rangeEnd={rangeEnd}
-                totalPages={totalPages}
-                selectedPageCount={selectedPageCount}
-                textDirection={textDirection}
-                detectedDirection={detectedDirection}
-                detecting={detecting}
-                sheetsPerBooklet={sheetsPerBooklet}
-                hasCover={hasCover}
-                coverPages={coverPages}
-                onPagesPerSheetChange={handlePagesPerSheetChange}
-                onRangeStartChange={handleRangeStartChange}
-                onRangeEndChange={handleRangeEndChange}
-                onResetRange={handleResetRange}
-                onTextDirectionChange={handleTextDirectionChange}
-                onSheetsPerBookletChange={handleSheetsPerBookletChange}
-                onOptimize={useOptimalSheets}
-                onHasCoverChange={handleHasCoverChange}
-                onCoverPagesChange={handleCoverPagesChange}
-              />
-
-              {layout && (
-                <>
-                  <ResultsDisplay
-                    layout={layout}
-                    error={null} // Add missing prop
-                    totalPages={totalPages}
-                    onPrint={handlePrint}
-                    exporting={exporting}
-                  />
-                  <BookletView layout={layout} layoutRangeStart={layoutRangeStart} />
-                </>
-              )}
-            </div>
-          )}
-        </main>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="tool" element={<BookletTool />} />
+          <Route path="articles" element={<Articles />} />
+          <Route path="articles/:id" element={<ArticleDetail />} />
+          <Route path="videos" element={<Tutorials />} />
+          <Route path="gallery" element={<Gallery />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
+
 export default App
+
 
