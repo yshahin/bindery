@@ -51,7 +51,7 @@ describe('App', () => {
     })
 
     render(<App />)
-    expect(screen.getByText(/Booklet Layout Optimizer/i)).toBeDefined()
+    expect(screen.getByText(/The Bindery Tool/i)).toBeDefined()
     // Using loose text matching for buttons/labels might need refinement if text changes
   })
 
@@ -112,7 +112,7 @@ describe('App', () => {
     expect(screen.getAllByText(/Sheets per Booklet/i).length).toBeGreaterThan(0)
 
     // Check for results
-    expect(screen.getByText(/Layout Results/i)).toBeDefined()
+    expect(screen.getByText(/3. Imposition Strategy/i)).toBeDefined()
   })
 
   it('displays error message when error state is present', () => {
