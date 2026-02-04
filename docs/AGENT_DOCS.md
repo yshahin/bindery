@@ -16,7 +16,7 @@ When printing books professionally, pages are printed on large sheets, folded, a
 
 - **Frontend Framework**: React 18 with TypeScript
 - **Build Tool**: Vite 7
-- **PDF Libraries**: 
+- **PDF Libraries**:
   - `pdf-lib` (v1.17.1) - PDF generation and manipulation
   - `pdfjs-dist` (v5.4.394) - PDF parsing and text extraction
 - **Testing**: Vitest 4
