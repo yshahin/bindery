@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "@types/js-yaml": "^4.0.9",
     "clsx": "^2.1.1",
     "front-matter": "^4.0.2",
     "lucide-react": "^0.563.0",

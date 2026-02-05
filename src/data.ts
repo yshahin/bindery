@@ -1,4 +1,7 @@
 import fm from 'front-matter';
+import { load } from 'js-yaml';
+// @ts-ignore
+import galleryRaw from '../content/gallery.yaml?raw';
 
 interface ArticleAttributes {
   id: string; // Changed to string for filename-based IDs
@@ -18,8 +21,8 @@ function calculateReadTime(content: string): string {
   return `${minutes} min read`;
 }
 
-const articleModules = import.meta.glob('./articles/*.md', { eager: true, query: '?raw', import: 'default' });
-const draftModules = import.meta.glob('./drafts/*.md', { eager: true, query: '?raw', import: 'default' });
+const articleModules = import.meta.glob('../content/articles/*.md', { eager: true, query: '?raw', import: 'default' });
+const draftModules = import.meta.glob('../content/drafts/*.md', { eager: true, query: '?raw', import: 'default' });
 
 export const articles = Object.entries({
   ...articleModules,
@@ -80,11 +83,4 @@ export const videos = articles.reduce((acc, article) => {
   return acc;
 }, [] as any[]);
 
-export const galleryImages = [
-  { image: "/images/gallery/leather-binding.jpg", caption: "Full leather binding with gold tooling" },
-  { image: "/images/gallery/quarter-cloth.png", caption: "Quarter cloth binding with marbled paper" },
-  { image: "/images/gallery/bible-restoration.jpg", caption: "Restoration of a 19th-century bible" },
-  { image: "/images/gallery/japanese-stab.png", caption: "Japanese Stab Binding (Yotsume Toji)" },
-  { image: "/images/gallery/slipcase.jpg", caption: "Custom slipcase construction" },
-  { image: "/images/gallery/leather-texture.png", caption: "Hand-dyed leather samples" }
-];
+export const galleryImages = load(galleryRaw) as { image: string, caption: string }[];
