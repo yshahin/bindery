@@ -8,7 +8,7 @@ interface PagesPerSheetControlProps {
 
 function PagesPerSheetControl({ pagesPerSheet, onPagesPerSheetChange }: PagesPerSheetControlProps) {
   return (
-    <div className="mb-6">
+    <div>
       <label className="block text-sm font-bold text-stone-700 mb-2">
         Pages per Sheet (front + back)
         <span className="block text-xs font-normal text-stone-500 mt-1">Must be multiple of 2</span>
@@ -52,7 +52,7 @@ function PrintRangeControl({
   onResetRange
 }: PrintRangeControlProps) {
   return (
-    <div className="mb-6">
+    <div>
       <label className="block text-sm font-bold text-stone-700 mb-2">
         Print Range
         <span className="block text-xs font-normal text-stone-500 mt-1">Choose the start and end page for the booklet</span>
@@ -106,7 +106,7 @@ function TextDirectionControl({
   onTextDirectionChange
 }: TextDirectionControlProps) {
   return (
-    <div className="mb-6">
+    <div>
       <label className="block text-sm font-bold text-stone-700 mb-2">
         Text Direction
         <span className="block text-xs font-normal text-stone-500 mt-1 h-5 flex items-center gap-1">
@@ -165,7 +165,7 @@ function SheetsPerBookletControl({
   onOptimize
 }: SheetsPerBookletControlProps) {
   return (
-    <div className="mb-6">
+    <div>
       <label htmlFor="sheets-per-booklet" className="block text-sm font-bold text-stone-700 mb-2">
         Sheets per Booklet (Signature)
         <span className="block text-xs font-normal text-stone-500 mt-1">Control how many sheets get folded into each booklet</span>
@@ -210,7 +210,7 @@ function BookCoverControl({
   onCoverPagesChange
 }: BookCoverControlProps) {
   return (
-    <div className="mb-6">
+    <div>
       <div className="flex items-center gap-3 mb-2">
         <label className="block text-sm font-bold text-stone-700">
           Book Cover
@@ -307,41 +307,47 @@ export default function LayoutControls({
     <div className="bg-white p-6 rounded-xl paper-shadow border border-stone-100 h-fit">
       <h2 className="text-lg font-serif font-bold text-stone-800 mb-6 pb-2 border-b border-stone-100">2. Layout Settings</h2>
 
-      <PagesPerSheetControl
-        pagesPerSheet={pagesPerSheet}
-        onPagesPerSheetChange={onPagesPerSheetChange}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-6">
+          <PagesPerSheetControl
+            pagesPerSheet={pagesPerSheet}
+            onPagesPerSheetChange={onPagesPerSheetChange}
+          />
 
-      <BookCoverControl
-        hasCover={hasCover}
-        coverPages={coverPages}
-        onHasCoverChange={onHasCoverChange}
-        onCoverPagesChange={onCoverPagesChange}
-      />
+          <PrintRangeControl
+            rangeStart={rangeStart}
+            rangeEnd={rangeEnd}
+            totalPages={totalPages}
+            selectedPageCount={selectedPageCount}
+            onRangeStartChange={onRangeStartChange}
+            onRangeEndChange={onRangeEndChange}
+            onResetRange={onResetRange}
+          />
 
-      <PrintRangeControl
-        rangeStart={rangeStart}
-        rangeEnd={rangeEnd}
-        totalPages={totalPages}
-        selectedPageCount={selectedPageCount}
-        onRangeStartChange={onRangeStartChange}
-        onRangeEndChange={onRangeEndChange}
-        onResetRange={onResetRange}
-      />
+          <SheetsPerBookletControl
+            sheetsPerBooklet={sheetsPerBooklet}
+            pagesPerSheet={pagesPerSheet}
+            onSheetsPerBookletChange={onSheetsPerBookletChange}
+            onOptimize={onOptimize}
+          />
+        </div>
 
-      <TextDirectionControl
-        textDirection={textDirection}
-        detectedDirection={detectedDirection}
-        detecting={detecting}
-        onTextDirectionChange={onTextDirectionChange}
-      />
+        <div className="space-y-6">
+          <BookCoverControl
+            hasCover={hasCover}
+            coverPages={coverPages}
+            onHasCoverChange={onHasCoverChange}
+            onCoverPagesChange={onCoverPagesChange}
+          />
 
-      <SheetsPerBookletControl
-        sheetsPerBooklet={sheetsPerBooklet}
-        pagesPerSheet={pagesPerSheet}
-        onSheetsPerBookletChange={onSheetsPerBookletChange}
-        onOptimize={onOptimize}
-      />
+          <TextDirectionControl
+            textDirection={textDirection}
+            detectedDirection={detectedDirection}
+            detecting={detecting}
+            onTextDirectionChange={onTextDirectionChange}
+          />
+        </div>
+      </div>
     </div>
   )
 }
