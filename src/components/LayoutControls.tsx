@@ -20,8 +20,8 @@ function PagesPerSheetControl({ pagesPerSheet, onPagesPerSheetChange }: PagesPer
             type="button"
             onClick={() => onPagesPerSheetChange(val)}
             className={`px-4 py-2 rounded text-sm font-medium transition-colors border ${pagesPerSheet === val
-                ? 'bg-stone-800 text-white border-stone-800'
-                : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
+              ? 'bg-stone-800 text-white border-stone-800'
+              : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
               }`}
           >
             {val}
@@ -128,8 +128,8 @@ function TextDirectionControl({
           type="button"
           onClick={() => onTextDirectionChange('ltr')}
           className={`flex-1 px-4 py-2 rounded text-sm font-medium transition-colors border text-center ${textDirection === 'ltr'
-              ? 'bg-stone-800 text-white border-stone-800'
-              : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
+            ? 'bg-stone-800 text-white border-stone-800'
+            : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
             }`}
           title="Left-to-Right (English, European languages)"
         >
@@ -139,8 +139,8 @@ function TextDirectionControl({
           type="button"
           onClick={() => onTextDirectionChange('rtl')}
           className={`flex-1 px-4 py-2 rounded text-sm font-medium transition-colors border text-center ${textDirection === 'rtl'
-              ? 'bg-stone-800 text-white border-stone-800'
-              : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
+            ? 'bg-stone-800 text-white border-stone-800'
+            : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
             }`}
           title="Right-to-Left (Arabic, Hebrew)"
         >
@@ -211,20 +211,24 @@ function BookCoverControl({
 }: BookCoverControlProps) {
   return (
     <div className="mb-6">
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center gap-3 mb-2">
         <label className="block text-sm font-bold text-stone-700">
           Book Cover
         </label>
         <button
           type="button"
+          role="switch"
+          aria-checked={hasCover}
           onClick={() => onHasCoverChange(!hasCover)}
-          className={`text-xs px-2 py-1 rounded border transition-colors ${hasCover
-              ? 'bg-stone-800 text-white border-stone-800'
-              : 'bg-white text-stone-500 border-stone-300 hover:bg-stone-50'
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 ${hasCover ? 'bg-stone-800' : 'bg-stone-200'
             }`}
           title={hasCover ? 'Remove cover pages' : 'Add cover pages'}
         >
-          {hasCover ? 'Enabled' : 'Disabled'}
+          <span className="sr-only">Use book cover</span>
+          <span
+            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${hasCover ? 'translate-x-6' : 'translate-x-1'
+              }`}
+          />
         </button>
       </div>
 
