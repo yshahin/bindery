@@ -1,5 +1,5 @@
 import { type TextDirection } from '../utils/rtlDetector'
-import { RotateCw, RefreshCw, Target } from 'lucide-react';
+import { RotateCw, RefreshCw, Target, ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface PagesPerSheetControlProps {
   pagesPerSheet: number
@@ -127,24 +127,24 @@ function TextDirectionControl({
         <button
           type="button"
           onClick={() => onTextDirectionChange('ltr')}
-          className={`flex-1 px-4 py-2 rounded text-sm font-medium transition-colors border text-center ${textDirection === 'ltr'
+          className={`px-4 py-2 rounded text-sm font-medium transition-colors border text-center flex items-center justify-center gap-2 ${textDirection === 'ltr'
             ? 'bg-stone-800 text-white border-stone-800'
             : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
             }`}
           title="Left-to-Right (English, European languages)"
         >
-          ← LTR
+          LTR <ArrowRight size={16} />
         </button>
         <button
           type="button"
           onClick={() => onTextDirectionChange('rtl')}
-          className={`flex-1 px-4 py-2 rounded text-sm font-medium transition-colors border text-center ${textDirection === 'rtl'
+          className={`px-4 py-2 rounded text-sm font-medium transition-colors border text-center flex items-center justify-center gap-2 ${textDirection === 'rtl'
             ? 'bg-stone-800 text-white border-stone-800'
             : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
             }`}
           title="Right-to-Left (Arabic, Hebrew)"
         >
-          RTL →
+          <ArrowLeft size={16} /> RTL
         </button>
       </div>
     </div>
