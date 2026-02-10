@@ -177,7 +177,7 @@ The modern synthetic option.
 | Type | Description | Best For |
 |------|-------------|----------|
 | Binder's polyester | Specifically for bookbinding | All binding |
--- Upholstery polyester | Very strong, thicker | Heavy books |
+| Upholstery polyester | Very strong, thicker | Heavy books |
 | General sewing | Thin, less suitable | Not recommended |
 
 #### When to Use Polyester

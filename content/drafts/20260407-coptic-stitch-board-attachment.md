@@ -23,7 +23,7 @@ Building on the basics covered in Part 1, this article focuses on the nuances of
 
 Coptic binding allows several methods for attaching covers. Each affects the book's appearance and function.
 
-### Method 1: Wrap-Around (Basic)
+#### Method 1: Wrap-Around (Basic)
 
 The method covered in Part 1:
 - Thread wraps around board edge
@@ -33,7 +33,7 @@ The method covered in Part 1:
 **Pros:** Simple, secure, traditional
 **Cons:** Thread shows on cover edge
 
-### Method 2: Three-Hole Attachment
+#### Method 2: Three-Hole Attachment
 
 For each sewing station, punch three holes in the cover:
 - Main hole (same position as basic method)
@@ -62,7 +62,7 @@ For each sewing station, punch three holes in the cover:
 
 > **Pro tip:** Space the three holes about 1/4 inch (6mm) apart in a row perpendicular to the spine edge.
 
-### Method 3: Paired Holes
+#### Method 3: Paired Holes
 
 Two holes per station, side by side:
 
@@ -82,7 +82,7 @@ Two holes per station, side by side:
 **Pros:** Clean appearance, very secure
 **Cons:** More punching, requires careful alignment
 
-### Method 4: Long Stitch Variant
+#### Method 4: Long Stitch Variant
 
 Cover holes extend along the spine edge, creating decorative long stitches:
 
@@ -95,7 +95,7 @@ Cover holes extend along the spine edge, creating decorative long stitches:
 
 The cover boards you choose affect both sewing and final appearance.
 
-### Book Board (Davey Board)
+#### Book Board (Davey Board)
 
 - Dense, heavy material
 - Holds holes well
@@ -107,7 +107,7 @@ The cover boards you choose affect both sewing and final appearance.
 - Medium books: 1/16–3/32 inch (2–2.5mm)
 - Large books: 1/8 inch (3mm+)
 
-### Chipboard
+#### Chipboard
 
 - Lighter weight
 - More economical
@@ -116,14 +116,14 @@ The cover boards you choose affect both sewing and final appearance.
 
 > **Budget option:** Chipboard works well for practice and gift books. For durability, consider covering both sides with paper.
 
-### Wood Veneer
+#### Wood Veneer
 
 - Interesting aesthetic
 - Can be laser cut
 - Holds holes well
 - Heavier, different feel
 
-### Leather-Covered Boards
+#### Leather-Covered Boards
 
 - Cover boards first, then punch and sew
 - Leather adds some thickness
@@ -134,7 +134,7 @@ The cover boards you choose affect both sewing and final appearance.
 
 For finished appearance, cover boards before sewing:
 
-### Process
+#### Process
 
 1. Cut boards to final size
 2. Mark hole positions clearly (will need to find after covering)
@@ -147,7 +147,7 @@ For finished appearance, cover boards before sewing:
 
 > **Common mistake:** Not marking hole positions before covering. Use a pin to mark through from the inside, or measure carefully after covering.
 
-### Tips for Pre-Covered Boards
+#### Tips for Pre-Covered Boards
 
 - Mark hole positions on both sides of board
 - Use awl carefully through covering
@@ -160,7 +160,7 @@ For finished appearance, cover boards before sewing:
 
 Consistent tension throughout sewing creates professional results. Variations cause problems.
 
-### Understanding Tension Variables
+#### Understanding Tension Variables
 
 **Thread tension:** How tight you pull after each stitch
 **Signature tension:** How tightly signatures compress against each other
@@ -168,7 +168,7 @@ Consistent tension throughout sewing creates professional results. Variations ca
 
 All three should be consistent throughout the book.
 
-### Achieving Consistent Thread Tension
+#### Achieving Consistent Thread Tension
 
 **Technique:**
 1. Complete each stitch
@@ -181,7 +181,7 @@ All three should be consistent throughout the book.
 - Count to three while pulling each stitch
 - The count creates consistent pull duration
 
-### Signature-to-Signature Consistency
+#### Signature-to-Signature Consistency
 
 Each signature should compress equally against the previous:
 
@@ -198,7 +198,7 @@ Each signature should compress equally against the previous:
 
 > **Pro tip:** If your first few signatures are looser than later ones (common beginner pattern), consciously ease up on tension as you progress.
 
-### Chain Link Consistency
+#### Chain Link Consistency
 
 The decorative chain should look uniform:
 
@@ -222,7 +222,7 @@ The decorative chain should look uniform:
 
 For covers that sit flush with the text block spine:
 
-### Adjusting Hole Position
+#### Adjusting Hole Position
 
 Move cover holes slightly closer to spine edge than signature holes:
 - Signature stations: 3/8 inch (10mm) from fold
@@ -230,7 +230,7 @@ Move cover holes slightly closer to spine edge than signature holes:
 
 This small difference allows the thread to pull covers flush with signatures.
 
-### The "Wrap-In" Technique
+#### The "Wrap-In" Technique
 
 1. Sew normally to last signature
 2. At cover, enter from inside
@@ -243,7 +243,7 @@ This reverses the normal wrap direction, pulling the cover inward.
 
 Sometimes a small gap exists between cover and first/last signature. This is normal but can be minimized.
 
-### Reducing Cover Gap
+#### Reducing Cover Gap
 
 1. **Thinner thread at covers:** Use thinner thread for cover attachment only
 2. **Tighter cover stitches:** Increase tension specifically at cover
@@ -256,20 +256,20 @@ Sometimes a small gap exists between cover and first/last signature. This is nor
 
 Coptic binding doesn't require endsheets, but they can be added:
 
-### Tipped-In Endsheets
+#### Tipped-In Endsheets
 
 1. Cut endsheet to signature size
 2. Apply thin line of paste to fold edge
 3. Adhere to first/last signature outer leaf
 4. Becomes first/last page of book
 
-### Sewn-In Endsheets
+#### Sewn-In Endsheets
 
 1. Add endsheet as part of first/last signature
 2. Different paper creates visual distinction
 3. Requires planning before sewing
 
-### Wraparound Endsheets
+#### Wraparound Endsheets
 
 1. Single folded sheet wraps around first/last signature
 2. Creates continuous endsheet effect
@@ -277,7 +277,7 @@ Coptic binding doesn't require endsheets, but they can be added:
 
 ## Professional Finishing Touches
 
-### Interior Cover Lining
+#### Interior Cover Lining
 
 After sewing, line the inside covers:
 1. Cut paper slightly smaller than cover—about 1/8 inch (3mm) margin on all sides
@@ -287,7 +287,7 @@ After sewing, line the inside covers:
 
 **Materials:** Decorative paper, marbled paper, or matching text paper
 
-### Spine Finishing
+#### Spine Finishing
 
 Some binders add elements to the exposed spine:
 
@@ -295,7 +295,7 @@ Some binders add elements to the exposed spine:
 - **Beads:** Thread beads onto chain stitches
 - **Ribbons:** Integrate ribbon markers during sewing
 
-### Corner Treatment
+#### Corner Treatment
 
 For pre-covered boards:
 1. Round corners with corner rounder

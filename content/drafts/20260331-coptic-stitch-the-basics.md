@@ -56,7 +56,7 @@ Unlike case binding where covers attach after sewing:
 
 ## Preparing the Materials
 
-### Making Signatures
+#### Making Signatures
 
 For a beginner project:
 - 5–6 signatures
@@ -72,7 +72,7 @@ For a beginner project:
 
 ![Step 1: Stack of folded signatures ready for binding](/images/diagrams/coptic-signatures.jpg)
 
-### Preparing Covers
+#### Preparing Covers
 
 Cut two pieces of binder's board:
 - Same height as signatures
@@ -91,7 +91,7 @@ Cut two pieces of binder's board:
 
 > **Budget option:** For practice, use chipboard or heavy cardstock instead of binder's board. Cover with decorative paper before sewing.
 
-### Marking and Piercing Signatures
+#### Marking and Piercing Signatures
 
 Create a template:
 1. Cut card stock to signature height
@@ -106,7 +106,7 @@ Pierce signatures:
 
 ## The Basic Coptic Stitch
 
-### Understanding the Chain
+#### Understanding the Chain
 
 The Coptic stitch creates a chain pattern where:
 - Each signature links to the one below
@@ -119,7 +119,7 @@ The Coptic stitch creates a chain pattern where:
 
 ## Step-by-Step Sewing Process
 
-### Step 1: Attach First Cover
+#### Step 1: Attach First Cover
 
 1. Cut thread: spine width × stations × 5 (e.g., 8-inch spine × 5 stations × 5 = 200 inches / 5m)
 2. Thread needle, no knot at end
@@ -134,7 +134,7 @@ The Coptic stitch creates a chain pattern where:
 
 **What you have:** Back cover with thread wrapped through each station.
 
-### Step 2: Attach First Signature
+#### Step 2: Attach First Signature
 
 1. Position first signature above back cover
 2. Enter signature at last station (tail) from outside
@@ -144,7 +144,7 @@ The Coptic stitch creates a chain pattern where:
 6. Continue pattern to head
 7. At head: link to cover thread, exit signature
 
-### Step 3: Build the Chain
+#### Step 3: Build the Chain
 
 Add second signature:
 1. Position above first signature
@@ -157,7 +157,7 @@ Add second signature:
 
 > **Common mistake:** Piercing through previous stitches instead of looping behind them. The needle should pass between the thread and the spine, not through anything.
 
-### Step 4: Continue Pattern
+#### Step 4: Continue Pattern
 
 Each new signature:
 1. Enter at the end where you exited the previous
@@ -168,7 +168,7 @@ Each new signature:
 
 **The rhythm:** Enter – Exit – Link – Enter – Exit – Link...
 
-### Step 5: Attach Front Cover
+#### Step 5: Attach Front Cover
 
 After last signature:
 1. Thread exits at head (or tail)
@@ -180,7 +180,7 @@ After last signature:
 7. Enter cover at next station
 8. Continue through all stations
 
-### Step 6: Finish
+#### Step 6: Finish
 
 After last cover station:
 1. Pass needle under several stitches
@@ -231,7 +231,7 @@ Consistency in chain link direction creates a uniform appearance:
 
 ## Variations
 
-### Number of Stations
+#### Number of Stations
 
 **3 stations:**
 - Minimum for stability
@@ -247,13 +247,13 @@ Consistency in chain link direction creates a uniform appearance:
 - More decorative chain visible
 - Longer sewing time
 
-### Thread Color
+#### Thread Color
 
 - **Matching:** Subtle, traditional appearance
 - **Contrasting:** Chain becomes primary decoration
 - **Variegated:** Changing colors along spine
 
-### Cover Treatments
+#### Cover Treatments
 
 Covers can be:
 - Left as plain board (industrial aesthetic)

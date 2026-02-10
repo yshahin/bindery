@@ -68,13 +68,13 @@ Folded:
 
 ## Understanding Paper Requirements
 
-### Grain Direction
+#### Grain Direction
 
 **Critical:** Grain must run parallel to the folds (perpendicular to the strip length).
 
 > **Common mistake:** Using paper with grain running along the strip length. This creates folds that fight the paper and never lie flat.
 
-### Joining Paper Strips
+#### Joining Paper Strips
 
 Most paper doesn't come in 72-inch (183cm) lengths:
 
@@ -92,7 +92,7 @@ Most paper doesn't come in 72-inch (183cm) lengths:
 
 ## Step-by-Step Instructions
 
-### Step 1: Prepare the Accordion Strip
+#### Step 1: Prepare the Accordion Strip
 
 **If using single sheet:**
 1. Cut to 6 × 72 inches (15 × 183cm)
@@ -103,7 +103,7 @@ Most paper doesn't come in 72-inch (183cm) lengths:
 2. Join to achieve total length
 3. Allow joins to dry completely
 
-### Step 2: Mark and Score Folds
+#### Step 2: Mark and Score Folds
 
 For 12 equal panels:
 1. Total length divided by 12 = panel width
@@ -116,7 +116,7 @@ For 12 equal panels:
 
 ![Step 2: Marking fold lines with ruler and bone folder](/images/diagrams/accordion-marking-folds.jpg)
 
-### Step 3: Fold the Accordion
+#### Step 3: Fold the Accordion
 
 1. Begin at one end
 2. Fold first score away from you (mountain fold)
@@ -130,7 +130,7 @@ For 12 equal panels:
 - Verify alignment at each fold
 - Stack should become neat brick shape
 
-### Step 4: Press the Accordion
+#### Step 4: Press the Accordion
 
 1. Stack all folds aligned
 2. Place between pressing boards
@@ -139,7 +139,7 @@ For 12 equal panels:
 
 ## Creating the Covers
 
-### Step 5: Cut the Boards
+#### Step 5: Cut the Boards
 
 1. Cut two pieces of binder's board
 2. Size: 6.25 × 6.25 inches (16 × 16cm)—slightly larger than accordion
@@ -148,7 +148,7 @@ For 12 equal panels:
 
 > **Tool swap:** No binder's board? Glue two pieces of mat board together for similar rigidity.
 
-### Step 6: Cover the Boards
+#### Step 6: Cover the Boards
 
 For each cover:
 1. Cut book cloth 1 inch (2.5cm) larger than board on all sides
@@ -165,14 +165,14 @@ For each cover:
 
 ## Attaching Accordion to Covers
 
-### Step 7: Prepare Endpapers
+#### Step 7: Prepare Endpapers
 
 The decorative paper covers the inside of each cover and attaches the accordion.
 
 1. Cut two pieces of decorative paper
 2. Size: 5.75 × 5.75 inches (14.5 × 14.5cm)—slightly smaller than boards
 
-### Step 8: Attach First End
+#### Step 8: Attach First End
 
 1. Place front cover face down
 2. Apply PVA to first accordion panel
@@ -188,7 +188,7 @@ The decorative paper covers the inside of each cover and attaches the accordion.
 - Accordion should be centered
 - Endpaper should be centered within cover
 
-### Step 9: Attach Second End
+#### Step 9: Attach Second End
 
 1. Fold accordion to stack
 2. Verify last panel is correctly oriented
@@ -201,13 +201,13 @@ The decorative paper covers the inside of each cover and attaches the accordion.
 
 ## Finishing
 
-### Step 10: Final Pressing
+#### Step 10: Final Pressing
 
 1. With accordion collapsed, press entire book
 2. Weight overnight
 3. This sets all attachments
 
-### Step 11: Check Your Work
+#### Step 11: Check Your Work
 
 - [ ] All folds crisp and even
 - [ ] Covers attached squarely
@@ -217,7 +217,7 @@ The decorative paper covers the inside of each cover and attaches the accordion.
 
 ## Mounting Photos
 
-### Mounting Options
+#### Mounting Options
 
 **Adhesive mounting:**
 - Photo corners (archival, removable)
@@ -232,7 +232,7 @@ The decorative paper covers the inside of each cover and attaches the accordion.
 
 > **Pro tip:** For archival albums, always use acid-free photo corners. They allow photos to be removed without damage.
 
-### Photo Arrangement
+#### Photo Arrangement
 
 **Single-sided:**
 - One photo per panel
@@ -251,28 +251,28 @@ The decorative paper covers the inside of each cover and attaches the accordion.
 
 ## Design Variations
 
-### Extended Accordion
+#### Extended Accordion
 
 More panels:
 - Longer strip, more folds
 - Consider storage (very long accordions awkward)
 - Great for visual narratives
 
-### Multiple Strips
+#### Multiple Strips
 
 Several accordions in one cover:
 - Attach multiple accordion strips
 - Creates layered effect
 - Complex but dramatic
 
-### Varied Panel Sizes
+#### Varied Panel Sizes
 
 Different width panels:
 - Creates rhythm and variety
 - Requires careful planning
 - Contemporary design approach
 
-### Pop-Up Elements
+#### Pop-Up Elements
 
 Add dimensional pieces:
 - Folds create natural pop-up opportunities

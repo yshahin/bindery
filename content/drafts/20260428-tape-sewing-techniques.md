@@ -34,8 +34,6 @@ Tape sewing differs from unsupported sewing:
 - Simpler but less strong
 - Suitable for lighter books
 
-<!-- TODO: Add photo comparing supported and unsupported sewing -->
-
 > **Pro tip:** Test your tape tension by pressing the center of each tape—it should deflect slightly but spring back. Too tight restricts movement; too loose causes uneven sewing.
 
 ## The Sewing Frame
@@ -160,7 +158,7 @@ Tail → └─────────────────────┘
 
 > **Common mistake:** Sewing through the tape instead of around it. The needle and thread must pass around the outside of the tape, not pierce it.
 
-### Continuing
+#### Continuing
 
 For each new signature:
 1. Enter at the end where you just made kettle stitch

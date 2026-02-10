@@ -65,13 +65,13 @@ When making book cloth at home, you replicate this structure using:
 
 Not all fabrics make good book cloth. The ideal fabric:
 
-### Weave Characteristics
+#### Weave Characteristics
 - Tight, even weave
 - No loose threads
 - Minimal stretch
 - Medium weight (not too thick or thin)
 
-### Fiber Content
+#### Fiber Content
 - 100% cotton (best for beginners)
 - Linen (excellent but expensive)
 - Cotton-linen blends
@@ -79,13 +79,13 @@ Not all fabrics make good book cloth. The ideal fabric:
 
 > **Common mistake:** Using polyester-blend fabrics. The paste won't bond properly, causing delamination.
 
-### Pattern Considerations
+#### Pattern Considerations
 - Solid colors are most versatile
 - Small patterns work well
 - Large patterns may not align across covers
 - Check pattern regularity before purchasing
 
-### Fabrics That Work Well
+#### Fabrics That Work Well
 - Quilting cotton
 - Shirting fabric
 - Linen suiting
@@ -93,7 +93,7 @@ Not all fabrics make good book cloth. The ideal fabric:
 - Osnaburg
 - Muslin (doubled)
 
-### Fabrics to Avoid
+#### Fabrics to Avoid
 - Polyester blends
 - Stretchy knits
 - Velvet or pile fabrics
@@ -106,7 +106,7 @@ Not all fabrics make good book cloth. The ideal fabric:
 
 Wheat paste creates the best bond for DIY book cloth. You can purchase pre-made paste or cook your own.
 
-### Homemade Wheat Paste Recipe
+#### Homemade Wheat Paste Recipe
 
 **Ingredients:**
 - 1/4 cup wheat starch (or white flour)
@@ -126,7 +126,7 @@ Wheat paste creates the best bond for DIY book cloth. You can purchase pre-made 
 
 > **Pro tip:** Cook paste the day before you need it. Overnight refrigeration gives a smoother, more consistent texture.
 
-### Paste Adjustments
+#### Paste Adjustments
 
 - **Too thick:** Add water, a tablespoon at a time
 - **Too thin:** Cook longer next time; for current batch, let it sit (evaporation thickens)
@@ -134,7 +134,7 @@ Wheat paste creates the best bond for DIY book cloth. You can purchase pre-made 
 
 ## Step-by-Step Process
 
-### Step 1: Prepare Your Workspace
+#### Step 1: Prepare Your Workspace
 
 1. Cover your work surface with wax paper
 2. Have all materials within reach
@@ -142,14 +142,14 @@ Wheat paste creates the best bond for DIY book cloth. You can purchase pre-made 
 4. Work in a well-ventilated space
 5. Protect clothing (paste washes out but is messy)
 
-### Step 2: Prepare the Fabric
+#### Step 2: Prepare the Fabric
 
 1. Wash and dry the fabric (removes sizing and preshrinks)
 2. Press with iron to remove wrinkles
 3. Cut to desired size plus 2-inch (5cm) margin on all sides
 4. Cut tissue paper to match
 
-### Step 3: Apply Paste to Tissue
+#### Step 3: Apply Paste to Tissue
 
 1. Lay tissue paper on wax paper
 2. Apply paste with brush in thin, even coat
@@ -161,14 +161,14 @@ Wheat paste creates the best bond for DIY book cloth. You can purchase pre-made 
 
 ![Step 2: Applying paste to tissue paper with brush](/images/diagrams/paste-application-book-cloth.jpg)
 
-### Step 4: Position the Fabric
+#### Step 4: Position the Fabric
 
 1. Lay fabric right-side up
 2. Carefully lower pasted tissue onto fabric back
 3. Align edges as well as possible
 4. Press down gently from center
 
-### Step 5: Remove Air Bubbles
+#### Step 5: Remove Air Bubbles
 
 1. Use brayer or bone folder wrapped in cloth
 2. Roll from center toward edges
@@ -177,7 +177,7 @@ Wheat paste creates the best bond for DIY book cloth. You can purchase pre-made 
 
 > **Tool swap:** No brayer? A clean glass jar or rolling pin wrapped in cloth works similarly.
 
-### Step 6: Apply Paste to Fabric Surface
+#### Step 6: Apply Paste to Fabric Surface
 
 This step sizes the fabric for better adhesion later:
 
@@ -187,7 +187,7 @@ This step sizes the fabric for better adhesion later:
 4. Wipe off excess with clean cloth
 5. This seals the fabric and aids future gluing
 
-### Step 7: Drying
+#### Step 7: Drying
 
 1. Place book cloth between sheets of clean newsprint or blotter paper
 2. Place between pressing boards
@@ -231,7 +231,7 @@ Before using on a real project, test your homemade book cloth:
 
 ## Alternative Methods
 
-### Using PVA Instead of Paste
+#### Using PVA Instead of Paste
 
 Some bookbinders prefer PVA for making book cloth:
 
@@ -247,7 +247,7 @@ Some bookbinders prefer PVA for making book cloth:
 
 **Method adjustment:** Dilute PVA 2:1 with water and apply sparingly.
 
-### Heat-Set Method
+#### Heat-Set Method
 
 For very delicate fabrics:
 

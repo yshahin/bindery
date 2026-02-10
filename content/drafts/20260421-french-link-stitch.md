@@ -68,20 +68,20 @@ French link stitch differs from both simple link stitch and tape sewing:
 
 ## Preparing the Tapes
 
-### Tape Selection
+#### Tape Selection
 
 - **Linen tape:** Traditional, strong
 - **Cotton tape:** More economical, good grip
 - **Width:** 1/2–3/4 inch (12–20mm) typical
 
-### Tape Quantity
+#### Tape Quantity
 
 Based on spine height:
 - Small books (under 6 inches / 15cm): 2 tapes
 - Medium books (6–9 inches / 15–23cm): 3 tapes
 - Large books (over 9 inches / 23cm): 4+ tapes
 
-### Tape Preparation
+#### Tape Preparation
 
 1. Cut tapes to approximately 3 inches (8cm) longer than spine width
 2. Tapes will extend beyond the text block
@@ -91,7 +91,7 @@ Based on spine height:
 
 ## Marking and Piercing
 
-### Station Layout
+#### Station Layout
 
 Example for 3 tapes on 8-inch (20cm) spine:
 
@@ -109,7 +109,7 @@ Tail end → ────────────────── ← Kettle s
 
 **At each tape:** Pierce holes on either side (thread enters one side, exits other)
 
-### Piercing Pattern
+#### Piercing Pattern
 
 For each signature at each tape station:
 - Two holes, straddling the tape position
@@ -123,7 +123,7 @@ For each signature at each tape station:
 
 ## Step-by-Step Sewing
 
-### Setting Up
+#### Setting Up
 
 1. Position first signature
 2. Place tapes across spine at marked positions
@@ -132,7 +132,7 @@ For each signature at each tape station:
 
 > **Tool swap:** No sewing frame? Tape the ends of your tapes to the work surface with masking tape. Remove and reposition as you sew.
 
-### Sewing Signature 1
+#### Sewing Signature 1
 
 1. Enter at head kettle station from inside
 2. Exit outside, wrap thread around tape 1
@@ -148,7 +148,7 @@ For each signature at each tape station:
 
 ![Step 2: Diagram showing sewing path through signature around tapes](/images/diagrams/french-link-sewing-path.svg)
 
-### Adding Signature 2
+#### Adding Signature 2
 
 1. Position signature 2 on top of signature 1
 2. Enter at tail from outside
@@ -158,7 +158,7 @@ For each signature at each tape station:
 6. At head: kettle stitch to signature 1
 7. Tie to starting tail with square knot
 
-### The French Link (The Key Technique)
+#### The French Link (The Key Technique)
 
 The "French link" happens at each tape:
 
@@ -182,7 +182,7 @@ This creates the chain pattern visible on the spine.
 
 > **Common mistake:** Forgetting to pass behind the tape twice. The thread must go behind the tape, form the link, then pass behind the tape again before re-entering.
 
-### Continuing the Pattern
+#### Continuing the Pattern
 
 For each subsequent signature:
 1. Enter at the end where previous exited
@@ -196,7 +196,7 @@ For each subsequent signature:
 
 The tape extensions allow several attachment methods:
 
-### Laced-In Boards
+#### Laced-In Boards
 
 Traditional method:
 1. Cut slots in boards for tapes
@@ -206,14 +206,14 @@ Traditional method:
 
 Strong, historical, clean appearance.
 
-### Adhered Tapes
+#### Adhered Tapes
 
 Simpler method:
 1. Paste tape extensions to inside of boards
 2. Cover with pastedown
 3. Functional but less refined
 
-### Exposed Tapes
+#### Exposed Tapes
 
 Contemporary option:
 1. Leave tapes visible
@@ -230,7 +230,7 @@ Contemporary option:
 | Forgetting links | Complex pattern | Count stations systematically |
 | Holes tearing | Too close to edge | Increase margins to 1/2 inch (12mm) |
 
-### Tips for Success
+#### Tips for Success
 
 **Tape Management:**
 - Secure tapes well before starting
@@ -251,20 +251,20 @@ Contemporary option:
 
 ## Variations
 
-### Single Link
+#### Single Link
 
 Simplified version:
 - Link only to adjacent signature (not through previous chain)
 - Easier but less decorative
 
-### Colored Thread
+#### Colored Thread
 
 Design element:
 - Contrasting thread highlights the chain
 - Multiple colors possible
 - Decorative emphasis
 
-### Combined with Other Structures
+#### Combined with Other Structures
 
 French link can combine with:
 - Exposed spine covers
