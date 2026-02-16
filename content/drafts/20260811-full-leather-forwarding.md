@@ -3,7 +3,7 @@ title: "Full Leather Forwarding"
 excerpt: "The pinnacle of book construction: covering an entire book in fine leather with raised bands."
 category: "Tutorial"
 date: "Aug 11, 2026"
-image: "/images/covers/placeholder.png"
+image: "/images/covers/20260811-full-leather-forwarding.png"
 published: false
 seoTitle: "Full Leather Forwarding: Complete Coverage"
 metaDescription: "Learn the forwarding steps for a full leather binding. Covers paring, covering, turning in, and board attachment for complete leather coverage."

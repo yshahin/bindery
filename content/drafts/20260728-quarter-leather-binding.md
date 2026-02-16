@@ -3,7 +3,7 @@ title: "Quarter-Leather Binding"
 excerpt: "Elevate your binding by combining leather spines with decorative paper or cloth sides."
 category: "Tutorial"
 date: "Jul 28, 2026"
-image: "/images/covers/placeholder.png"
+image: "/images/covers/20260728-quarter-leather-binding.png"
 published: false
 seoTitle: "Quarter Leather Binding: A First Leather Project"
 metaDescription: "Create a quarter leather binding with leather spine and paper-covered boards. An accessible introduction to working with leather on books."

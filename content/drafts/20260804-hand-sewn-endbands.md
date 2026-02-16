@@ -3,7 +3,7 @@ title: "Hand-sewn Endbands"
 excerpt: "Learn to sew functional endbands that add strength and beauty to your book's head and tail."
 category: "Technique"
 date: "Aug 04, 2026"
-image: "/images/covers/placeholder.png"
+image: "/images/covers/20260804-hand-sewn-endbands.png"
 published: false
 seoTitle: "Hand-Sewn Endbands: Step-by-Step Tutorial"
 metaDescription: "Learn to sew decorative endbands by hand for your bookbinding projects. Covers single and two-color techniques with bead-on-core construction."
