@@ -2,8 +2,8 @@ import FileUpload from '../components/FileUpload'
 import LayoutControls from '../components/LayoutControls'
 import ResultsDisplay from '../components/ResultsDisplay'
 import BookletView from '../components/BookletView'
-import { useBookletState } from '../hooks/useBookletState'
-import { useBookletPdfGenerator, downloadPdfBlob } from '../hooks/usePdfGeneration'
+import { useBookletWorkflow } from '../hooks/useBookletWorkflow'
+import { downloadPdfBlob } from '../hooks/usePdfGeneration'
 import { Book, CircleHelp } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -13,7 +13,6 @@ export default function BookletTool() {
     totalPages,
     sheetsPerBooklet,
     pagesPerSheet,
-    pdfData,
     textDirection,
     detectedDirection,
     layout,
@@ -27,7 +26,7 @@ export default function BookletTool() {
     hasCover,
     coverPages,
     setError,
-    setExporting,
+    exportBooklet,
     handleFileUpload,
     handleSheetsPerBookletChange,
     handleTextDirectionChange,
@@ -38,26 +37,20 @@ export default function BookletTool() {
     handleResetRange,
     handleHasCoverChange,
     handleCoverPagesChange,
-  } = useBookletState()
-
-  const generateBookletPdf = useBookletPdfGenerator(pdfData, layout)
+  } = useBookletWorkflow()
 
   const handlePrint = async () => {
-    if (!layout || !pdfData) {
+    if (!layout) {
       setError('Upload a PDF and generate a layout before exporting.')
       return
     }
 
-    setExporting(true)
     try {
-      const pdfBytes = await generateBookletPdf()
-      const baseName = pdfFile?.name?.replace(/\.pdf$/i, '') || 'booklet'
-      downloadPdfBlob(pdfBytes, `${baseName}-booklet.pdf`)
+      const exported = await exportBooklet()
+      downloadPdfBlob(exported.pdfBytes, exported.fileName)
     } catch (err) {
       console.error(err)
       setError(`Unable to generate booklet PDF: ${err instanceof Error ? err.message : 'Unknown error'}`)
-    } finally {
-      setExporting(false)
     }
   }
 
