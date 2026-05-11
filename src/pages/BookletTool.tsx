@@ -62,7 +62,7 @@ export default function BookletTool() {
       <header className="text-center space-y-4 mb-12">
         <div className="flex items-center justify-center gap-3 text-stone-800 mb-2">
           <Book size={32} />
-          <h1 className="serif-font text-4xl font-bold">The Bindery Tool</h1>
+          <h1 className="serif-font text-4xl font-bold">Waraq Tool</h1>
         </div>
         <p className="text-xl text-stone-600 font-light max-w-2xl mx-auto">
           Calculate optimal signature layouts and generate imposition proofs for hand-bookbinding.

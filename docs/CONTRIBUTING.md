@@ -1,6 +1,6 @@
 # Contribution Guide
 
-This guide explains how to make common modifications to the Bindery app.
+This guide explains how to make common modifications to the Waraq app.
 
 ---
 
@@ -21,7 +21,7 @@ This guide explains how to make common modifications to the Bindery app.
 ```bash
 # Clone and install
 git clone <repo-url>
-cd booklets
+cd waraq
 npm install
 
 # Start development server
@@ -194,7 +194,7 @@ export function useBookletPdfGenerator(...) {
 
     // Add metadata
     bookletPdf.setTitle('Booklet Layout')
-    bookletPdf.setAuthor('Bindery')
+    bookletPdf.setAuthor('Waraq')
     bookletPdf.setSubject('Print-ready booklet')
     bookletPdf.setCreator('https://your-site.com')
     bookletPdf.setProducer('pdf-lib')
@@ -734,7 +734,7 @@ npm run preview
 ```bash
 # Update vite.config.js
 export default defineConfig({
-  base: '/booklets/',  // Your repo name
+  base: '/waraq/',  // Your repo name
   // ...
 })
 

@@ -1,6 +1,6 @@
 # Bookbinding Topics & Content Ideas
 
-This document serves as a comprehensive list of potential topics for articles, tutorials, and documentation within the Bindery app. It covers various aspects of the craft, from fundamental theories to advanced decorative techniques.
+This document serves as a comprehensive list of potential topics for articles, tutorials, and documentation within the Waraq app. It covers various aspects of the craft, from fundamental theories to advanced decorative techniques.
 
 ## 1. Fundamentals & Theory
 *   **Paper Grain**: Understanding grain direction, testing methods, consequences of cross-grain construction.

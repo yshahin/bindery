@@ -1,4 +1,4 @@
-# Bindery
+# Waraq
 
 A comprehensive digital workbench for bookbinders. This application combines practical tools for calculating signatures and layouts with a rich library of learning resources, tutorials, and binding theory.
 
@@ -63,4 +63,3 @@ Special thanks to **[Four Keys Book Arts](https://www.youtube.com/@FourKeysBookA
 ## License
 
 MIT
-

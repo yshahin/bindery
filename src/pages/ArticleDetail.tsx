@@ -147,7 +147,7 @@ export default function ArticleDetail() {
           </div>
 
           <div className="mt-12 pt-8 border-t border-stone-100 flex items-center justify-between text-stone-500 italic">
-            <span>Written by The Bindery Staff</span>
+            <span>Written by Waraq Staff</span>
             <BookOpen size={20} className="opacity-50" />
           </div>
         </div>

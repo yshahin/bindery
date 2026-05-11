@@ -37,7 +37,7 @@ export default function Layout() {
             {/* Logo */}
             <Link to="/" className="flex-shrink-0 flex items-center cursor-pointer">
               <BookOpen className="h-8 w-8 text-stone-700 mr-2" />
-              <span className="serif-font font-bold text-2xl text-stone-800 tracking-wide">The Bindery</span>
+              <span className="serif-font font-bold text-2xl text-stone-800 tracking-wide">Waraq</span>
             </Link>
 
             {/* Desktop Menu */}
@@ -85,7 +85,7 @@ export default function Layout() {
         <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-              <span className="serif-font font-bold text-lg text-stone-800">The Bindery</span>
+              <span className="serif-font font-bold text-lg text-stone-800">Waraq</span>
               <p className="text-sm text-stone-500 mt-1">Preserving the craft, one stitch at a time.</p>
             </div>
             <div className="flex space-x-6">
@@ -95,7 +95,7 @@ export default function Layout() {
             </div>
           </div>
           <div className="mt-8 border-t border-stone-200 pt-8 text-center text-sm text-stone-400">
-            <p className="mb-2">&copy; {new Date().getFullYear()} The Bindery Project. All rights reserved.</p>
+            <p className="mb-2">&copy; {new Date().getFullYear()} Waraq. All rights reserved.</p>
             <p>
               Special thanks to <a href="https://www.youtube.com/@FourKeysBookArts" target="_blank" rel="noopener noreferrer" className="hover:text-stone-600 underline decoration-stone-300">Four Keys Book Arts</a> for their invaluable tutorials and inspiration.
             </p>

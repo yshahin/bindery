@@ -54,7 +54,7 @@ describe('BookletTool', () => {
         <BookletTool />
       </BrowserRouter>
     )
-    expect(screen.getByText(/The Bindery Tool/i)).toBeDefined()
+    expect(screen.getByText(/Waraq Tool/i)).toBeDefined()
     // Using loose text matching for buttons/labels might need refinement if text changes
   })
 
