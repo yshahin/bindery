@@ -16,7 +16,7 @@ Before printing and bookmaking merged, paper was always sold in large sheets to 
 - Each fold doubles the number of leaves: 1 fold = 4 pages, 2 folds = 8 pages, 3 folds = 16 pages
 - Imposition arranges pages so they appear in correct order when folded and trimmed
 
-![Hero: Stack of different weight papers fanned out with GSM labels](/images/hero/paper-weights-comparison.jpg)
+![Comparison of paper thicknesses](/images/diagrams/paper-thickness-comparison.svg)
 
 ## Paper Weight: Understanding GSM
 
@@ -113,7 +113,7 @@ Three folds from a single sheet. The classic book signature.
 
 Four folds. Maximum practical for most papers before bulk becomes problematic.
 
-![Step 2: Imposition Layout showing page positions for 8-page signature](/images/diagrams/imposition-layout-8page.svg)
+![Imposition layout showing page positions for an 8-page signature](/images/diagrams/imposition-layout-8page.svg)
 
 ## The Mathematics of Signatures
 
@@ -206,7 +206,7 @@ To determine how much paper you need:
 
 > **Common mistake:** Forgetting to account for endpapers. A casebound book needs additional sheets for the front and back endpapers, usually 2–4 extra leaves.
 
-![Step 3: Paper calculation worksheet example](/images/diagrams/paper-calculation.jpg)
+![Step 3: Imposition layout used to plan page positions](/images/diagrams/imposition-layout-8page.svg)
 
 ## Common Mistakes
 
@@ -263,3 +263,8 @@ No. Free tools and built-in PDF reader features handle simple booklet imposition
 - **Step 1:** Paper thickness comparison diagram
 - **Step 2:** Imposition layout showing page positions for 8-page signature
 - **Step 3:** Paper calculation worksheet example
+
+## Sources & Further Reading
+
+- [Adobe Acrobat: Print booklets](https://helpx.adobe.com/acrobat/kb/print-booklets-acrobat-reader.html) — booklet imposition and printing workflow.
+- [Library of Congress: Care, Handling, and Storage of Books](https://www.loc.gov/preservation/care/books.html) — paper and finished-book handling context.

@@ -3,7 +3,7 @@ title: "The Anatomy of a Book"
 excerpt: "A complete visual guide to book structure: signatures, joints, squares, and every part in between."
 category: "Fundamentals"
 date: "Feb 10, 2026"
-image: "/images/covers/20260224-anatomy-of-a-book.png"
+image: "/images/other/Book-diagrams-anatomy-of-a-hardcover-book.jpg"
 seoTitle: "Book Anatomy Guide: Parts of a Book Explained"
 metaDescription: "Learn every part of a book from signatures to endpapers. Essential vocabulary for bookbinders with clear diagrams and definitions."
 slug: "anatomy-of-a-book"
@@ -16,7 +16,7 @@ Before you can make a book, you need to understand how books are built.
 - Grain direction must run head-to-tail in all materials
 - Standard squares (board overhang) are 1/8 inch (3mm) on three sides
 
-![Hero: Exploded view of a hardcover book showing all components labeled](/images/hero/anatomy-exploded-view.jpg)
+![Exploded view of a hardcover book showing its main components](/images/other/Book-diagrams-anatomy-of-a-hardcover-book.jpg)
 
 ## The Text Block
 
@@ -92,7 +92,7 @@ Where the text block meets the case, several critical elements come together:
 
 The squares are the overhang of the boards beyond the text block edges. Standard squares are 1/8 inch (3mm) on three sides (head, tail, fore edge). Squares protect the pages from damage.
 
-![Step 2: Cross-section showing square measurement from board edge to text block](/images/diagrams/squares-measurement.svg)
+![Case binding dimensions showing board overhang](/images/diagrams/case-binding-dimensions.png)
 
 ```mermaid
 graph TD
@@ -144,7 +144,7 @@ Endpapers connect the text block to the case and provide a finished interior.
 - **Made endpaper:** Multi-section construction for strength
 - **Tipped-on:** Endpaper glued to the text block edge
 
-![Step 3: Endpaper diagram showing paste-down and flyleaf positions](/images/diagrams/endpaper-anatomy.svg)
+![Bookbinding workspace showing endpaper preparation](/images/diagrams/binding-workspace.svg)
 
 ## Decorative Elements
 
@@ -206,7 +206,7 @@ Every book you make or repair becomes clearer once you can name and understand i
 - **Square:** The overhang of the cover boards beyond the text block edges
 - **Paste-down:** The portion of the endpaper glued to the inside of the cover board
 - **Hinge:** The flexible interior junction between the spine and cover boards
-- **Folio:** A single sheet folded once, creating 4 pages
+- **Folio:** A single sheet folded once, creating 2 leaves (4 pages)
 
 ---
 
@@ -250,3 +250,8 @@ Endpapers are typically slightly heavier than text pages—around 100–140 GSM 
 ## References
 
 - https://ebookfriendly.com/book-diagrams/
+
+## Sources & Further Reading
+
+- [Library of Congress: Care, Handling, and Storage of Books](https://www.loc.gov/preservation/care/books.html) — terminology and care context for bound books.
+- [University of Iowa Libraries: Bookbinding](https://bookbinding.lib.uiowa.edu/) — demonstrations and historical bookbinding structures.

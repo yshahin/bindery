@@ -16,7 +16,7 @@ The pamphlet stitch is the simplest form of bookbinding.
 - You need only paper, thread, needle, and basic tools
 - This technique teaches folding, piercing, and sewing—skills used in all binding
 
-![Hero: Finished pamphlet stitch notebook opened to show the binding](/images/hero/pamphlet-stitch-finished.jpg)
+![Pamphlet stitch pattern](/images/diagrams/pamphlet-stitch-pattern.svg)
 
 ## What You'll Make
 
@@ -100,7 +100,7 @@ Pierce all three holes through both the cover and text pages simultaneously.
 
 > **Common mistake:** Piercing cover and pages separately causes misaligned holes. Always pierce through all layers together.
 
-![Step 2: Awl piercing through signature at center fold](/images/diagrams/pamphlet-piercing.jpg)
+![Step 2: Three-hole pamphlet stitch pattern](/images/diagrams/pamphlet-stitch-pattern.svg)
 
 ### Step 5: Thread the Needle
 
@@ -117,18 +117,17 @@ This is a three-hole stitch. Work from inside the signature:
 
 **Starting from inside:**
 
-1. Enter the **center hole** from inside, pulling thread through until about 4 inches (10cm) remains inside
-2. Exit through the center hole, leaving the tail inside
+1. Exit through the **center hole** from inside, leaving about 4 inches (10cm) of tail inside.
 
 **Sewing pattern:**
 
-3. Enter the **tail hole** from outside
-4. Exit through the **head hole** from inside
-5. Enter the **center hole** from outside
+2. Enter the **head hole** from outside.
+3. Exit through the **tail hole** from inside.
+4. Enter the **center hole** from outside.
 
 **Finishing:**
 
-6. Your thread should now exit next to the starting tail
+5. Your thread should now be inside next to the starting tail
 7. Make sure the thread wraps around the long stitch connecting head to tail holes
 8. Tie a square knot with the two thread ends
 
@@ -242,3 +241,8 @@ This happens when holes are too close to the edge or paper is too thin. Keep hol
 - **Step 1:** Signature page sequence showing folded sheets nested together
 - **Step 2:** Awl piercing through signature at center fold
 - **Step 3:** Pamphlet stitch pattern diagram showing thread path
+
+## Sources & Further Reading
+
+- [University of Iowa Libraries: Bookbinding](https://bookbinding.lib.uiowa.edu/) — instructional material on sewing and simple bindings.
+- [Library of Congress: Care, Handling, and Storage of Books](https://www.loc.gov/preservation/care/books.html) — guidance for handling and storing completed booklets.

@@ -3,7 +3,7 @@ title: "Tools Checklist: Soft vs Hard Cover"
 excerpt: "Know what you need before you start. A practical guide to essential tools for different binding styles."
 category: "Tools"
 date: "Feb 17, 2026"
-image: "/images/covers/20260303-tools-checklist-soft-vs-hard.png"
+image: "/images/diagrams/binding-workspace.svg"
 seoTitle: "Bookbinding Tools Checklist: Beginner to Advanced"
 metaDescription: "Complete bookbinding tools list organized by project type. Start with basics for pamphlets, add equipment as you advance to hardcover binding."
 slug: "tools-checklist-soft-vs-hard-cover"
@@ -16,7 +16,7 @@ The tools you need depend on what you're making.
 - Soft cover binding needs minimal investment; hardcover adds pressing equipment
 - Buy quality basics first; specialty tools can wait until projects demand them
 
-![Hero: Organized bookbinding workspace with tools arranged by category](/images/hero/bookbinding-tools-workspace.jpg)
+![Organized bookbinding workspace with tools arranged by category](/images/diagrams/binding-workspace.svg)
 
 ## Universal Tools (Always Needed)
 
@@ -54,7 +54,7 @@ Self-healing mats protect your work surface and blades.
 - **A3 size minimum:** 12 × 17 inches (30 × 43cm) for most projects
 - **Gridded:** Helps with alignment
 
-![Step 1: Essential tools laid out - bone folder, ruler, knife, and cutting mat](/images/diagrams/essential-tools-layout.jpg)
+![Step 1: Essential tools laid out - bone folder, ruler, knife, and cutting mat](/images/diagrams/binding-workspace.svg)
 
 ![Watch: Essential Bookbinding Tools Overview](https://www.youtube.com/watch?v=ACLrh4fa77E)
 
@@ -98,7 +98,7 @@ Case binding and board attachment require additional equipment:
 
 > **Budget option:** For weights, bricks wrapped in cloth work well. Clean, flat stones from a garden center are also effective.
 
-![Step 2: Case binding tools including boards, PVA, and pressing equipment](/images/diagrams/case-binding-tools.jpg)
+![Step 2: Case binding tools including boards, PVA, and pressing equipment](/images/diagrams/binding-workspace.svg)
 
 ### Measuring Tools
 
@@ -124,7 +124,7 @@ Multi-signature sewing requires a few specialized items:
 - **Bookbinding thread:** Pre-waxed, various thicknesses
 - **Silk thread:** For fine work and exposed stitching
 
-> **Common mistake:** Using cotton embroidery floss. It's too stretchy and weak for binding. Stick to linen or purpose-made thread.
+> **Common mistake:** Choosing thread that is too thin or stretchy for the book. Match the thread size to the holes and paper; linen is a reliable general-purpose choice, while embroidery floss can work for lightweight decorative bindings.
 
 ### Sewing Frame (Optional)
 
@@ -145,7 +145,7 @@ Beyond the basic craft knife:
 - **Heavy-duty knife:** Stanley-type for 1/8 inch (3mm+) board
 - **Multiple passes:** Never try to cut through thick board in one stroke
 
-![Step 3: Cutting tools arranged from basic to specialized](/images/diagrams/cutting-tools-progression.jpg)
+![Step 3: Cutting tools arranged from basic to specialized](/images/diagrams/binding-workspace.svg)
 
 ## Specialized Tools (Advanced)
 
@@ -228,6 +228,13 @@ Aim for 10–20 lbs (5–10 kg) total. The pressure needs to be even across the 
 
 - The Anatomy of a Book
 - Beginner's Guide to Case Binding
+
+---
+
+## Sources & Further Reading
+
+- [University of Iowa Libraries: Bookbinding](https://bookbinding.lib.uiowa.edu/) — examples of tools, structures, and binding processes.
+- [NEDCC Preservation Leaflets](https://www.nedcc.org/free-resources/preservation-leaflets/overview) — preservation-safe materials and handling guidance.
 - Project: Pamphlet Stitch Booklet
 - Adhesives 101: PVA vs. Paste
 

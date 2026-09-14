@@ -16,7 +16,7 @@ If there's one rule that separates amateur bookbinding from professional work, i
 - Test grain with the bend test, tear test, wet test, or fingernail test
 - Score heavy cardstock before folding to prevent cracking
 
-![Hero: Side-by-side comparison of paper bent with and against grain](/images/hero/grain-direction-comparison.jpg)
+![Paper grain direction bend test](/images/diagrams/grain-bend-test.svg)
 
 ## Why Grain Matters
 
@@ -144,7 +144,7 @@ Binder's board also has grain, though it's subtler than paper. Wrong grain cause
 - Fingernail test is reliable
 - Some boards are labeled
 
-![Step 3: Board grain test showing fingernail drag marks](/images/diagrams/board-grain-test.jpg)
+![Fiber expansion caused by moisture](/images/diagrams/fiber-expansion.svg)
 
 ## Practical Application
 
@@ -246,6 +246,13 @@ It matters less for single-sheet items without a spine. For anything bound, grai
 - Paper Weights & Imposition
 - Adhesives 101: PVA vs. Paste
 - Tools Checklist: Soft vs Hard Cover
+
+---
+
+## Sources & Further Reading
+
+- [Library of Congress: Care, Handling, and Storage of Books](https://www.loc.gov/preservation/care/books.html) — paper and book-care considerations.
+- [Canadian Conservation Institute Notes](https://www.canada.ca/en/conservation-institute/services/conservation-preservation-publications/canadian-conservation-institute-notes.html) — conservation guidance for paper-based materials.
 
 ---
 

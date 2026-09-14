@@ -16,7 +16,7 @@ Japanese stab binding refers to a family of side-sewn bindings where thread pass
 - Thread wraps around the spine, head, and tail edges in a systematic pattern
 - Pages don't open flat—this binding works best for single-sided printing
 
-![Hero: Completed 4-hole stab bound book showing decorative thread pattern](/images/hero/japanese-stab-finished.jpg)
+![Completed four-hole Japanese stab binding](/images/gallery/japanese-stab.png)
 
 ## History and Characteristics
 
@@ -58,13 +58,13 @@ Stab binding originated in China and spread throughout East Asia. Unlike Western
 4. **Tap edges on table** to align perfectly
 5. **Clip the fore edge** to hold everything together
 
-![Step 1: Stacked pages with binder clips on fore edge](/images/diagrams/stab-binding-prep.jpg)
+![Four-hole Japanese stab binding layout](/images/diagrams/japanese-stab-4hole.svg)
 
 ### Step 2: Mark the Holes
 
 Japanese stab binding uses specific proportions. For a standard 4-hole pattern:
 
-**Spine margin:** The distance from the edge to the holes—typically 3/8–5/8 inch (10–15mm)
+**Spine margin:** The distance from the edge to the holes—typically 3/8–5/8 inch (10–16mm)
 
 **Hole spacing:** Divide the remaining spine length into equal sections
 
@@ -72,8 +72,8 @@ Japanese stab binding uses specific proportions. For a standard 4-hole pattern:
 
 1. Mark a line parallel to the spine at your chosen margin—for example, 1/2 inch (12mm) from edge
 2. Measure the spine height
-3. Mark the first hole 5/8 inch (15mm) from the head
-4. Mark the fourth hole 5/8 inch (15mm) from the tail
+3. Mark the first hole 5/8 inch (16mm) from the head
+4. Mark the fourth hole 5/8 inch (16mm) from the tail
 5. Divide the remaining space into three equal parts for holes 2 and 3
 
 ```
@@ -92,7 +92,7 @@ TAIL
   1/2 inch from spine edge
 ```
 
-> **Pro tip:** For a 9-inch (23cm) spine with 5/8-inch (15mm) margins top and bottom, you have about 7.75 inches (20cm) to divide. Space holes roughly 2.6 inches (6.5cm) apart.
+> **Pro tip:** For a 9-inch (23cm) spine with 5/8-inch (16mm) margins top and bottom, you have about 7.75 inches (20cm) to divide. Space holes roughly 2.6 inches (6.5cm) apart.
 
 ### Step 3: Pierce the Holes
 
@@ -113,7 +113,7 @@ Cut thread approximately **4 times the spine length**:
 - Thread the needle
 - Do **not** knot the end—leave a tail for tying
 
-![Step 2: 4-Hole Stitch Pattern showing thread path around spine](/images/diagrams/japanese-stab-4hole.svg)
+![Four-hole stitch pattern showing thread path around the spine](/images/diagrams/japanese-stab-4hole.svg)
 
 ### Step 5: The 4-Hole Sewing Pattern
 
@@ -168,14 +168,14 @@ The Yotsume Toji pattern wraps thread around the spine and through each hole sys
 **Back cover:**
 - Diagonal stitches creating an X pattern between holes
 
-![Step 3: Finished stitch pattern showing front, spine, and back views](/images/diagrams/stab-binding-finished-pattern.jpg)
+![Step 3: Four-hole stitch pattern](/images/diagrams/japanese-stab-4hole.svg)
 
 ## Tips & Troubleshooting
 
 | Problem | Cause | Solution |
 |---------|-------|----------|
 | Loose stitches | Not enough tension | Pull snug after each pass |
-| Thread tangling | Thread too long | Use shorter thread, join with reef knot |
+| Thread tangling | Thread too long | Use shorter thread; if joining thread, use a secure flat knot and trim the tails |
 | Uneven holes | Inconsistent awl angle | Pierce straight through |
 | Pages shifting | Not clipped properly | Use more clips during sewing |
 | Can't find hole | Lost track of pattern | Mark holes with numbers |
@@ -281,3 +281,8 @@ No. Any paper with grain running parallel to the spine works. Washi is tradition
 - **Step 1:** Stacked pages with binder clips on fore edge
 - **Step 2:** 4-hole stitch pattern diagram showing thread path around spine
 - **Step 3:** Finished stitch pattern showing front, spine, and back views
+
+## Sources & Further Reading
+
+- [British Library: Japanese binding](https://www.bl.uk/collection-items/japanese-binding) — historical context for Japanese side-sewn bindings.
+- [University of Iowa Libraries: Bookbinding](https://bookbinding.lib.uiowa.edu/) — practical binding structures and sewing references.
