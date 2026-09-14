@@ -101,6 +101,7 @@ export default function HoleGuide() {
   const [spineInset, setSpineInset] = useState('1.20')
   const [symmetricOffsets, setSymmetricOffsets] = useState(true)
   const [kettlePairGap, setKettlePairGap] = useState('1.6')
+  const [ribbonGap, setRibbonGap] = useState('')
   const [paperSize, setPaperSize] = useState<PaperSize>('a4')
 
   const allPresets = useMemo(() => [...METRIC_SIGNATURE_PRESETS, ...IMPERIAL_SIGNATURE_PRESETS], [])
@@ -158,6 +159,13 @@ export default function HoleGuide() {
   }, [bottomOffset, symmetricOffsets, topOffsetMm, unitSystem])
 
   const kettlePairGapMm = useMemo(() => fromUnitValue(kettlePairGap, unitSystem), [kettlePairGap, unitSystem])
+  const ribbonGapMm = useMemo(() => {
+    if (!ribbonGap.trim()) {
+      return null
+    }
+
+    return fromUnitValue(ribbonGap, unitSystem)
+  }, [ribbonGap, unitSystem])
   const spineInsetMm = useMemo(() => fromUnitValue(spineInset, unitSystem), [spineInset, unitSystem])
 
   const holeCount = selectedPattern.id === 'kettle-stitch'
@@ -181,6 +189,10 @@ export default function HoleGuide() {
       return { error: 'Provide a valid kettle pair spacing value.', holes: [] as number[] }
     }
 
+    if (selectedPattern.supportsRibbonGap && ribbonGap.trim() && !Number.isFinite(ribbonGapMm)) {
+      return { error: 'Provide a valid center ribbon gap value.', holes: [] as number[] }
+    }
+
     try {
       if (selectedPattern.id === 'kettle-stitch') {
         const holes = calculateKettleHolePositions({
@@ -199,6 +211,7 @@ export default function HoleGuide() {
         topOffsetMm,
         bottomOffsetMm,
         holeCount,
+        ribbonGapMm: selectedPattern.supportsRibbonGap && Number.isFinite(ribbonGapMm) ? ribbonGapMm : undefined,
       })
 
       return { error: null as string | null, holes }
@@ -215,6 +228,8 @@ export default function HoleGuide() {
     bottomOffsetMm,
     spineInsetMm,
     kettlePairGapMm,
+    ribbonGap,
+    ribbonGapMm,
     kettlePairCount,
     selectedPattern,
     holeCount,
@@ -383,6 +398,20 @@ export default function HoleGuide() {
                   onChange={(event) => setCustomHoleCount(Number.parseInt(event.target.value, 10) || 2)}
                   className="w-full rounded-lg border border-stone-300 px-3 py-2 bg-white text-stone-800"
                 />
+              </label>
+            )}
+
+            {selectedPattern.supportsRibbonGap && (
+              <label className="space-y-1.5 sm:col-span-2">
+                <span className="text-sm font-medium text-stone-700">Center Ribbon Gap ({unitSystem === 'metric' ? 'cm' : 'in'})</span>
+                <input
+                  value={ribbonGap}
+                  onChange={(event) => setRibbonGap(event.target.value)}
+                  className="w-full rounded-lg border border-stone-300 px-3 py-2 bg-white text-stone-800"
+                  inputMode="decimal"
+                  placeholder={unitSystem === 'metric' ? 'Optional' : 'Optional'}
+                />
+                <p className="text-xs text-stone-500">Optional wider center gap for ribbons, closures, or decorative spacing.</p>
               </label>
             )}
 

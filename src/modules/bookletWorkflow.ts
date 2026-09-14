@@ -247,6 +247,7 @@ export function createBookletWorkflowModule(
     async load(file) {
       if (file.type !== 'application/pdf') {
         pdfData = null
+        sourceFileName = null
         snapshot = {
           ...createEmptySnapshot(),
           phase: 'failed',

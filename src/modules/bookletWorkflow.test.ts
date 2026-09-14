@@ -107,4 +107,5 @@ describe('createBookletWorkflowModule', () => {
       mimeType: 'application/pdf',
     })
   })
+
 })
