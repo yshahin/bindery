@@ -130,6 +130,8 @@ Welcome! This index helps you find the right documentation for your needs.
 
 ### I'm an AI Agent tasked with...
 
+**Start Here: [AGENTS.md](../AGENTS.md)** - High-level project entry point for AI assistants.
+
 #### Understanding the codebase
 → Start: [QUICK_REFERENCE.md](QUICK_REFERENCE.md)
 → Then: [ARCHITECTURE.md](ARCHITECTURE.md)

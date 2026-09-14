@@ -14,13 +14,19 @@ When printing books professionally, pages are printed on large sheets, folded, a
 
 ## Technology Stack
 
-- **Frontend Framework**: React 18 with TypeScript
+- **Frontend Framework**: React 19 with TypeScript
 - **Build Tool**: Vite 7
+- **Routing**: React Router 7
+- **Styling**: Tailwind CSS 4
 - **PDF Libraries**:
   - `pdf-lib` (v1.17.1) - PDF generation and manipulation
-  - `pdfjs-dist` (v5.4.394) - PDF parsing and text extraction
-- **Testing**: Vitest 4
-- **Node Version**: v16 or higher
+  - `pdfjs-dist` (v5.4.624) - PDF parsing and text extraction
+- **Content Management**:
+  - `react-markdown` & `remark-gfm` - Rendering markdown
+  - `front-matter` - Metadata parsing
+  - `js-yaml` - YAML parsing
+- **Testing**: Vitest 4 with React Testing Library
+- **Node Version**: v22 or higher
 
 ---
 
@@ -28,29 +34,40 @@ When printing books professionally, pages are printed on large sheets, folded, a
 
 ```
 waraq/
+├── content/
+│   ├── articles/                # Markdown articles for tutorials
+│   ├── drafts/                  # Draft articles (shown in DEV mode)
+│   └── gallery.yaml             # Gallery project definitions
+├── docs/                        # Project documentation
+├── public/                      # Static assets
 ├── src/
-│   ├── App.tsx                          # App Routing & Layout
-│   ├── main.tsx                         # Entry point
-│   ├── index.css                        # Global styles & Tailwind Config
+│   ├── App.tsx                  # App Routing & Layout
+│   ├── main.tsx                 # Entry point
+│   ├── data.ts                  # Content loading & processing
+│   ├── index.css                # Global styles & Tailwind Config
 │   ├── pages/
-│   │   ├── Home.tsx                    # Landing Page
-│   │   ├── BookletTool.tsx             # Main Tool Page
-│   │   ├── Articles.tsx                # Articles/Tutorials List
-│   │   ├── Tutorials.tsx               # Video Tutorials Page
-│   │   └── Gallery.tsx                 # Project Gallery
+│   │   ├── Home.tsx             # Landing Page
+│   │   ├── BookletTool.tsx      # Main Tool Page
+│   │   ├── Articles.tsx         # Articles/Tutorials List
+│   │   ├── Tutorials.tsx        # Video Tutorials Page
+│   │   ├── Gallery.tsx          # Project Gallery
+│   │   └── ArticlePost.tsx      # Individual Article view
 │   ├── components/
-│   │   ├── Layout.tsx                  # Common Nav & Footer Layout
-│   │   ├── FileUpload.tsx              # PDF upload component
-│   │   ├── LayoutControls.tsx          # Settings controls
-│   │   ├── ResultsDisplay.tsx          # Shows calculation results
-│   │   └── BookletView.tsx             # Visualizes booklet/sheet layout
+│   │   ├── Layout.tsx           # Common Nav & Footer Layout
+│   │   ├── FileUpload.tsx       # PDF upload component
+│   │   ├── LayoutControls.tsx   # Settings controls
+│   │   ├── ResultsDisplay.tsx   # Shows calculation results
+│   │   ├── BookletView.tsx      # Visualizes booklet/sheet layout
+│   │   └── ArticleCard.tsx      # Card component for article lists
 │   ├── hooks/
-│   │   ├── useBookletState.ts          # Main state management hook
-│   │   └── usePdfGeneration.ts         # PDF export functionality
-│   └── utils/
-│       ├── bookletCalculator.ts        # Core booklet calculation algorithm
-│       ├── bookletCalculator.test.ts   # Unit tests
-│       └── rtlDetector.ts              # RTL text detection
+│   │   ├── useBookletState.ts   # Main state management hook
+│   │   └── usePdfGeneration.ts  # PDF export functionality
+│   ├── utils/
+│   │   ├── bookletCalculator.ts        # Core booklet calculation algorithm
+│   │   ├── bookletCalculator.test.ts   # Unit tests
+│   │   └── rtlDetector.ts              # RTL text detection
+│   └── test/
+│       └── setup.ts             # Test environment check
 ├── package.json
 ├── vite.config.js
 └── tsconfig.json
@@ -185,7 +202,30 @@ interface BookletLayout {
 - Arabic: 0x0600-0x06FF, 0x0750-0x077F, 0x08A0-0x08FF
 - Arabic Presentation Forms: 0xFB50-0xFDFF, 0xFE70-0xFEFF
 
-### 5. Components
+### 5. `src/data.ts`
+
+**Purpose**: Handles loading and processing of static content (articles and gallery items).
+
+**Functionality**:
+- **Article Loading**: Uses `import.meta.glob` to load all `.md` files from `content/articles/`.
+- **Draft Handling**: Conditionally loads files from `content/drafts/` only in development mode (`import.meta.env.DEV`).
+- **Metadata Parsing**: Uses `front-matter` to extract attributes like title, date, and category from markdown files.
+- **Read Time**: Automatically calculates estimated read time based on word count.
+- **Gallery Loading**: Imports raw YAML from `content/gallery.yaml` and parses it into `Project` objects.
+
+**Key Types**:
+```typescript
+interface ArticleAttributes {
+  id: string
+  title: string
+  category: string
+  date: string
+  readTime: string
+  published?: boolean
+}
+```
+
+### 6. Components
 
 #### `FileUpload.tsx`
 Simple file input component. Shows:
@@ -299,13 +339,17 @@ npm test
 ```
 
 ### Test Files
-- `utils/bookletCalculator.test.ts`: Core algorithm tests
+- `utils/bookletCalculator.test.ts`: Core algorithm logic
+- `utils/rtlDetector.test.ts`: Text direction detection logic
+- `data.test.ts`: Content loading and processing verification
+- `App.test.tsx`: Integration tests for the main app component
 
 ### Test Coverage
 - Basic layout calculations
 - Edge cases (0 pages, 1 page, etc.)
-- Blank page calculations
 - Optimization algorithm
+- Article metadata parsing and filtering
+- Main app rendering and routing integration
 
 ### Adding Tests
 Use Vitest syntax:

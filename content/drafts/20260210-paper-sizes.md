@@ -5,11 +5,21 @@ category: "Reference"
 date: "Feb 10, 2026"
 image: "/images/covers/20260210-paper-sizes.png"
 published: false
+seoTitle: "Paper Sizes for Bookbinding Explained"
+metaDescription: "Understand paper sizing systems used in bookbinding. Covers ISO, US, and traditional sheet sizes with conversion charts and practical guidance."
+slug: "paper-sizes"
 ---
 
-When binding books, understanding the relationship between the full sheet size and the final book size is crucial for minimizing waste.
+Understanding paper sizes and how they relate to finished book dimensions is essential for planning any binding project.
 
-### ISO Paper Sizes
+**TL;DR**
+- ISO sizes (A4, A3) fold predictably — each size is half the next larger size
+- US sizes (Letter, Legal) don't share this mathematical relationship
+- Traditional bookbinding sizes (crown, demy, royal) appear in older references
+
+![Hero: Paper Sizes for Bookbinding Explained](/images/hero/paper-sizes.jpg)
+
+## ISO Paper Sizes
 
 | Format | Width (mm) | Height (mm) | Uses |
 | :--- | :--- | :--- | :--- |
@@ -18,7 +28,7 @@ When binding books, understanding the relationship between the full sheet size a
 | **A5** | 148 | 210 | Common journal size |
 | **A6** | 105 | 148 | Pocket notebooks |
 
-### ISO B Series (Intermediate Sizes)
+## ISO B Series (Intermediate Sizes)
 
 | Format | Width (mm) | Height (mm) | Uses |
 | :--- | :--- | :--- | :--- |
@@ -27,7 +37,7 @@ When binding books, understanding the relationship between the full sheet size a
 | **B5** | 176 | 250 | Standard books, journals |
 | **B6** | 125 | 176 | Small notebooks |
 
-### North American Sizes
+## North American Sizes
 
 | Name | Inches | Millimeters | Uses |
 | :--- | :--- | :--- | :--- |
@@ -36,7 +46,7 @@ When binding books, understanding the relationship between the full sheet size a
 | **Tabloid** | 11 x 17 | 279 x 432 | Newsletters, small posters |
 | **Junior Legal** | 5 x 8 | 127 x 203 | Notepads |
 
-### Traditional British Sizes
+## Traditional British Sizes
 
 | Name | Inches | Millimeters |
 | :--- | :--- | :--- |
@@ -44,7 +54,7 @@ When binding books, understanding the relationship between the full sheet size a
 | **Demy** | 17.5 x 22.5 | 445 x 572 |
 | **Royal** | 20 x 25 | 508 x 635 |
 
-### Common Commercial Book Formats
+## Common Commercial Book Formats
 
 | Name | Inches | Millimeters |
 | :--- | :--- | :--- |

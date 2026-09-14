@@ -9,7 +9,7 @@ import {
   inferDirectionFromFilename,
   type TextDirection,
 } from '../utils/rtlDetector'
-import { generateBookletPdf } from '../hooks/usePdfGeneration'
+import { generateBookletPdf } from '../utils/bookletPdf'
 
 type TextDirectionChoice = 'auto' | 'ltr' | 'rtl'
 type WorkflowPhase = 'empty' | 'ready' | 'failed'
@@ -247,6 +247,7 @@ export function createBookletWorkflowModule(
     async load(file) {
       if (file.type !== 'application/pdf') {
         pdfData = null
+        sourceFileName = null
         snapshot = {
           ...createEmptySnapshot(),
           phase: 'failed',

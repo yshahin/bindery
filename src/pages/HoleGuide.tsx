@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { CircleHelp, Printer, Ruler } from 'lucide-react'
+import { Printer, Ruler } from 'lucide-react'
 import {
   calculateEvenSpacing,
   calculateHolePositions,
@@ -98,9 +98,9 @@ export default function HoleGuide() {
   const [kettlePairCount, setKettlePairCount] = useState(2)
   const [topOffset, setTopOffset] = useState('2.20')
   const [bottomOffset, setBottomOffset] = useState('2.20')
-  const [spineInset, setSpineInset] = useState('1.20')
   const [symmetricOffsets, setSymmetricOffsets] = useState(true)
   const [kettlePairGap, setKettlePairGap] = useState('1.6')
+  const [ribbonGap, setRibbonGap] = useState('')
   const [paperSize, setPaperSize] = useState<PaperSize>('a4')
 
   const allPresets = useMemo(() => [...METRIC_SIGNATURE_PRESETS, ...IMPERIAL_SIGNATURE_PRESETS], [])
@@ -121,8 +121,7 @@ export default function HoleGuide() {
   useEffect(() => {
     setTopOffset(toUnitValue(selectedPattern.defaultTopOffsetMm, unitSystem))
     setBottomOffset(toUnitValue(selectedPattern.defaultTopOffsetMm, unitSystem))
-    setSpineInset(toUnitValue(selectedPattern.defaultSpineInsetMm, unitSystem))
-  }, [selectedPattern])
+  }, [selectedPattern, unitSystem])
 
   const selectedPreset = useMemo(() => {
     if (selectedPresetId === 'custom') {
@@ -158,7 +157,13 @@ export default function HoleGuide() {
   }, [bottomOffset, symmetricOffsets, topOffsetMm, unitSystem])
 
   const kettlePairGapMm = useMemo(() => fromUnitValue(kettlePairGap, unitSystem), [kettlePairGap, unitSystem])
-  const spineInsetMm = useMemo(() => fromUnitValue(spineInset, unitSystem), [spineInset, unitSystem])
+  const ribbonGapMm = useMemo(() => {
+    if (!ribbonGap.trim()) {
+      return null
+    }
+
+    return fromUnitValue(ribbonGap, unitSystem)
+  }, [ribbonGap, unitSystem])
 
   const holeCount = selectedPattern.id === 'kettle-stitch'
     ? 2 + (kettlePairCount * 2)
@@ -173,12 +178,12 @@ export default function HoleGuide() {
       return { error: 'Provide valid top and bottom offsets.', holes: [] as number[] }
     }
 
-    if (!Number.isFinite(spineInsetMm)) {
-      return { error: 'Provide a valid spine-edge inset value.', holes: [] as number[] }
-    }
-
     if (selectedPattern.id === 'kettle-stitch' && !Number.isFinite(kettlePairGapMm)) {
       return { error: 'Provide a valid kettle pair spacing value.', holes: [] as number[] }
+    }
+
+    if (selectedPattern.supportsRibbonGap && ribbonGap.trim() && !Number.isFinite(ribbonGapMm)) {
+      return { error: 'Provide a valid center ribbon gap value.', holes: [] as number[] }
     }
 
     try {
@@ -199,6 +204,7 @@ export default function HoleGuide() {
         topOffsetMm,
         bottomOffsetMm,
         holeCount,
+        ribbonGapMm: selectedPattern.supportsRibbonGap && Number.isFinite(ribbonGapMm) ? ribbonGapMm : undefined,
       })
 
       return { error: null as string | null, holes }
@@ -213,8 +219,9 @@ export default function HoleGuide() {
     signatureWidthMm,
     topOffsetMm,
     bottomOffsetMm,
-    spineInsetMm,
     kettlePairGapMm,
+    ribbonGap,
+    ribbonGapMm,
     kettlePairCount,
     selectedPattern,
     holeCount,
@@ -229,7 +236,6 @@ export default function HoleGuide() {
     setCustomHeight(toUnitValue(defaultPreset.heightMm, next))
     setTopOffset(toUnitValue(selectedPattern.defaultTopOffsetMm, next))
     setBottomOffset(toUnitValue(selectedPattern.defaultTopOffsetMm, next))
-    setSpineInset(toUnitValue(selectedPattern.defaultSpineInsetMm, next))
     setKettlePairGap(next === 'imperial' ? '5/8' : '1.60')
   }
 
@@ -253,12 +259,7 @@ export default function HoleGuide() {
   const signatureTopMm = (page.height - fitHeightMm) / 2
   const signatureLeftMm = (page.width - fitWidthMm) / 2
   const foldX = signatureLeftMm + fitWidthMm / 2
-  const edgeX = signatureLeftMm + (
-    fitWidthMm > 0 && safeSignatureWidthMm > 0
-      ? Math.min(Math.max(spineInsetMm, 1), safeSignatureWidthMm - 1) / safeSignatureWidthMm * fitWidthMm
-      : fitWidthMm * 0.12
-  )
-  const stitchLineX = selectedPattern.bindingMode === 'edge' ? edgeX : foldX
+  const stitchLineX = foldX
   const dimensionX = signatureLeftMm - 12
   const fullHeightTextX = signatureLeftMm - 32
   const fullHeightTextY = signatureTopMm + (fitHeightMm / 2)
@@ -386,6 +387,20 @@ export default function HoleGuide() {
               </label>
             )}
 
+            {selectedPattern.supportsRibbonGap && (
+              <label className="space-y-1.5 sm:col-span-2">
+                <span className="text-sm font-medium text-stone-700">Center Ribbon Gap ({unitSystem === 'metric' ? 'cm' : 'in'})</span>
+                <input
+                  value={ribbonGap}
+                  onChange={(event) => setRibbonGap(event.target.value)}
+                  className="w-full rounded-lg border border-stone-300 px-3 py-2 bg-white text-stone-800"
+                  inputMode="decimal"
+                  placeholder="Optional"
+                />
+                <p className="text-xs text-stone-500">Optional wider center gap for ribbons, closures, or decorative spacing.</p>
+              </label>
+            )}
+
             {selectedPattern.id === 'kettle-stitch' && (
               <>
                 <label className="space-y-1.5 sm:col-span-2">
@@ -424,18 +439,6 @@ export default function HoleGuide() {
                 inputMode="decimal"
               />
             </label>
-
-            {selectedPattern.bindingMode === 'edge' && (
-              <label className="space-y-1.5 sm:col-span-2">
-                <span className="text-sm font-medium text-stone-700">Distance from Spine Edge ({unitSystem === 'metric' ? 'cm' : 'in'})</span>
-                <input
-                  value={spineInset}
-                  onChange={(event) => setSpineInset(event.target.value)}
-                  className="w-full rounded-lg border border-stone-300 px-3 py-2 bg-white text-stone-800"
-                  inputMode="decimal"
-                />
-              </label>
-            )}
 
             <label className="space-y-1.5">
               <span className="text-sm font-medium text-stone-700">Bottom Offset ({unitSystem === 'metric' ? 'cm' : 'in'})</span>
@@ -505,7 +508,7 @@ export default function HoleGuide() {
           <div className="bg-white rounded-xl border border-stone-200 paper-shadow p-4 no-print">
             <h3 className="font-semibold text-stone-800 mb-2">Hole Measurements</h3>
             {calculation.error ? (
-              <p className="text-sm text-red-700 bg-red-50 border border-red-100 rounded-md p-3">{calculation.error}</p>
+              <p role="alert" className="text-sm text-red-700 bg-red-50 border border-red-100 rounded-md p-3">{calculation.error}</p>
             ) : (
               <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-stone-700">
                 {calculation.holes.map((position, index) => (
