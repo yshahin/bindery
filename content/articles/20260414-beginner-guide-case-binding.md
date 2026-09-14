@@ -16,7 +16,7 @@ Case binding is the standard method for creating hardcover books.
 - Accurate measurement is critical—squares should be 1/8 inch (3mm) on all edges
 - The endpapers glue the text block into the finished case
 
-![Hero: Exploded view showing case and text block as separate components](/images/hero/case-binding-components.jpg)
+![Case binding dimensions](/images/diagrams/case-binding-dimensions.png)
 
 ## Understanding the Two Components
 
@@ -62,7 +62,7 @@ Before making the case, your text block must be complete:
 
 The text block should be pressed flat and the spine should be firm but flexible.
 
-![Step 1: Completed text block with endpapers attached](/images/diagrams/case-binding-textblock.jpg)
+![Bookbinding workspace for preparing a text block](/images/diagrams/binding-workspace.svg)
 
 > **Common mistake:** Rushing the spine glue. Let it dry fully before proceeding—at least 2 hours, preferably overnight.
 
@@ -119,7 +119,7 @@ This is where the two components become one book:
 
 Let the book dry under pressure for at least 4 hours, preferably overnight.
 
-![Step 3: Cross-section showing text block being glued into case](/images/diagrams/case-in-process.jpg)
+![Case binding dimensions showing board and spine measurements](/images/diagrams/case-binding-dimensions.png)
 
 ## Tips & Troubleshooting
 

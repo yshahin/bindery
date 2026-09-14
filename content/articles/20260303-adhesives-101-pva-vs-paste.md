@@ -16,7 +16,7 @@ Every bookbinder must understand adhesives.
 - Wheat paste is reversible, slow-drying, and essential for conservation work
 - Mix them together (1:1 ratio) for a versatile general-purpose adhesive
 
-![Hero: Glass jars of PVA and wheat paste side by side with brushes](/images/hero/adhesives-comparison.jpg)
+![PVA structure diagram](/images/diagrams/pva-structure.svg)
 
 ## PVA: The Modern Standard
 
@@ -28,7 +28,7 @@ PVA is a synthetic polymer adhesive—the white glue you probably already know. 
 - **Dries clear:** Becomes transparent when dry
 - **Flexible when dry:** Won't crack with book movement
 - **Strong bond:** Creates a permanent, non-reversible bond
-- **Waterproof when cured:** Resistant to moisture
+- **Water resistance varies:** Check the manufacturer's specification; ordinary bookbinding PVA should not be assumed waterproof
 
 ### Best Uses for PVA
 
@@ -76,7 +76,7 @@ PVA works through mechanical adhesion. As the water in PVA evaporates, the polym
 
 Wheat paste bonds through hydrogen bonding between starch molecules and cellulose fibers. These bonds are strong but can be broken by reintroducing water, which allows the starch to re-swell and release from the paper fibers.
 
-![Step 2: Comparison diagram of PVA mechanical interlocking vs paste hydrogen bonding](/images/diagrams/adhesive-bond-comparison.svg)
+![PVA structure diagram](/images/diagrams/pva-structure.svg)
 
 ## Mixing Adhesives: The Hybrid Approach
 
@@ -108,7 +108,7 @@ Many bookbinders mix PVA and wheat paste to get properties of both:
 3. **Apply with a brush** in consistent, overlapping strokes
 4. **Make fresh batches**; refrigerated paste lasts only 3–5 days before molding
 
-![Step 3: Hand applying paste with brush showing proper stroke technique](/images/diagrams/paste-application.jpg)
+![PVA structure diagram](/images/diagrams/pva-structure.svg)
 
 ## Which Should You Use?
 
@@ -142,12 +142,12 @@ Many bookbinders mix PVA and wheat paste to get properties of both:
 
 ## Safety Notes
 
-Both PVA and wheat paste are non-toxic and safe to handle. However:
+Bookbinding products vary by formulation, so follow the manufacturer's safety guidance. For common water-based products:
 
 - **Wash hands after use**—dried adhesive is uncomfortable
 - **Keep containers closed**—PVA skins form quickly and contaminate the batch
 - **Dispose of old paste**—moldy wheat paste should be discarded, not used
-- **Ventilation is helpful** when working with large amounts of wet adhesive
+- **Ventilate the workspace** and avoid inhaling dust or fumes
 
 Understanding adhesives is understanding bookbinding itself. The right glue, applied correctly, is invisible in the finished work.
 
