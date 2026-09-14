@@ -241,3 +241,8 @@ This happens when holes are too close to the edge or paper is too thin. Keep hol
 - **Step 1:** Signature page sequence showing folded sheets nested together
 - **Step 2:** Awl piercing through signature at center fold
 - **Step 3:** Pamphlet stitch pattern diagram showing thread path
+
+## Sources & Further Reading
+
+- [University of Iowa Libraries: Bookbinding](https://bookbinding.lib.uiowa.edu/) — instructional material on sewing and simple bindings.
+- [Library of Congress: Care, Handling, and Storage of Books](https://www.loc.gov/preservation/care/books.html) — guidance for handling and storing completed booklets.

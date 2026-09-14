@@ -281,3 +281,8 @@ No. Any paper with grain running parallel to the spine works. Washi is tradition
 - **Step 1:** Stacked pages with binder clips on fore edge
 - **Step 2:** 4-hole stitch pattern diagram showing thread path around spine
 - **Step 3:** Finished stitch pattern showing front, spine, and back views
+
+## Sources & Further Reading
+
+- [British Library: Japanese binding](https://www.bl.uk/collection-items/japanese-binding) — historical context for Japanese side-sewn bindings.
+- [University of Iowa Libraries: Bookbinding](https://bookbinding.lib.uiowa.edu/) — practical binding structures and sewing references.

@@ -228,6 +228,13 @@ Aim for 10–20 lbs (5–10 kg) total. The pressure needs to be even across the 
 
 - The Anatomy of a Book
 - Beginner's Guide to Case Binding
+
+---
+
+## Sources & Further Reading
+
+- [University of Iowa Libraries: Bookbinding](https://bookbinding.lib.uiowa.edu/) — examples of tools, structures, and binding processes.
+- [NEDCC Preservation Leaflets](https://www.nedcc.org/free-resources/preservation-leaflets/overview) — preservation-safe materials and handling guidance.
 - Project: Pamphlet Stitch Booklet
 - Adhesives 101: PVA vs. Paste
 

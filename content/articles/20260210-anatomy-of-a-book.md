@@ -250,3 +250,8 @@ Endpapers are typically slightly heavier than text pages—around 100–140 GSM 
 ## References
 
 - https://ebookfriendly.com/book-diagrams/
+
+## Sources & Further Reading
+
+- [Library of Congress: Care, Handling, and Storage of Books](https://www.loc.gov/preservation/care/books.html) — terminology and care context for bound books.
+- [University of Iowa Libraries: Bookbinding](https://bookbinding.lib.uiowa.edu/) — demonstrations and historical bookbinding structures.

@@ -249,6 +249,13 @@ It matters less for single-sheet items without a spine. For anything bound, grai
 
 ---
 
+## Sources & Further Reading
+
+- [Library of Congress: Care, Handling, and Storage of Books](https://www.loc.gov/preservation/care/books.html) — paper and book-care considerations.
+- [Canadian Conservation Institute Notes](https://www.canada.ca/en/conservation-institute/services/conservation-preservation-publications/canadian-conservation-institute-notes.html) — conservation guidance for paper-based materials.
+
+---
+
 ## Image Plan
 
 - **Hero:** Side-by-side comparison of paper bent with and against grain

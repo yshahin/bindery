@@ -191,3 +191,8 @@ Minimum 4 hours, ideally overnight. Rushing the drying causes warping and weak b
 - **Step 1:** Completed text block with endpapers attached
 - **Step 2:** Case dimensions diagram showing squares and measurements
 - **Step 3:** Cross-section showing text block being glued into case
+
+## Sources & Further Reading
+
+- [University of Iowa Libraries: Bookbinding](https://bookbinding.lib.uiowa.edu/) — case binding structures and demonstrations.
+- [Library of Congress: Care, Handling, and Storage of Books](https://www.loc.gov/preservation/care/books.html) — guidance for handling and storing bound books.

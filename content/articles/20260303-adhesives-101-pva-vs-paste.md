@@ -197,3 +197,8 @@ Methyl cellulose is another reversible adhesive used in conservation. Rice paste
 - **Step 1:** PVA molecular structure diagram showing chains before and after drying
 - **Step 2:** Comparison diagram of PVA mechanical interlocking vs paste hydrogen bonding
 - **Step 3:** Hand applying paste with brush showing proper stroke technique
+
+## Sources & Further Reading
+
+- [NEDCC: Adhesives and Pasting Techniques](https://www.nedcc.org/free-resources/preservation-leaflets/7.-conservation-procedures/7.3-adhesives-and-pastes) — conservation adhesive properties and preparation considerations.
+- [Canadian Conservation Institute Notes](https://www.canada.ca/en/conservation-institute/services/conservation-preservation-publications/canadian-conservation-institute-notes.html) — preservation materials and treatment context.

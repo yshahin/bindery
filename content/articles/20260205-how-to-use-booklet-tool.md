@@ -62,3 +62,10 @@ The generated PDF is arranged for duplex printing. The required flip setting dep
 4.  Ensure "Actual Size" or "Scale 100%" is selected so margins aren't distorted.
 
 Once printed, simply fold each sheet in half, group them by signature, and you are ready to bind!
+
+---
+
+## Sources & Further Reading
+
+- [Adobe Acrobat: Print booklets](https://helpx.adobe.com/acrobat/kb/print-booklets-acrobat-reader.html) — booklet printing and duplex settings.
+- [Library of Congress: Care, Handling, and Storage of Books](https://www.loc.gov/preservation/care/books.html) — practical guidance for handling finished books.

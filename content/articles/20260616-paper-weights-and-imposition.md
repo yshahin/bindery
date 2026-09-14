@@ -263,3 +263,8 @@ No. Free tools and built-in PDF reader features handle simple booklet imposition
 - **Step 1:** Paper thickness comparison diagram
 - **Step 2:** Imposition layout showing page positions for 8-page signature
 - **Step 3:** Paper calculation worksheet example
+
+## Sources & Further Reading
+
+- [Adobe Acrobat: Print booklets](https://helpx.adobe.com/acrobat/kb/print-booklets-acrobat-reader.html) — booklet imposition and printing workflow.
+- [Library of Congress: Care, Handling, and Storage of Books](https://www.loc.gov/preservation/care/books.html) — paper and finished-book handling context.
