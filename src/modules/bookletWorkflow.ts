@@ -260,7 +260,7 @@ export function createBookletWorkflowModule(
         sourceFileName = file.name
         const pdf = await PDFDocument.load(pdfData)
         const totalPages = pdf.getPageCount()
-        const detectedDirection = await deps.detectTextDirection(pdfData, file.name)
+        const detectedDirection = await deps.detectTextDirection(pdfData.slice(0), file.name)
         snapshot = createReadySnapshot({
           fileName: file.name,
           totalPages,

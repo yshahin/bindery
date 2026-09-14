@@ -90,4 +90,21 @@ describe('createBookletWorkflowModule', () => {
     expect(exportResult.mimeType).toBe('application/pdf')
     expect(exportedPdf.getPageCount()).toBe(workflow.getSnapshot().bookletLayout?.sequence.length)
   })
+
+  it('keeps exportable PDF data when direction detection transfers its input buffer', async () => {
+    const workflow = createBookletWorkflowModule({
+      detectTextDirection: async (pdfData) => {
+        structuredClone(pdfData, { transfer: [pdfData] })
+        return 'ltr'
+      },
+    })
+    const file = await createPdfFile(12, 'transferred.pdf')
+
+    await workflow.load(file)
+
+    await expect(workflow.export()).resolves.toMatchObject({
+      fileName: 'transferred-booklet.pdf',
+      mimeType: 'application/pdf',
+    })
+  })
 })
