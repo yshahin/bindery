@@ -9,7 +9,7 @@ const getSelectedPageCount = (start: number, end: number): number => Math.max(0,
 export interface UseBookletWorkflowResult {
   pdfFile: File | null
   totalPages: number
-  sheetsPerBooklet: number
+  sheetsPerBooklet: number | 'optimal'
   pagesPerSheet: number
   textDirection: TextDirection
   detectedDirection: TextDirection | null

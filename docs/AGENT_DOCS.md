@@ -26,7 +26,7 @@ When printing books professionally, pages are printed on large sheets, folded, a
   - `front-matter` - Metadata parsing
   - `js-yaml` - YAML parsing
 - **Testing**: Vitest 4 with React Testing Library
-- **Node Version**: v16 or higher
+- **Node Version**: v22 or higher
 
 ---
 

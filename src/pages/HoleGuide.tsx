@@ -122,7 +122,7 @@ export default function HoleGuide() {
     setTopOffset(toUnitValue(selectedPattern.defaultTopOffsetMm, unitSystem))
     setBottomOffset(toUnitValue(selectedPattern.defaultTopOffsetMm, unitSystem))
     setSpineInset(toUnitValue(selectedPattern.defaultSpineInsetMm, unitSystem))
-  }, [selectedPattern])
+  }, [selectedPattern, unitSystem])
 
   const selectedPreset = useMemo(() => {
     if (selectedPresetId === 'custom') {

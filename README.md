@@ -18,7 +18,7 @@ A comprehensive digital workbench for bookbinders. This application combines pra
 ## Getting Started
 
 ### Prerequisites
-- Node.js (v16 or higher)
+- Node.js (v22 or higher)
 - npm or yarn
 
 ### Installation
