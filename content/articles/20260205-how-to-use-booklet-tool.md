@@ -25,7 +25,7 @@ Navigate to the **Tool** page. You will see a large upload area.
 
 Drag and drop your PDF file onto the target area, or click "Select PDF" to browse your computer. The tool processes the file locally in your browser—your document is never sent to a server, ensuring privacy.
 
-### Step 3: Configure Your Waraq Settings
+### Step 3: Configure Your Booklet Settings
 
 Once loaded, you will see the configuration panel. These settings determine how your book is constructed.
 

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { CircleHelp, Printer, Ruler } from 'lucide-react'
+import { Printer, Ruler } from 'lucide-react'
 import {
   calculateEvenSpacing,
   calculateHolePositions,
@@ -395,7 +395,7 @@ export default function HoleGuide() {
                   onChange={(event) => setRibbonGap(event.target.value)}
                   className="w-full rounded-lg border border-stone-300 px-3 py-2 bg-white text-stone-800"
                   inputMode="decimal"
-                  placeholder={unitSystem === 'metric' ? 'Optional' : 'Optional'}
+                  placeholder="Optional"
                 />
                 <p className="text-xs text-stone-500">Optional wider center gap for ribbons, closures, or decorative spacing.</p>
               </label>
