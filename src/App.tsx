@@ -6,6 +6,7 @@ import Tutorials from './pages/Tutorials'
 import Articles from './pages/Articles'
 import ArticleDetail from './pages/ArticleDetail'
 import Gallery from './pages/Gallery'
+import HoleGuide from './pages/HoleGuide'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="tool" element={<BookletTool />} />
+          <Route path="hole-guide" element={<HoleGuide />} />
           <Route path="articles" element={<Articles />} />
           <Route path="articles/:id" element={<ArticleDetail />} />
           <Route path="videos" element={<Tutorials />} />

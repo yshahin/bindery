@@ -1,4 +1,4 @@
-# Agent Documentation: Bindery
+# Agent Documentation: Waraq
 
 ## Project Overview
 
@@ -33,7 +33,7 @@ When printing books professionally, pages are printed on large sheets, folded, a
 ## Project Structure
 
 ```
-booklets/
+waraq/
 ├── content/
 │   ├── articles/                # Markdown articles for tutorials
 │   ├── drafts/                  # Draft articles (shown in DEV mode)
@@ -530,4 +530,4 @@ When a user requests changes, ask:
 
 ---
 
-This documentation should provide everything needed to understand, maintain, and extend the Bindery application.
+This documentation should provide everything needed to understand, maintain, and extend the Waraq application.

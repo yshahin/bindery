@@ -2,8 +2,8 @@ import FileUpload from '../components/FileUpload'
 import LayoutControls from '../components/LayoutControls'
 import ResultsDisplay from '../components/ResultsDisplay'
 import BookletView from '../components/BookletView'
-import { useBookletState } from '../hooks/useBookletState'
-import { useBookletPdfGenerator, downloadPdfBlob } from '../hooks/usePdfGeneration'
+import { useBookletWorkflow } from '../hooks/useBookletWorkflow'
+import { downloadPdfBlob } from '../hooks/usePdfGeneration'
 import { Book, CircleHelp } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -13,7 +13,6 @@ export default function BookletTool() {
     totalPages,
     sheetsPerBooklet,
     pagesPerSheet,
-    pdfData,
     textDirection,
     detectedDirection,
     layout,
@@ -27,7 +26,7 @@ export default function BookletTool() {
     hasCover,
     coverPages,
     setError,
-    setExporting,
+    exportBooklet,
     handleFileUpload,
     handleSheetsPerBookletChange,
     handleTextDirectionChange,
@@ -38,26 +37,20 @@ export default function BookletTool() {
     handleResetRange,
     handleHasCoverChange,
     handleCoverPagesChange,
-  } = useBookletState()
-
-  const generateBookletPdf = useBookletPdfGenerator(pdfData, layout)
+  } = useBookletWorkflow()
 
   const handlePrint = async () => {
-    if (!layout || !pdfData) {
+    if (!layout) {
       setError('Upload a PDF and generate a layout before exporting.')
       return
     }
 
-    setExporting(true)
     try {
-      const pdfBytes = await generateBookletPdf()
-      const baseName = pdfFile?.name?.replace(/\.pdf$/i, '') || 'booklet'
-      downloadPdfBlob(pdfBytes, `${baseName}-booklet.pdf`)
+      const exported = await exportBooklet()
+      downloadPdfBlob(exported.pdfBytes, exported.fileName)
     } catch (err) {
       console.error(err)
       setError(`Unable to generate booklet PDF: ${err instanceof Error ? err.message : 'Unknown error'}`)
-    } finally {
-      setExporting(false)
     }
   }
 
@@ -69,7 +62,7 @@ export default function BookletTool() {
       <header className="text-center space-y-4 mb-12">
         <div className="flex items-center justify-center gap-3 text-stone-800 mb-2">
           <Book size={32} />
-          <h1 className="serif-font text-4xl font-bold">The Bindery Tool</h1>
+          <h1 className="serif-font text-4xl font-bold">Waraq Tool</h1>
         </div>
         <p className="text-xl text-stone-600 font-light max-w-2xl mx-auto">
           Calculate optimal signature layouts and generate imposition proofs for hand-bookbinding.
@@ -81,6 +74,14 @@ export default function BookletTool() {
           >
             <CircleHelp size={16} />
             <span>New to this? Read the <strong>How-To Guide</strong></span>
+          </Link>
+        </div>
+        <div className="flex justify-center">
+          <Link
+            to="/hole-guide"
+            className="inline-flex items-center gap-2 text-sm text-stone-500 hover:text-stone-800 border border-stone-200 rounded-full px-4 py-1.5 transition-colors bg-white/50 backdrop-blur-sm hover:bg-white hover:border-stone-300"
+          >
+            <span>Need to punch signatures? Open the <strong>Hole Guide Tool</strong></span>
           </Link>
         </div>
       </header>

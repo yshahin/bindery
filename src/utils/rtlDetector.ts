@@ -1,3 +1,5 @@
+import pdfWorkerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
+
 export type TextDirection = 'ltr' | 'rtl' | 'unknown'
 
 const rtlRanges: [number, number][] = [
@@ -38,14 +40,9 @@ export async function detectTextDirection(
     // Dynamically import pdfjs-dist
     const pdfjsLib = await import('pdfjs-dist')
 
-    // Set worker source - try CDN first, fallback to local
+    // Use the bundled worker so PDF parsing never depends on third-party runtime scripts.
     if (typeof window !== 'undefined') {
-      try {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
-      } catch (e) {
-        // Fallback to unpkg
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`
-      }
+      pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerSrc
     }
 
     // Load the PDF document
@@ -103,4 +100,3 @@ export async function detectTextDirection(
     return 'unknown'
   }
 }
-

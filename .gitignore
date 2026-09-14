@@ -24,4 +24,13 @@ dist-ssr
 *.sw?
 
 # Dotenv files
+.env
+.env.*
 *.env
+*.pem
+*.key
+
+# Test artifacts
+test-results/
+playwright-report/
+coverage/
