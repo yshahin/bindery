@@ -534,7 +534,7 @@ export default function HoleGuide() {
           <div className="bg-white rounded-xl border border-stone-200 paper-shadow p-4 no-print">
             <h3 className="font-semibold text-stone-800 mb-2">Hole Measurements</h3>
             {calculation.error ? (
-              <p className="text-sm text-red-700 bg-red-50 border border-red-100 rounded-md p-3">{calculation.error}</p>
+              <p role="alert" className="text-sm text-red-700 bg-red-50 border border-red-100 rounded-md p-3">{calculation.error}</p>
             ) : (
               <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-stone-700">
                 {calculation.holes.map((position, index) => (

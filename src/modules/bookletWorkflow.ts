@@ -9,7 +9,7 @@ import {
   inferDirectionFromFilename,
   type TextDirection,
 } from '../utils/rtlDetector'
-import { generateBookletPdf } from '../hooks/usePdfGeneration'
+import { generateBookletPdf } from '../utils/bookletPdf'
 
 type TextDirectionChoice = 'auto' | 'ltr' | 'rtl'
 type WorkflowPhase = 'empty' | 'ready' | 'failed'
