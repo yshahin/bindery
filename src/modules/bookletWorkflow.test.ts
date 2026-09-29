@@ -15,9 +15,7 @@ async function createPdfFile(pageCount: number, name: string): Promise<File> {
 
 describe('createBookletWorkflowModule', () => {
   it('loads a PDF and returns a ready booklet workflow snapshot', async () => {
-    const workflow = createBookletWorkflowModule({
-      detectTextDirection: async () => 'rtl',
-    })
+    const workflow = createBookletWorkflowModule(async () => 'rtl')
     const file = await createPdfFile(20, 'sample.pdf')
 
     const snapshot = await workflow.load(file)
@@ -30,6 +28,13 @@ describe('createBookletWorkflowModule', () => {
     expect(snapshot.configuration.printRange).toEqual({
       start: 1,
       end: 20,
+    })
+    expect(snapshot.configuration.printSheet).toEqual({
+      paperType: 'letter',
+      orientation: 'auto',
+      outerMarginMm: 0,
+      spineMarginMm: 0,
+      showFoldGuide: false,
     })
     expect(snapshot.configuration.textDirection).toEqual({
       choice: 'auto',
@@ -47,15 +52,14 @@ describe('createBookletWorkflowModule', () => {
   })
 
   it('revises the print range and text direction through the workflow interface', async () => {
-    const workflow = createBookletWorkflowModule({
-      detectTextDirection: async () => 'rtl',
-    })
+    const workflow = createBookletWorkflowModule(async () => 'rtl')
     const file = await createPdfFile(32, 'sample.pdf')
 
     await workflow.load(file)
     const snapshot = workflow.revise({
       printRange: { kind: 'custom', start: 5, end: 20 },
       textDirection: 'ltr',
+      printSheet: { orientation: 'landscape', outerMarginMm: 12, spineMarginMm: 6, showFoldGuide: true },
     })
 
     expect(snapshot.phase).toBe('ready')
@@ -68,6 +72,13 @@ describe('createBookletWorkflowModule', () => {
       detected: 'rtl',
       effective: 'ltr',
     })
+    expect(snapshot.configuration.printSheet).toEqual({
+      paperType: 'letter',
+      orientation: 'landscape',
+      outerMarginMm: 12,
+      spineMarginMm: 6,
+      showFoldGuide: true,
+    })
     expect(snapshot.bookletLayout).toMatchObject({
       totalPages: 16,
       rangeStart: 5,
@@ -76,10 +87,24 @@ describe('createBookletWorkflowModule', () => {
     })
   })
 
-  it('exports a booklet PDF and file name from the current workflow state', async () => {
-    const workflow = createBookletWorkflowModule({
-      detectTextDirection: async () => 'ltr',
+  it('preserves unchanged print-sheet settings across partial and unrelated revisions', async () => {
+    const workflow = createBookletWorkflowModule(async () => 'ltr')
+    await workflow.load(await createPdfFile(8, 'settings.pdf'))
+
+    workflow.revise({ printSheet: { spineMarginMm: 7 } })
+    const snapshot = workflow.revise({ sheetsPerBooklet: 3 })
+
+    expect(snapshot.configuration.printSheet).toEqual({
+      paperType: 'letter',
+      orientation: 'auto',
+      outerMarginMm: 0,
+      spineMarginMm: 7,
+      showFoldGuide: false,
     })
+  })
+
+  it('exports a booklet PDF and file name from the current workflow state', async () => {
+    const workflow = createBookletWorkflowModule(async () => 'ltr')
     const file = await createPdfFile(12, 'chapter.pdf')
 
     await workflow.load(file)
@@ -88,15 +113,19 @@ describe('createBookletWorkflowModule', () => {
 
     expect(exportResult.fileName).toBe('chapter-booklet.pdf')
     expect(exportResult.mimeType).toBe('application/pdf')
-    expect(exportedPdf.getPageCount()).toBe(workflow.getSnapshot().bookletLayout?.sequence.length)
+    const layout = workflow.getSnapshot().bookletLayout
+    expect(exportedPdf.getPageCount()).toBe(
+      Math.ceil((layout?.sequence.length ?? 0) / (layout?.pagesPerSheet ?? 1)) * 2,
+    )
+    const exportedSize = exportedPdf.getPage(0).getSize()
+    expect(exportedSize.width).toBeCloseTo(792)
+    expect(exportedSize.height).toBeCloseTo(612)
   })
 
   it('keeps exportable PDF data when direction detection transfers its input buffer', async () => {
-    const workflow = createBookletWorkflowModule({
-      detectTextDirection: async (pdfData) => {
-        structuredClone(pdfData, { transfer: [pdfData] })
-        return 'ltr'
-      },
+    const workflow = createBookletWorkflowModule(async (pdfData) => {
+      structuredClone(pdfData, { transfer: [pdfData] })
+      return 'ltr'
     })
     const file = await createPdfFile(12, 'transferred.pdf')
 

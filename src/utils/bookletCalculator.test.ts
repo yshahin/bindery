@@ -22,6 +22,37 @@ describe('findOptimalSheetsPerBooklet', () => {
   })
 })
 
+function fourUpReadingOrder(sheets: Array<Array<number | null>>): Array<number | null> {
+  const readingOrder: Array<number | null> = []
+
+  for (const sheet of sheets) {
+    readingOrder.push(sheet[1] ?? null, sheet[2] ?? null)
+  }
+
+  for (const sheet of [...sheets].reverse()) {
+    readingOrder.push(sheet[3] ?? null, sheet[0] ?? null)
+  }
+
+  return readingOrder
+}
+
+describe('optimal signature padding', () => {
+  it('keeps capacity blanks after content in reading order and preserves cover blanks', () => {
+    const optimalSheets = findOptimalSheetsPerBooklet(5, 4)
+    const layout = calculateBookletLayout(5, optimalSheets, 4)
+
+    expect(optimalSheets).toBe(2)
+    expect(fourUpReadingOrder(layout.booklets[0].sheets)).toEqual([
+      1, 2, 3, 4, 5, null, null, null,
+    ])
+
+    const layoutWithCover = calculateBookletLayout(5, 2, 4, false, true, 1)
+    expect(fourUpReadingOrder(layoutWithCover.booklets[0].sheets)).toEqual([
+      null, 1, 2, 3, 4, 5, null, null,
+    ])
+  })
+})
+
 describe('booklet page order (4 pages per sheet, LTR)', () => {
   const cases = [
     {

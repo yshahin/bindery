@@ -1,4 +1,5 @@
 import { type TextDirection } from '../utils/rtlDetector'
+import { PRINT_PAPER_SIZES, type PrintSheetSettings } from '../hooks/usePdfGeneration'
 import { RotateCw, RefreshCw, Target, ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface PagesPerSheetControlProps {
@@ -258,6 +259,99 @@ function BookCoverControl({
   )
 }
 
+interface PrintSheetControlProps {
+  settings: PrintSheetSettings
+  onChange: (settings: Partial<PrintSheetSettings>) => void
+}
+
+function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
+  return (
+    <div>
+      <h3 className="block text-sm font-bold text-stone-700 mb-2">Print Sheet Spacing</h3>
+      <label htmlFor="print-paper-type" className="block text-xs text-stone-600 mb-4">
+        Print paper
+        <select
+          id="print-paper-type"
+          value={settings.paperType}
+          onChange={(event) => onChange({ paperType: event.target.value as PrintSheetSettings['paperType'] })}
+          className="mt-1 w-full px-3 py-2 bg-white border border-stone-300 rounded text-sm text-stone-800"
+        >
+          <optgroup label="Source">
+            <option value="source">Uploaded PDF page</option>
+          </optgroup>
+          {(['Metric', 'Imperial'] as const).map((system) => (
+            <optgroup key={system} label={system}>
+              {Object.entries(PRINT_PAPER_SIZES)
+                .filter(([, paper]) => paper.system === system)
+                .map(([value, paper]) => (
+                  <option key={value} value={value}>{paper.label}</option>
+                ))}
+            </optgroup>
+          ))}
+        </select>
+      </label>
+      <div className="mb-4">
+        <span className="block text-xs text-stone-600 mb-1">Sheet orientation</span>
+        <div role="group" aria-label="Sheet orientation" className="inline-flex border border-stone-300 rounded overflow-hidden">
+          {(['auto', 'portrait', 'landscape'] as const).map((orientation) => (
+            <button
+              key={orientation}
+              type="button"
+              aria-pressed={settings.orientation === orientation}
+              onClick={() => onChange({ orientation })}
+              className={`px-3 py-2 text-sm capitalize transition-colors ${settings.orientation === orientation
+                ? 'bg-stone-800 text-white'
+                : 'bg-white text-stone-600 hover:bg-stone-50'}`}
+            >
+              {orientation}
+            </button>
+          ))}
+        </div>
+        <span className="block text-xs text-stone-500 mt-1">Auto: landscape for 4/16, portrait for 8 pages per sheet.</span>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <label htmlFor="outer-margin-mm" className="block text-xs text-stone-600">
+          Outer margin (mm)
+          <input
+            id="outer-margin-mm"
+            type="number"
+            step="0.5"
+            value={settings.outerMarginMm}
+            onChange={(event) => onChange({ outerMarginMm: Number(event.target.value) })}
+            className="mt-1 w-full px-3 py-2 bg-white border border-stone-300 rounded focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500 text-stone-800 text-center"
+          />
+        </label>
+        <label htmlFor="spine-margin-mm" className="block text-xs text-stone-600">
+          Spine inset (mm)
+          <input
+            id="spine-margin-mm"
+            type="number"
+            step="0.5"
+            value={settings.spineMarginMm}
+            onChange={(event) => onChange({ spineMarginMm: Number(event.target.value) })}
+            className="mt-1 w-full px-3 py-2 bg-white border border-stone-300 rounded focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500 text-stone-800 text-center"
+          />
+        </label>
+      </div>
+      <div className="mt-4 flex items-center justify-between gap-3">
+        <label htmlFor="fold-guide-toggle" className="text-sm text-stone-700">Center-fold guide</label>
+        <button
+          id="fold-guide-toggle"
+          type="button"
+          role="switch"
+          aria-checked={settings.showFoldGuide}
+          onClick={() => onChange({ showFoldGuide: !settings.showFoldGuide })}
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 ${settings.showFoldGuide ? 'bg-stone-800' : 'bg-stone-200'}`}
+          title={settings.showFoldGuide ? 'Hide center-fold guide' : 'Show center-fold guide'}
+        >
+          <span className="sr-only">Draw center-fold guide</span>
+          <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${settings.showFoldGuide ? 'translate-x-6' : 'translate-x-1'}`} />
+        </button>
+      </div>
+    </div>
+  )
+}
+
 interface LayoutControlsProps {
   pagesPerSheet: number
   rangeStart: number
@@ -270,6 +364,7 @@ interface LayoutControlsProps {
   sheetsPerBooklet: number
   hasCover: boolean
   coverPages: number
+  printSheet: PrintSheetSettings
   onPagesPerSheetChange: (value: number) => void
   onRangeStartChange: (value: string) => void
   onRangeEndChange: (value: string) => void
@@ -279,6 +374,7 @@ interface LayoutControlsProps {
   onOptimize: () => void
   onHasCoverChange: (value: boolean) => void
   onCoverPagesChange: (value: number) => void
+  onPrintSheetChange: (settings: Partial<PrintSheetSettings>) => void
 }
 
 export default function LayoutControls({
@@ -293,6 +389,7 @@ export default function LayoutControls({
   sheetsPerBooklet,
   hasCover,
   coverPages,
+  printSheet,
   onPagesPerSheetChange,
   onRangeStartChange,
   onRangeEndChange,
@@ -301,7 +398,8 @@ export default function LayoutControls({
   onSheetsPerBookletChange,
   onOptimize,
   onHasCoverChange,
-  onCoverPagesChange
+  onCoverPagesChange,
+  onPrintSheetChange,
 }: LayoutControlsProps) {
   return (
     <div className="bg-white p-6 rounded-xl paper-shadow border border-stone-100 h-fit">
@@ -345,6 +443,11 @@ export default function LayoutControls({
             detectedDirection={detectedDirection}
             detecting={detecting}
             onTextDirectionChange={onTextDirectionChange}
+          />
+
+          <PrintSheetControl
+            settings={printSheet}
+            onChange={onPrintSheetChange}
           />
         </div>
       </div>

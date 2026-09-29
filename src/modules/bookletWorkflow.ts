@@ -9,7 +9,7 @@ import {
   inferDirectionFromFilename,
   type TextDirection,
 } from '../utils/rtlDetector'
-import { generateBookletPdf } from '../hooks/usePdfGeneration'
+import { generateBookletPdf, type PrintSheetSettings } from '../hooks/usePdfGeneration'
 
 type TextDirectionChoice = 'auto' | 'ltr' | 'rtl'
 type WorkflowPhase = 'empty' | 'ready' | 'failed'
@@ -18,18 +18,16 @@ type PrintRangeIntent = { kind: 'all' } | { kind: 'custom'; start: number; end: 
 type WorkflowErrorCode =
   | 'invalid-file'
   | 'pdf-load-failed'
-  | 'invalid-layout'
-  | 'export-not-ready'
 
 export interface WorkflowError {
   code: WorkflowErrorCode
   message: string
-  recoverable: boolean
 }
 
 export interface WorkflowConfiguration {
   pagesPerSheet: number
   sheetsPerBooklet: number
+  printSheet: PrintSheetSettings
   printRange: {
     start: number
     end: number
@@ -70,13 +68,10 @@ export interface BookletWorkflowModule {
   reset(): WorkflowSnapshot
 }
 
-interface WorkflowDependencies {
-  detectTextDirection: (pdfData: ArrayBuffer, fileName: string) => Promise<TextDirection>
-}
-
 export interface WorkflowRevision {
   pagesPerSheet?: number
   sheetsPerBooklet?: number | 'optimal'
+  printSheet?: Partial<PrintSheetSettings>
   printRange?: PrintRangeIntent
   textDirection?: TextDirectionChoice
   coverPages?: {
@@ -88,6 +83,13 @@ export interface WorkflowRevision {
 const defaultConfiguration: WorkflowConfiguration = {
   pagesPerSheet: 4,
   sheetsPerBooklet: 4,
+  printSheet: {
+    paperType: 'letter',
+    orientation: 'auto',
+    outerMarginMm: 0,
+    spineMarginMm: 0,
+    showFoldGuide: false,
+  },
   printRange: {
     start: 1,
     end: 1,
@@ -129,7 +131,6 @@ function toWorkflowError(code: WorkflowErrorCode, message: string): WorkflowErro
   return {
     code,
     message,
-    recoverable: true,
   }
 }
 
@@ -172,6 +173,7 @@ function createReadySnapshot(input: {
   textDirectionChoice: TextDirectionChoice
   pagesPerSheet: number
   sheetsPerBooklet: number | 'optimal'
+  printSheet: PrintSheetSettings
   printRange?: PrintRangeIntent
   coverPages: {
     enabled: boolean
@@ -187,11 +189,11 @@ function createReadySnapshot(input: {
   )
   const sheetsPerBooklet = input.sheetsPerBooklet === 'optimal'
     ? findOptimalSheetsPerBooklet(
-        selectedPages,
-        input.pagesPerSheet,
-        input.coverPages.enabled,
-        input.coverPages.count,
-      )
+      selectedPages,
+      input.pagesPerSheet,
+      input.coverPages.enabled,
+      input.coverPages.count,
+    )
     : input.sheetsPerBooklet
   const bookletLayout = {
     ...calculateBookletLayout(
@@ -215,6 +217,7 @@ function createReadySnapshot(input: {
     configuration: {
       pagesPerSheet: input.pagesPerSheet,
       sheetsPerBooklet,
+      printSheet: input.printSheet,
       printRange,
       textDirection: {
         choice: input.textDirectionChoice,
@@ -229,12 +232,8 @@ function createReadySnapshot(input: {
 }
 
 export function createBookletWorkflowModule(
-  dependencies: Partial<WorkflowDependencies> = {},
+  detectTextDirection = detectTextDirectionImpl,
 ): BookletWorkflowModule {
-  const deps: WorkflowDependencies = {
-    detectTextDirection: dependencies.detectTextDirection ?? detectTextDirectionImpl,
-  }
-
   let snapshot = createEmptySnapshot()
   let pdfData: ArrayBuffer | null = null
   let sourceFileName: string | null = null
@@ -260,7 +259,7 @@ export function createBookletWorkflowModule(
         sourceFileName = file.name
         const pdf = await PDFDocument.load(pdfData)
         const totalPages = pdf.getPageCount()
-        const detectedDirection = await deps.detectTextDirection(pdfData.slice(0), file.name)
+        const detectedDirection = await detectTextDirection(pdfData.slice(0), file.name)
         snapshot = createReadySnapshot({
           fileName: file.name,
           totalPages,
@@ -268,6 +267,7 @@ export function createBookletWorkflowModule(
           textDirectionChoice: 'auto',
           pagesPerSheet: defaultConfiguration.pagesPerSheet,
           sheetsPerBooklet: 'optimal',
+          printSheet: defaultConfiguration.printSheet,
           printRange: { kind: 'all' },
           coverPages: defaultConfiguration.coverPages,
         })
@@ -300,6 +300,10 @@ export function createBookletWorkflowModule(
         textDirectionChoice: intent.textDirection ?? snapshot.configuration.textDirection.choice,
         pagesPerSheet: intent.pagesPerSheet ?? snapshot.configuration.pagesPerSheet,
         sheetsPerBooklet: intent.sheetsPerBooklet ?? snapshot.configuration.sheetsPerBooklet,
+        printSheet: {
+          ...snapshot.configuration.printSheet,
+          ...intent.printSheet,
+        },
         printRange: intent.printRange
           ?? { kind: 'custom', start: snapshot.configuration.printRange.start, end: snapshot.configuration.printRange.end },
         coverPages: intent.coverPages ?? snapshot.configuration.coverPages,
@@ -313,7 +317,7 @@ export function createBookletWorkflowModule(
         throw new Error('Booklet workflow is not ready for export')
       }
 
-      const pdfBytes = await generateBookletPdf(pdfData, snapshot.bookletLayout)
+      const pdfBytes = await generateBookletPdf(pdfData, snapshot.bookletLayout, snapshot.configuration.printSheet)
       const baseName = (sourceFileName ?? snapshot.source?.fileName ?? 'booklet').replace(/\.pdf$/i, '')
 
       return {

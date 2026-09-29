@@ -1,10 +1,9 @@
 import { useCallback, useMemo, useState } from 'react'
 import { createBookletWorkflowModule, type WorkflowSnapshot } from '../modules/bookletWorkflow'
 import type { TextDirection } from '../utils/rtlDetector'
+import type { PrintSheetSettings } from './usePdfGeneration'
 
 type WorkflowLayout = WorkflowSnapshot['bookletLayout']
-
-const getSelectedPageCount = (start: number, end: number): number => Math.max(0, end - start + 1)
 
 export interface UseBookletWorkflowResult {
   pdfFile: File | null
@@ -23,6 +22,7 @@ export interface UseBookletWorkflowResult {
   selectedPageCount: number
   hasCover: boolean
   coverPages: number
+  printSheet: PrintSheetSettings
   setError: (error: string | null) => void
   handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>
   handleSheetsPerBookletChange: (value: string) => void
@@ -34,6 +34,7 @@ export interface UseBookletWorkflowResult {
   handleResetRange: () => void
   handleHasCoverChange: (value: boolean) => void
   handleCoverPagesChange: (value: number) => void
+  handlePrintSheetChange: (settings: Partial<PrintSheetSettings>) => void
   exportBooklet: () => Promise<{ pdfBytes: Uint8Array; fileName: string; mimeType: 'application/pdf' }>
 }
 
@@ -150,6 +151,10 @@ export function useBookletWorkflow(): UseBookletWorkflowResult {
     }
   }, [snapshot.configuration.coverPages.enabled, updateSnapshot, workflow])
 
+  const handlePrintSheetChange = useCallback((settings: Partial<PrintSheetSettings>): void => {
+    updateSnapshot(workflow.revise({ printSheet: settings }))
+  }, [updateSnapshot, workflow])
+
   const exportBooklet = useCallback(async () => {
     setExporting(true)
 
@@ -182,12 +187,13 @@ export function useBookletWorkflow(): UseBookletWorkflowResult {
     exporting,
     rangeStart: snapshot.configuration.printRange.start,
     rangeEnd: snapshot.configuration.printRange.end,
-    selectedPageCount: getSelectedPageCount(
-      snapshot.configuration.printRange.start,
-      snapshot.configuration.printRange.end,
+    selectedPageCount: Math.max(
+      0,
+      snapshot.configuration.printRange.end - snapshot.configuration.printRange.start + 1,
     ),
     hasCover: snapshot.configuration.coverPages.enabled,
     coverPages: snapshot.configuration.coverPages.count,
+    printSheet: snapshot.configuration.printSheet,
     setError,
     handleFileUpload,
     handleSheetsPerBookletChange,
@@ -199,6 +205,7 @@ export function useBookletWorkflow(): UseBookletWorkflowResult {
     handleResetRange,
     handleHasCoverChange,
     handleCoverPagesChange,
+    handlePrintSheetChange,
     exportBooklet,
   }
 }
