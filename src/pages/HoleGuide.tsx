@@ -19,9 +19,9 @@ import {
 
 type PaperSize = 'a4' | 'letter'
 
-const PAPER_SIZES_MM: Record<PaperSize, { label: string; width: number; height: number }> = {
-  a4: { label: 'A4', width: 210, height: 297 },
-  letter: { label: 'US Letter', width: 215.9, height: 279.4 },
+const PAPER_SIZES_MM: Record<PaperSize, { width: number; height: number }> = {
+  a4: { width: 210, height: 297 },
+  letter: { width: 215.9, height: 279.4 },
 }
 
 function toUnitValue(mm: number, unitSystem: UnitSystem): string {

@@ -10,9 +10,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.18",
     "@types/js-yaml": "^4.0.9",
-    "clsx": "^2.1.1",
     "front-matter": "^4.0.2",
     "lucide-react": "^0.563.0",
     "mermaid": "^11.12.2",
@@ -20,11 +18,9 @@
     "pdfjs-dist": "^5.4.624",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-github-corner": "^2.5.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.13.0",
     "remark-gfm": "^4.0.1",
-    "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {

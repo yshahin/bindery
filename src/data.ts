@@ -74,9 +74,7 @@ export const videos = articles.reduce((acc, article) => {
         thumbnail: `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`,
         url: cleanUrl,
         articleId: article.id,
-        articleTitle: article.title,
-        duration: "Video",
-        views: "YouTube"
+        articleTitle: article.title
       });
     }
   }

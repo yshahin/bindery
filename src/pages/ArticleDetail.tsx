@@ -3,30 +3,7 @@ import { BookOpen, Clock, Play } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Mermaid from '../components/Mermaid';
-import React, { ReactNode } from 'react';
-import { articles } from '../data';
-
-// Helper to extract text content recursively from React nodes
-const getTextContent = (node: ReactNode): string => {
-  if (!node) return '';
-  if (typeof node === 'string') return node;
-  if (Array.isArray(node)) return node.map(getTextContent).join('');
-  if (React.isValidElement(node) && node.props && typeof node.props === 'object' && 'children' in node.props) {
-    return getTextContent((node.props as { children: ReactNode }).children);
-  }
-  return '';
-};
-
-// Helper to extract YouTube ID
-const getYouTubeId = (text: string) => {
-  // Finds generic http(s) links in the text
-  const match = text.match(/https?:\/\/[^\s]+/);
-  if (!match) return null;
-  const url = match[0];
-  // Extracts ID specifically for Youtube
-  const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([^&]+)/);
-  return ytMatch ? ytMatch[1] : null;
-};
+import { articles, getYouTubeId } from '../data';
 
 export default function ArticleDetail() {
   const { id } = useParams();

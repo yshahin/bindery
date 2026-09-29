@@ -18,7 +18,6 @@ export interface StitchPattern {
   bindingMode: 'fold' | 'edge'
   defaultTopOffsetMm: number
   defaultSpineInsetMm: number
-  supportsRibbonGap: boolean
 }
 
 export interface HoleGuideInput {
@@ -72,7 +71,6 @@ export const STITCH_PATTERNS: StitchPattern[] = [
     bindingMode: 'fold',
     defaultTopOffsetMm: 22,
     defaultSpineInsetMm: 12,
-    supportsRibbonGap: false,
   },
   {
     id: 'custom',
@@ -85,7 +83,6 @@ export const STITCH_PATTERNS: StitchPattern[] = [
     bindingMode: 'fold',
     defaultTopOffsetMm: 20,
     defaultSpineInsetMm: 12,
-    supportsRibbonGap: true,
   },
 ]
 
