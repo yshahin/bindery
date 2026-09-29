@@ -1,13 +1,17 @@
+import { useEffect, useRef, useState } from 'react'
 import FileUpload from '../components/FileUpload'
 import LayoutControls from '../components/LayoutControls'
 import ResultsDisplay from '../components/ResultsDisplay'
 import BookletView from '../components/BookletView'
 import { useBookletWorkflow } from '../hooks/useBookletWorkflow'
-import { downloadPdfBlob } from '../hooks/usePdfGeneration'
-import { Book, CircleHelp } from 'lucide-react'
+import { addPreviewMarginGuides, downloadPdfBlob } from '../hooks/usePdfGeneration'
+import { Book, CircleHelp, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export default function BookletTool() {
+  const [preview, setPreview] = useState<{ url: string; pageCount: number } | null>(null)
+  const [previewPage, setPreviewPage] = useState(1)
+  const previewUrlRef = useRef<string | null>(null)
   const {
     pdfFile,
     totalPages,
@@ -25,6 +29,7 @@ export default function BookletTool() {
     selectedPageCount,
     hasCover,
     coverPages,
+    printSheet,
     setError,
     exportBooklet,
     handleFileUpload,
@@ -37,7 +42,44 @@ export default function BookletTool() {
     handleResetRange,
     handleHasCoverChange,
     handleCoverPagesChange,
+    handlePrintSheetChange,
   } = useBookletWorkflow()
+
+  useEffect(() => () => {
+    if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current)
+  }, [])
+
+  useEffect(() => {
+    if (!previewUrlRef.current) return
+
+    URL.revokeObjectURL(previewUrlRef.current)
+    previewUrlRef.current = null
+    setPreview(null)
+    setPreviewPage(1)
+  }, [layout, printSheet])
+
+  const handlePreview = async () => {
+    if (!layout) return
+
+    try {
+      const exported = await exportBooklet()
+      if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current)
+
+      const previewBytes = await addPreviewMarginGuides(exported.pdfBytes)
+      const url = URL.createObjectURL(new Blob([previewBytes as BlobPart], { type: 'application/pdf' }))
+      previewUrlRef.current = url
+      setPreview({ url, pageCount: layout.totalSheets * 2 })
+      setPreviewPage(1)
+    } catch (err) {
+      setError(`Unable to preview booklet PDF: ${err instanceof Error ? err.message : 'Unknown error'}`)
+    }
+  }
+
+  const handleClosePreview = () => {
+    if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current)
+    previewUrlRef.current = null
+    setPreview(null)
+  }
 
   const handlePrint = async () => {
     if (!layout) {
@@ -114,6 +156,7 @@ export default function BookletTool() {
               sheetsPerBooklet={sheetsPerBooklet}
               hasCover={hasCover}
               coverPages={coverPages}
+              printSheet={printSheet}
               onPagesPerSheetChange={handlePagesPerSheetChange}
               onRangeStartChange={handleRangeStartChange}
               onRangeEndChange={handleRangeEndChange}
@@ -123,6 +166,7 @@ export default function BookletTool() {
               onOptimize={useOptimalSheets}
               onHasCoverChange={handleHasCoverChange}
               onCoverPagesChange={handleCoverPagesChange}
+              onPrintSheetChange={handlePrintSheetChange}
             />
 
             {layout && (
@@ -132,8 +176,50 @@ export default function BookletTool() {
                   error={null}
                   totalPages={totalPages}
                   onPrint={handlePrint}
+                  onPreview={handlePreview}
                   exporting={exporting}
                 />
+                {preview && (
+                  <section className="bg-white border border-stone-200 rounded-lg shadow-sm overflow-hidden" aria-label="Generated PDF preview">
+                    <header className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-stone-200">
+                      <h2 className="font-serif text-lg font-bold text-stone-800">Generated PDF Preview</h2>
+                      <div className="flex items-center gap-3">
+                        <label htmlFor="preview-page" className="text-sm text-stone-600">Page</label>
+                        <input
+                          id="preview-page"
+                          aria-label="Preview page"
+                          type="number"
+                          min="1"
+                          max={preview.pageCount}
+                          value={previewPage}
+                          onChange={(event) => {
+                            const nextPage = Number(event.target.value)
+                            if (Number.isInteger(nextPage) && nextPage >= 1 && nextPage <= preview.pageCount) {
+                              setPreviewPage(nextPage)
+                            }
+                          }}
+                          className="w-20 px-3 py-2 bg-white border border-stone-300 rounded text-center text-stone-800"
+                        />
+                        <span className="text-sm text-stone-500">of {preview.pageCount}</span>
+                        <button
+                          type="button"
+                          aria-label="Close preview"
+                          title="Close preview"
+                          onClick={handleClosePreview}
+                          className="p-2 text-stone-500 hover:text-stone-800 hover:bg-stone-100 rounded"
+                        >
+                          <X size={18} />
+                        </button>
+                      </div>
+                    </header>
+                    <iframe
+                      key={`${preview.url}#page=${previewPage}`}
+                      title={`Generated PDF page ${previewPage}`}
+                      src={`${preview.url}#page=${previewPage}`}
+                      className="w-full h-[70vh] min-h-[420px] bg-stone-100"
+                    />
+                  </section>
+                )}
                 <BookletView layout={layout} layoutRangeStart={layoutRangeStart} />
               </>
             )}

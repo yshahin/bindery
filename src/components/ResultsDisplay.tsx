@@ -1,34 +1,47 @@
 import { type BookletLayout } from '../utils/bookletCalculator'
-import { Download } from 'lucide-react'
+import { Download, Eye } from 'lucide-react'
 
 interface ResultsSummaryProps {
   onPrint: () => void
+  onPreview: () => void
   exporting: boolean
 }
 
-function ResultsSummary({ onPrint, exporting }: ResultsSummaryProps) {
+function ResultsSummary({ onPrint, onPreview, exporting }: ResultsSummaryProps) {
   return (
-    <div className="flex items-center justify-between mb-6 pb-4 border-b border-stone-100">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 pb-4 border-b border-stone-100">
       <h2 className="text-lg font-serif font-bold text-stone-800">3. Imposition Strategy</h2>
-      <button
-        type="button"
-        onClick={onPrint}
-        className="bg-stone-800 text-white px-5 py-2 rounded-lg font-bold hover:bg-stone-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-sm"
-        title="Generate a booklet-ready PDF"
-        disabled={exporting}
-      >
-        {exporting ? (
-          <>
-            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-            Generating...
-          </>
-        ) : (
-          <>
-            <Download size={18} />
-            Generate PDF
-          </>
-        )}
-      </button>
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={onPreview}
+          className="bg-white text-stone-700 px-4 py-2 rounded-lg font-bold border border-stone-300 hover:bg-stone-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          title="Preview a page from the generated PDF"
+          disabled={exporting}
+        >
+          <Eye size={18} />
+          Preview PDF
+        </button>
+        <button
+          type="button"
+          onClick={onPrint}
+          className="bg-stone-800 text-white px-5 py-2 rounded-lg font-bold hover:bg-stone-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-sm"
+          title="Generate a booklet-ready PDF"
+          disabled={exporting}
+        >
+          {exporting ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              Generating...
+            </>
+          ) : (
+            <>
+              <Download size={18} />
+              Generate PDF
+            </>
+          )}
+        </button>
+      </div>
     </div>
   )
 }
@@ -132,10 +145,11 @@ interface ResultsDisplayProps {
   error: string | null
   totalPages: number
   onPrint: () => void
+  onPreview: () => void
   exporting: boolean
 }
 
-export default function ResultsDisplay({ layout, error, totalPages, onPrint, exporting }: ResultsDisplayProps) {
+export default function ResultsDisplay({ layout, error, totalPages, onPrint, onPreview, exporting }: ResultsDisplayProps) {
   if (error) {
     return (
       <div className="bg-red-50 p-6 rounded-xl border border-red-200 text-center">
@@ -151,7 +165,7 @@ export default function ResultsDisplay({ layout, error, totalPages, onPrint, exp
 
   return (
     <div className="bg-white p-6 rounded-xl paper-shadow border border-stone-100">
-      <ResultsSummary onPrint={onPrint} exporting={exporting} />
+      <ResultsSummary onPrint={onPrint} onPreview={onPreview} exporting={exporting} />
       <ResultsGrid layout={layout} />
       <DetailsBreakdown layout={layout} totalPages={totalPages} />
     </div>
