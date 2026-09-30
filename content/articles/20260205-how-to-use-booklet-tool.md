@@ -53,12 +53,11 @@ The **Booklet Preview** visualize how your signatures will look. You can see:
 
 When you are satisfied, click **Download Booklet PDF**.
 
+By default, the tool arranges pages in the PDF for printing. Turn off **Impose pages in PDF** to keep selected pages in reading order and use your printer's booklet setting instead.
+
 ### Step 5: Printing
 
-The generated PDF is formatted for **Duplex Printing (Short-Edge Binding)**.
-1.  Open the file in your PDF viewer.
-2.  Select "Print on both sides of paper".
-3.  Choose **Flip on Short Edge**.
-4.  Ensure "Actual Size" or "Scale 100%" is selected so margins aren't distorted.
+When the PDF is imposed by the tool, print it using **Duplex Printing (Short-Edge Binding)** at **Actual Size** or **100%**. If you left imposition to your printer, select its **Booklet** setting and follow its duplex and binding prompts.
+Open the file in your PDF viewer and apply the appropriate print settings above.
 
 Once printed, simply fold each sheet in half, group them by signature, and you are ready to bind!

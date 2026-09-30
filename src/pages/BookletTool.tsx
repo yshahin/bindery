@@ -65,10 +65,12 @@ export default function BookletTool() {
       const exported = await exportBooklet()
       if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current)
 
-      const previewBytes = await addPreviewMarginGuides(exported.pdfBytes)
+      const previewBytes = printSheet.imposePages
+        ? await addPreviewMarginGuides(exported.pdfBytes)
+        : exported.pdfBytes
       const url = URL.createObjectURL(new Blob([previewBytes as BlobPart], { type: 'application/pdf' }))
       previewUrlRef.current = url
-      setPreview({ url, pageCount: layout.totalSheets * 2 })
+      setPreview({ url, pageCount: printSheet.imposePages ? layout.totalSheets * 2 : layout.totalPages })
       setPreviewPage(1)
     } catch (err) {
       setError(`Unable to preview booklet PDF: ${err instanceof Error ? err.message : 'Unknown error'}`)

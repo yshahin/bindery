@@ -268,11 +268,32 @@ function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
   return (
     <div>
       <h3 className="block text-sm font-bold text-stone-700 mb-2">Print Sheet Spacing</h3>
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <label htmlFor="impose-pages-toggle" className="text-sm text-stone-700">Impose pages in PDF</label>
+        <button
+          id="impose-pages-toggle"
+          type="button"
+          role="switch"
+          aria-checked={settings.imposePages}
+          onClick={() => onChange({ imposePages: !settings.imposePages })}
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 ${settings.imposePages ? 'bg-stone-800' : 'bg-stone-200'}`}
+          title={settings.imposePages ? 'Leave booklet imposition to the printer' : 'Impose pages in the PDF'}
+        >
+          <span className="sr-only">Impose pages in PDF</span>
+          <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${settings.imposePages ? 'translate-x-6' : 'translate-x-1'}`} />
+        </button>
+      </div>
+      {!settings.imposePages && (
+        <p className="mb-4 text-xs text-stone-500">
+          Pages stay in reading order; use your printer&apos;s booklet setting to arrange them.
+        </p>
+      )}
       <label htmlFor="print-paper-type" className="block text-xs text-stone-600 mb-4">
         Print paper
         <select
           id="print-paper-type"
           value={settings.paperType}
+          disabled={!settings.imposePages}
           onChange={(event) => onChange({ paperType: event.target.value as PrintSheetSettings['paperType'] })}
           className="mt-1 w-full px-3 py-2 bg-white border border-stone-300 rounded text-sm text-stone-800"
         >
@@ -297,6 +318,7 @@ function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
             <button
               key={orientation}
               type="button"
+              disabled={!settings.imposePages}
               aria-pressed={settings.orientation === orientation}
               onClick={() => onChange({ orientation })}
               className={`px-3 py-2 text-sm capitalize transition-colors ${settings.orientation === orientation
@@ -317,6 +339,7 @@ function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
             type="number"
             step="0.5"
             value={settings.outerMarginMm}
+            disabled={!settings.imposePages}
             onChange={(event) => onChange({ outerMarginMm: Number(event.target.value) })}
             className="mt-1 w-full px-3 py-2 bg-white border border-stone-300 rounded focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500 text-stone-800 text-center"
           />
@@ -328,6 +351,7 @@ function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
             type="number"
             step="0.5"
             value={settings.spineMarginMm}
+            disabled={!settings.imposePages}
             onChange={(event) => onChange({ spineMarginMm: Number(event.target.value) })}
             className="mt-1 w-full px-3 py-2 bg-white border border-stone-300 rounded focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500 text-stone-800 text-center"
           />
@@ -339,6 +363,7 @@ function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
           id="fold-guide-toggle"
           type="button"
           role="switch"
+          disabled={!settings.imposePages}
           aria-checked={settings.showFoldGuide}
           onClick={() => onChange({ showFoldGuide: !settings.showFoldGuide })}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 ${settings.showFoldGuide ? 'bg-stone-800' : 'bg-stone-200'}`}

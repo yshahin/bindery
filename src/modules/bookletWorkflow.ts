@@ -84,6 +84,7 @@ const defaultConfiguration: WorkflowConfiguration = {
   pagesPerSheet: 4,
   sheetsPerBooklet: 4,
   printSheet: {
+    imposePages: true,
     paperType: 'letter',
     orientation: 'auto',
     outerMarginMm: 0,

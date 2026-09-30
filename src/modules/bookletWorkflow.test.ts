@@ -30,6 +30,7 @@ describe('createBookletWorkflowModule', () => {
       end: 20,
     })
     expect(snapshot.configuration.printSheet).toEqual({
+      imposePages: true,
       paperType: 'letter',
       orientation: 'auto',
       outerMarginMm: 0,
@@ -59,7 +60,7 @@ describe('createBookletWorkflowModule', () => {
     const snapshot = workflow.revise({
       printRange: { kind: 'custom', start: 5, end: 20 },
       textDirection: 'ltr',
-      printSheet: { orientation: 'landscape', outerMarginMm: 12, spineMarginMm: 6, showFoldGuide: true },
+      printSheet: { imposePages: false, orientation: 'landscape', outerMarginMm: 12, spineMarginMm: 6, showFoldGuide: true },
     })
 
     expect(snapshot.phase).toBe('ready')
@@ -73,6 +74,7 @@ describe('createBookletWorkflowModule', () => {
       effective: 'ltr',
     })
     expect(snapshot.configuration.printSheet).toEqual({
+      imposePages: false,
       paperType: 'letter',
       orientation: 'landscape',
       outerMarginMm: 12,
@@ -95,6 +97,7 @@ describe('createBookletWorkflowModule', () => {
     const snapshot = workflow.revise({ sheetsPerBooklet: 3 })
 
     expect(snapshot.configuration.printSheet).toEqual({
+      imposePages: true,
       paperType: 'letter',
       orientation: 'auto',
       outerMarginMm: 0,
@@ -120,6 +123,22 @@ describe('createBookletWorkflowModule', () => {
     const exportedSize = exportedPdf.getPage(0).getSize()
     expect(exportedSize.width).toBeCloseTo(792)
     expect(exportedSize.height).toBeCloseTo(612)
+  })
+
+  it('exports original pages in reading order when imposition is left to the printer', async () => {
+    const workflow = createBookletWorkflowModule(async () => 'ltr')
+    await workflow.load(await createPdfFile(12, 'chapter.pdf'))
+    workflow.revise({
+      printRange: { kind: 'custom', start: 3, end: 5 },
+      printSheet: { imposePages: false },
+    })
+
+    const exportResult = await workflow.export()
+    const exportedPdf = await PDFDocument.load(exportResult.pdfBytes)
+
+    expect(exportedPdf.getPageCount()).toBe(3)
+    expect(exportedPdf.getPage(0).getSize()).toEqual({ width: 612, height: 792 })
+    expect(exportedPdf.getPage(2).getSize()).toEqual({ width: 612, height: 792 })
   })
 
   it('keeps exportable PDF data when direction detection transfers its input buffer', async () => {

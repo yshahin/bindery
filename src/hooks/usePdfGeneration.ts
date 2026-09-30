@@ -14,6 +14,7 @@ export const PRINT_PAPER_SIZES = {
 type PrintPaperType = 'source' | keyof typeof PRINT_PAPER_SIZES
 
 export interface PrintSheetSettings {
+  imposePages: boolean
   paperType: PrintPaperType
   orientation: 'auto' | 'portrait' | 'landscape'
   outerMarginMm: number
@@ -22,6 +23,7 @@ export interface PrintSheetSettings {
 }
 
 const DEFAULT_PRINT_SHEET_SETTINGS: PrintSheetSettings = {
+  imposePages: true,
   paperType: 'letter',
   orientation: 'auto',
   outerMarginMm: 0,
@@ -44,6 +46,21 @@ export async function generateBookletPdf(
   const sourcePdf = await PDFDocument.load(pdfData)
   const bookletPdf = await PDFDocument.create()
   const pointsPerMillimeter = 72 / 25.4
+  const pageRangeOffset = Math.max(0, (layout.rangeStart ?? 1) - 1)
+  const sourcePages = sourcePdf.getPages()
+
+  if (settings.imposePages === false) {
+    const pageCount = layout.rangeEnd === undefined
+      ? layout.totalPages
+      : Math.max(0, layout.rangeEnd - (layout.rangeStart ?? 1) + 1)
+    const indices = Array.from(
+      { length: Math.min(pageCount, sourcePages.length - pageRangeOffset) },
+      (_, index) => pageRangeOffset + index,
+    )
+    const pages = await bookletPdf.copyPages(sourcePdf, indices)
+    pages.forEach((page) => bookletPdf.addPage(page))
+    return bookletPdf.save()
+  }
 
   let defaultSize: [number, number] = [612, 792]
   if (sourcePdf.getPageCount() > 0) {
@@ -64,8 +81,6 @@ export async function generateBookletPdf(
     : height > width
   if (swapDimensions) defaultSize = [height, width]
 
-  const pageRangeOffset = Math.max(0, (layout.rangeStart ?? 1) - 1)
-  const sourcePages = sourcePdf.getPages()
   const indicesToCopy = new Set<number>()
 
   for (const pageNum of layout.sequence) {

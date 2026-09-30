@@ -35,6 +35,8 @@ const mockSourcePdf = {
 
 const mockBookletPdf = {
   addPage: mockAddPage,
+  copyPages: vi.fn(async (_sourcePdf: typeof mockSourcePdf, indices: number[]) =>
+    indices.map((index) => mockSourcePages[index])),
   embedPages: mockEmbedPages,
   save: mockSave,
 }
@@ -138,6 +140,28 @@ describe('generateBookletPdf', () => {
     expect(mockOutputPages).toHaveLength(2)
   })
 
+  it('exports selected pages in reading order when imposition is left to the printer', async () => {
+    const layout = {
+      ...createLayout([1, 2, 3, 4]),
+      rangeStart: 5,
+      rangeEnd: 6,
+      totalPages: 2,
+    }
+
+    await generateBookletPdf(new ArrayBuffer(10), layout, {
+      imposePages: false,
+      paperType: 'letter',
+      orientation: 'auto',
+      outerMarginMm: 0,
+      spineMarginMm: 0,
+      showFoldGuide: true,
+    })
+
+    expect(mockBookletPdf.copyPages).toHaveBeenCalledWith(mockSourcePdf, [4, 5])
+    expect(mockAddPage).toHaveBeenCalledTimes(2)
+    expect(mockEmbedPages).not.toHaveBeenCalled()
+  })
+
   it.each([4, 8, 16])('composes %i-page sheets into two output sides', async (pagesPerSheet) => {
     const sequence = Array.from({ length: pagesPerSheet }, (_, index) => index + 1)
     const mockLayout = createLayout(sequence, pagesPerSheet)
@@ -161,6 +185,7 @@ describe('generateBookletPdf', () => {
     ]
 
     await generateBookletPdf(new ArrayBuffer(10), mockLayout, {
+      imposePages: true,
       paperType: 'source',
       orientation: 'landscape',
       outerMarginMm: 0,
@@ -189,7 +214,7 @@ describe('generateBookletPdf', () => {
     await generateBookletPdf(
       new ArrayBuffer(10),
       createLayout([1, 2, 3, 4]),
-      { paperType: 'source', orientation, outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
+      { imposePages: true, paperType: 'source', orientation, outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
     )
 
     expect(mockAddPage).toHaveBeenNthCalledWith(1, expectedSize)
@@ -207,6 +232,7 @@ describe('generateBookletPdf', () => {
     const pointsPerMillimeter = 72 / 25.4
 
     await generateBookletPdf(new ArrayBuffer(10), createLayout([1, 2, 3, 4]), {
+      imposePages: true,
       paperType,
       orientation: 'portrait',
       outerMarginMm: 0,
@@ -229,7 +255,7 @@ describe('generateBookletPdf', () => {
     await generateBookletPdf(
       new ArrayBuffer(10),
       mockLayout,
-      { paperType: 'source', orientation: 'portrait', outerMarginMm: 10, spineMarginMm: 5, showFoldGuide: true },
+      { imposePages: true, paperType: 'source', orientation: 'portrait', outerMarginMm: 10, spineMarginMm: 5, showFoldGuide: true },
     )
 
     const pointsPerMillimeter = 72 / 25.4
@@ -253,7 +279,7 @@ describe('generateBookletPdf', () => {
     await generateBookletPdf(
       new ArrayBuffer(10),
       createLayout([1, 2, 3, 4]),
-      { paperType: 'source', orientation: 'portrait', outerMarginMm: -5, spineMarginMm: -2, showFoldGuide: false },
+      { imposePages: true, paperType: 'source', orientation: 'portrait', outerMarginMm: -5, spineMarginMm: -2, showFoldGuide: false },
     )
 
     const pointsPerMillimeter = 72 / 25.4

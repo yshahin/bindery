@@ -7,7 +7,7 @@ A comprehensive digital workbench for bookbinders. This application combines pra
 ### 🛠️ Booklet Calculator
 - **PDF Upload**: Analyze valid print layouts for any PDF.
 - **Signature Optimization**: Automatically calculates the optimal number of sheets per signature to minimize blank pages.
-- **Export Ready**: Generates imposition-ready PDFs for home printing.
+- **Export Ready**: Exports imposed PDFs for home printing or reading-order PDFs for printer imposition.
 
 ### 📚 Knowledge Base
 - **Articles & Guides**: In-depth articles on techniques, materials, and theory, powered by Markdown.
