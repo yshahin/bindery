@@ -215,7 +215,7 @@ describe('BookletTool', () => {
   it('downloads the exported booklet PDF through the page adapter', async () => {
     const exportBooklet = vi.fn().mockResolvedValue({
       pdfBytes: new Uint8Array([1, 2, 3]),
-      fileName: 'test-booklet.pdf',
+      fileName: 'test.booklet.pdf',
       mimeType: 'application/pdf',
     })
 
@@ -279,14 +279,14 @@ describe('BookletTool', () => {
 
     await waitFor(() => {
       expect(exportBooklet).toHaveBeenCalled()
-      expect(downloadPdfBlob).toHaveBeenCalledWith(new Uint8Array([1, 2, 3]), 'test-booklet.pdf')
+      expect(downloadPdfBlob).toHaveBeenCalledWith(new Uint8Array([1, 2, 3]), 'test.booklet.pdf')
     })
   })
 
   it('previews a selected page from the generated booklet PDF', async () => {
     const exportBooklet = vi.fn().mockResolvedValue({
       pdfBytes: new Uint8Array([1, 2, 3]),
-      fileName: 'test-booklet.pdf',
+      fileName: 'test.booklet.pdf',
       mimeType: 'application/pdf',
     })
     const createObjectURL = vi.fn().mockReturnValue('blob:generated-booklet')

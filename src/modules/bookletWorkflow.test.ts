@@ -117,7 +117,7 @@ describe('createBookletWorkflowModule', () => {
     const exportResult = await workflow.export()
     const exportedPdf = await PDFDocument.load(exportResult.pdfBytes)
 
-    expect(exportResult.fileName).toBe('chapter-booklet.pdf')
+    expect(exportResult.fileName).toBe('chapter.booklet.pdf')
     expect(exportResult.mimeType).toBe('application/pdf')
     const layout = workflow.getSnapshot().bookletLayout
     expect(exportedPdf.getPageCount()).toBe(
@@ -154,7 +154,7 @@ describe('createBookletWorkflowModule', () => {
     await workflow.load(file)
 
     await expect(workflow.export()).resolves.toMatchObject({
-      fileName: 'transferred-booklet.pdf',
+      fileName: 'transferred.booklet.pdf',
       mimeType: 'application/pdf',
     })
   })

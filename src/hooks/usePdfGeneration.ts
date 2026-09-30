@@ -173,19 +173,21 @@ export async function generateBookletPdf(
         })
       }
 
-      const tabWidth = 3 * pointsPerMillimeter
-      const tabSlotHeight = defaultSize[1] / Math.max(1, exportLayout.totalBooklets)
-      const tabHeight = Math.min(10 * pointsPerMillimeter, tabSlotHeight * 0.8)
-      const tabX = exportLayout.isRTL ? 0 : defaultSize[0] - tabWidth
-      const tabY = defaultSize[1] - bookletIndex * tabSlotHeight + (tabSlotHeight - tabHeight) / 2
+      if (settings.orderAsSignatures) {
+        const tabWidth = 3 * pointsPerMillimeter
+        const tabSlotHeight = defaultSize[1] / Math.max(1, exportLayout.totalBooklets)
+        const tabHeight = Math.min(10 * pointsPerMillimeter, tabSlotHeight * 0.8)
+        const tabX = exportLayout.isRTL ? 0 : defaultSize[0] - tabWidth
+        const tabY = defaultSize[1] - bookletIndex * tabSlotHeight + (tabSlotHeight - tabHeight) / 2
 
-      outputPage.drawRectangle({
-        x: tabX,
-        y: tabY,
-        width: tabWidth,
-        height: tabHeight,
-        color: rgb(0.12, 0.12, 0.12),
-      })
+        outputPage.drawRectangle({
+          x: tabX,
+          y: tabY,
+          width: tabWidth,
+          height: tabHeight,
+          color: rgb(0.12, 0.12, 0.12),
+        })
+      }
     }
   }
 

@@ -320,7 +320,7 @@ export function createBookletWorkflowModule(
 
       return {
         pdfBytes,
-        fileName: `${baseName}-booklet.pdf`,
+        fileName: `${baseName}.booklet.pdf`,
         mimeType: 'application/pdf',
       }
     },

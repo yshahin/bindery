@@ -291,6 +291,7 @@ describe('generateBookletPdf', () => {
       [12, 5], [6, 11],
       [10, 7], [8, 9],
     ])
+    expect(mockOutputPages.every((page) => page.drawRectangle.mock.calls.length === 0)).toBe(true)
   })
 
   it.each([
