@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { addPreviewMarginGuides, generateBookletPdf } from './usePdfGeneration'
 import { PDFDocument } from 'pdf-lib'
-import { BookletLayout } from '../utils/bookletCalculator'
+import { calculateBookletLayout, type BookletLayout } from '../utils/bookletCalculator'
 
 const mockSave = vi.fn().mockResolvedValue(new Uint8Array([1, 2, 3]))
 const mockSourcePages = Array.from({ length: 20 }, (_, index) => ({
@@ -150,6 +150,7 @@ describe('generateBookletPdf', () => {
 
     await generateBookletPdf(new ArrayBuffer(10), layout, {
       imposePages: false,
+      orderAsSignatures: true,
       paperType: 'letter',
       orientation: 'auto',
       outerMarginMm: 0,
@@ -161,6 +162,55 @@ describe('generateBookletPdf', () => {
     expect(mockAddPage).toHaveBeenCalledTimes(2)
     expect(mockEmbedPages).not.toHaveBeenCalled()
   })
+
+  it.each([
+    {
+      isRTL: false,
+      orderAsSignatures: true,
+      expected: [[12, 1], [2, 11], [10, 3], [4, 9], [8, 5], [6, 7]],
+    },
+    {
+      isRTL: false,
+      orderAsSignatures: false,
+      expected: [[12, 1], [2, 11], [10, 3], [4, 9], [8, 5], [6, 7]],
+    },
+    {
+      isRTL: true,
+      orderAsSignatures: true,
+      expected: [[1, 12], [11, 2], [3, 10], [9, 4], [5, 8], [7, 6]],
+    },
+    {
+      isRTL: true,
+      orderAsSignatures: false,
+      expected: [[1, 12], [11, 2], [3, 10], [9, 4], [5, 8], [7, 6]],
+    },
+  ])(
+    'imposes 3-sheet signatures in the correct $isRTL page order (signature grouping: $orderAsSignatures)',
+    async ({ isRTL, orderAsSignatures, expected }) => {
+      const layout = calculateBookletLayout(12, 3, 4, isRTL)
+
+      await generateBookletPdf(new ArrayBuffer(10), layout, {
+        imposePages: true,
+        orderAsSignatures,
+        paperType: 'source',
+        orientation: 'landscape',
+        outerMarginMm: 0,
+        spineMarginMm: 0,
+        showFoldGuide: false,
+      })
+
+      const printedPageNumbers = mockOutputPages.map((page) =>
+        page.drawPage.mock.calls.map(([embeddedPage]) => embeddedPage.source.index + 1))
+      expect(printedPageNumbers).toEqual(expected)
+
+      const frontDraws = mockOutputPages[0].drawPage.mock.calls
+      const pageOneX = frontDraws.find(([embeddedPage]) => embeddedPage.source.index === 0)?.[1].x
+      const pageTwelveX = frontDraws.find(([embeddedPage]) => embeddedPage.source.index === 11)?.[1].x
+      expect(pageOneX).toBeDefined()
+      expect(pageTwelveX).toBeDefined()
+      expect(pageOneX! < pageTwelveX!).toBe(isRTL)
+    },
+  )
 
   it.each([4, 8, 16])('composes %i-page sheets into two output sides', async (pagesPerSheet) => {
     const sequence = Array.from({ length: pagesPerSheet }, (_, index) => index + 1)
@@ -186,6 +236,7 @@ describe('generateBookletPdf', () => {
 
     await generateBookletPdf(new ArrayBuffer(10), mockLayout, {
       imposePages: true,
+      orderAsSignatures: true,
       paperType: 'source',
       orientation: 'landscape',
       outerMarginMm: 0,
@@ -205,6 +256,43 @@ describe('generateBookletPdf', () => {
     })
   })
 
+  it('ignores sheets per signature and imposes the entire document as one signature', async () => {
+    const layout = createLayout([8, 1, 2, 7, 6, 3, 4, 5, 16, 9, 10, 15, 14, 11, 12, 13], 4, false)
+    const firstSheets = [[8, 1, 2, 7], [6, 3, 4, 5]]
+    const secondSheets = [[16, 9, 10, 15], [14, 11, 12, 13]]
+    layout.totalPages = 16
+    layout.totalBooklets = 2
+    layout.totalSheets = 4
+    layout.booklets = [firstSheets, secondSheets].map((sheets, index) => ({
+      index: index + 1,
+      sheets,
+      sheetCount: sheets.length,
+      pages: 8,
+      blankPages: 0,
+      isFinal: index === 1,
+      pageOrder: sheets.flat(),
+    }))
+
+    await generateBookletPdf(new ArrayBuffer(10), layout, {
+      imposePages: true,
+      orderAsSignatures: false,
+      paperType: 'source',
+      orientation: 'landscape',
+      outerMarginMm: 0,
+      spineMarginMm: 0,
+      showFoldGuide: false,
+    })
+
+    const printedPageOrder = mockOutputPages.map((page) =>
+      page.drawPage.mock.calls.map(([embeddedPage]) => embeddedPage.source.index + 1))
+    expect(printedPageOrder).toEqual([
+      [16, 1], [2, 15],
+      [14, 3], [4, 13],
+      [12, 5], [6, 11],
+      [10, 7], [8, 9],
+    ])
+  })
+
   it.each([
     { paperType: 'source' as const, orientation: 'portrait' as const, sourceSize: { width: 792, height: 612 }, expectedSize: [612, 792] },
     { paperType: 'source' as const, orientation: 'landscape' as const, sourceSize: { width: 612, height: 792 }, expectedSize: [792, 612] },
@@ -214,7 +302,7 @@ describe('generateBookletPdf', () => {
     await generateBookletPdf(
       new ArrayBuffer(10),
       createLayout([1, 2, 3, 4]),
-      { imposePages: true, paperType: 'source', orientation, outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
+      { imposePages: true, orderAsSignatures: true, paperType: 'source', orientation, outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
     )
 
     expect(mockAddPage).toHaveBeenNthCalledWith(1, expectedSize)
@@ -233,6 +321,7 @@ describe('generateBookletPdf', () => {
 
     await generateBookletPdf(new ArrayBuffer(10), createLayout([1, 2, 3, 4]), {
       imposePages: true,
+      orderAsSignatures: true,
       paperType,
       orientation: 'portrait',
       outerMarginMm: 0,
@@ -255,7 +344,7 @@ describe('generateBookletPdf', () => {
     await generateBookletPdf(
       new ArrayBuffer(10),
       mockLayout,
-      { imposePages: true, paperType: 'source', orientation: 'portrait', outerMarginMm: 10, spineMarginMm: 5, showFoldGuide: true },
+      { imposePages: true, orderAsSignatures: true, paperType: 'source', orientation: 'portrait', outerMarginMm: 10, spineMarginMm: 5, showFoldGuide: true },
     )
 
     const pointsPerMillimeter = 72 / 25.4
@@ -279,7 +368,7 @@ describe('generateBookletPdf', () => {
     await generateBookletPdf(
       new ArrayBuffer(10),
       createLayout([1, 2, 3, 4]),
-      { imposePages: true, paperType: 'source', orientation: 'portrait', outerMarginMm: -5, spineMarginMm: -2, showFoldGuide: false },
+      { imposePages: true, orderAsSignatures: true, paperType: 'source', orientation: 'portrait', outerMarginMm: -5, spineMarginMm: -2, showFoldGuide: false },
     )
 
     const pointsPerMillimeter = 72 / 25.4

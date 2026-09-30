@@ -1,5 +1,5 @@
 import { PDFDocument, rgb } from 'pdf-lib'
-import type { BookletLayout } from '../utils/bookletCalculator'
+import { calculateBookletLayout, type BookletLayout } from '../utils/bookletCalculator'
 
 export const PRINT_PAPER_SIZES = {
   a3: { label: 'A3 (297 × 420 mm)', widthMm: 297, heightMm: 420, system: 'Metric' },
@@ -15,6 +15,7 @@ type PrintPaperType = 'source' | keyof typeof PRINT_PAPER_SIZES
 
 export interface PrintSheetSettings {
   imposePages: boolean
+  orderAsSignatures: boolean
   paperType: PrintPaperType
   orientation: 'auto' | 'portrait' | 'landscape'
   outerMarginMm: number
@@ -22,8 +23,9 @@ export interface PrintSheetSettings {
   showFoldGuide: boolean
 }
 
-const DEFAULT_PRINT_SHEET_SETTINGS: PrintSheetSettings = {
+export const DEFAULT_PRINT_SHEET_SETTINGS: PrintSheetSettings = {
   imposePages: true,
+  orderAsSignatures: true,
   paperType: 'letter',
   orientation: 'auto',
   outerMarginMm: 0,
@@ -49,7 +51,7 @@ export async function generateBookletPdf(
   const pageRangeOffset = Math.max(0, (layout.rangeStart ?? 1) - 1)
   const sourcePages = sourcePdf.getPages()
 
-  if (settings.imposePages === false) {
+  if (!settings.imposePages) {
     const pageCount = layout.rangeEnd === undefined
       ? layout.totalPages
       : Math.max(0, layout.rangeEnd - (layout.rangeStart ?? 1) + 1)
@@ -62,6 +64,17 @@ export async function generateBookletPdf(
     return bookletPdf.save()
   }
 
+  const exportLayout = settings.orderAsSignatures
+    ? layout
+    : calculateBookletLayout(
+      layout.totalPages,
+      Math.max(1, Math.ceil((layout.totalPages + (layout.hasCover ? (layout.coverPages ?? 2) * 2 : 0)) / layout.pagesPerSheet)),
+      layout.pagesPerSheet,
+      layout.isRTL,
+      layout.hasCover,
+      layout.coverPages,
+    )
+
   let defaultSize: [number, number] = [612, 792]
   if (sourcePdf.getPageCount() > 0) {
     const { width, height } = sourcePdf.getPage(0).getSize()
@@ -73,7 +86,7 @@ export async function generateBookletPdf(
   }
 
   const orientation = settings.orientation === 'auto'
-    ? layout.pagesPerSheet === 8 ? 'portrait' : 'landscape'
+    ? exportLayout.pagesPerSheet === 8 ? 'portrait' : 'landscape'
     : settings.orientation
   const [width, height] = defaultSize
   const swapDimensions = orientation === 'portrait'
@@ -83,7 +96,7 @@ export async function generateBookletPdf(
 
   const indicesToCopy = new Set<number>()
 
-  for (const pageNum of layout.sequence) {
+  for (const pageNum of exportLayout.sequence) {
     if (pageNum !== null) {
       const absoluteIndex = pageRangeOffset + pageNum - 1
       if (absoluteIndex >= 0 && absoluteIndex < sourcePages.length) {
@@ -100,14 +113,14 @@ export async function generateBookletPdf(
   const embeddedPageBySourceIndex = new Map(
     embeddableSourceIndices.map((sourceIndex, index) => [sourceIndex, embeddedPages[index]]),
   )
-  const sheets = layout.booklets.flatMap((booklet) =>
+  const sheets = exportLayout.booklets.flatMap((booklet) =>
     booklet.sheets.map((sheet) => ({ sheet, bookletIndex: booklet.index })),
   )
   if (!sheets.length) {
-    for (let offset = 0; offset < layout.sequence.length; offset += layout.pagesPerSheet) {
-      const sheet = layout.sequence.slice(offset, offset + layout.pagesPerSheet)
-      while (sheet.length < layout.pagesPerSheet) sheet.push(null)
-      const bookletIndex = Math.floor(offset / Math.max(1, layout.pagesPerBooklet)) + 1
+    for (let offset = 0; offset < exportLayout.sequence.length; offset += exportLayout.pagesPerSheet) {
+      const sheet = exportLayout.sequence.slice(offset, offset + exportLayout.pagesPerSheet)
+      while (sheet.length < exportLayout.pagesPerSheet) sheet.push(null)
+      const bookletIndex = Math.floor(offset / Math.max(1, exportLayout.pagesPerBooklet)) + 1
       sheets.push({ sheet, bookletIndex })
     }
   }
@@ -161,9 +174,9 @@ export async function generateBookletPdf(
       }
 
       const tabWidth = 3 * pointsPerMillimeter
-      const tabSlotHeight = defaultSize[1] / Math.max(1, layout.totalBooklets)
+      const tabSlotHeight = defaultSize[1] / Math.max(1, exportLayout.totalBooklets)
       const tabHeight = Math.min(10 * pointsPerMillimeter, tabSlotHeight * 0.8)
-      const tabX = layout.isRTL ? 0 : defaultSize[0] - tabWidth
+      const tabX = exportLayout.isRTL ? 0 : defaultSize[0] - tabWidth
       const tabY = defaultSize[1] - bookletIndex * tabSlotHeight + (tabSlotHeight - tabHeight) / 2
 
       outputPage.drawRectangle({

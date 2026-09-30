@@ -31,6 +31,7 @@ describe('createBookletWorkflowModule', () => {
     })
     expect(snapshot.configuration.printSheet).toEqual({
       imposePages: true,
+      orderAsSignatures: true,
       paperType: 'letter',
       orientation: 'auto',
       outerMarginMm: 0,
@@ -60,7 +61,7 @@ describe('createBookletWorkflowModule', () => {
     const snapshot = workflow.revise({
       printRange: { kind: 'custom', start: 5, end: 20 },
       textDirection: 'ltr',
-      printSheet: { imposePages: false, orientation: 'landscape', outerMarginMm: 12, spineMarginMm: 6, showFoldGuide: true },
+      printSheet: { imposePages: false, orderAsSignatures: false, orientation: 'landscape', outerMarginMm: 12, spineMarginMm: 6, showFoldGuide: true },
     })
 
     expect(snapshot.phase).toBe('ready')
@@ -75,6 +76,7 @@ describe('createBookletWorkflowModule', () => {
     })
     expect(snapshot.configuration.printSheet).toEqual({
       imposePages: false,
+      orderAsSignatures: false,
       paperType: 'letter',
       orientation: 'landscape',
       outerMarginMm: 12,
@@ -98,6 +100,7 @@ describe('createBookletWorkflowModule', () => {
 
     expect(snapshot.configuration.printSheet).toEqual({
       imposePages: true,
+      orderAsSignatures: true,
       paperType: 'letter',
       orientation: 'auto',
       outerMarginMm: 0,

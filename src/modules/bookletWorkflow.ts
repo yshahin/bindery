@@ -9,7 +9,11 @@ import {
   inferDirectionFromFilename,
   type TextDirection,
 } from '../utils/rtlDetector'
-import { generateBookletPdf, type PrintSheetSettings } from '../hooks/usePdfGeneration'
+import {
+  DEFAULT_PRINT_SHEET_SETTINGS,
+  generateBookletPdf,
+  type PrintSheetSettings,
+} from '../hooks/usePdfGeneration'
 
 type TextDirectionChoice = 'auto' | 'ltr' | 'rtl'
 type WorkflowPhase = 'empty' | 'ready' | 'failed'
@@ -83,14 +87,7 @@ export interface WorkflowRevision {
 const defaultConfiguration: WorkflowConfiguration = {
   pagesPerSheet: 4,
   sheetsPerBooklet: 4,
-  printSheet: {
-    imposePages: true,
-    paperType: 'letter',
-    orientation: 'auto',
-    outerMarginMm: 0,
-    spineMarginMm: 0,
-    showFoldGuide: false,
-  },
+  printSheet: { ...DEFAULT_PRINT_SHEET_SETTINGS },
   printRange: {
     start: 1,
     end: 1,

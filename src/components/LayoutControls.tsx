@@ -1,6 +1,63 @@
+import type { ReactNode } from 'react'
 import { type TextDirection } from '../utils/rtlDetector'
 import { PRINT_PAPER_SIZES, type PrintSheetSettings } from '../hooks/usePdfGeneration'
 import { RotateCw, RefreshCw, Target, ArrowLeft, ArrowRight } from 'lucide-react';
+
+interface ToggleSwitchProps {
+  id: string
+  label: string
+  checked: boolean
+  onChange: (checked: boolean) => void
+  title: string
+  disabled?: boolean
+  className?: string
+  labelClassName?: string
+}
+
+function ToggleSwitch({
+  id,
+  label,
+  checked,
+  onChange,
+  title,
+  disabled = false,
+  className = '',
+  labelClassName = 'text-sm text-stone-700',
+}: ToggleSwitchProps) {
+  return (
+    <div className={`flex items-center justify-between gap-3 ${disabled ? 'opacity-50' : ''} ${className}`}>
+      <label htmlFor={id} className={labelClassName}>{label}</label>
+      <button
+        id={id}
+        type="button"
+        role="switch"
+        disabled={disabled}
+        aria-checked={checked}
+        onClick={() => onChange(!checked)}
+        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 disabled:cursor-not-allowed ${checked ? 'bg-stone-800' : 'bg-stone-200'}`}
+        title={title}
+      >
+        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${checked ? 'translate-x-6' : 'translate-x-1'}`} />
+      </button>
+    </div>
+  )
+}
+
+interface CollapsiblePanelProps {
+  open: boolean
+  children: ReactNode
+}
+
+function CollapsiblePanel({ open, children }: CollapsiblePanelProps) {
+  return (
+    <div
+      aria-hidden={!open}
+      className={`transition-all duration-300 overflow-hidden ${open ? 'max-h-40 opacity-100' : 'max-h-0 opacity-50'}`}
+    >
+      {children}
+    </div>
+  )
+}
 
 interface PagesPerSheetControlProps {
   pagesPerSheet: number
@@ -155,6 +212,9 @@ function TextDirectionControl({
 interface SheetsPerBookletControlProps {
   sheetsPerBooklet: number
   pagesPerSheet: number
+  imposePages: boolean
+  orderAsSignatures: boolean
+  onOrderAsSignaturesChange: (value: boolean) => void
   onSheetsPerBookletChange: (value: string) => void
   onOptimize: () => void
 }
@@ -162,37 +222,56 @@ interface SheetsPerBookletControlProps {
 function SheetsPerBookletControl({
   sheetsPerBooklet,
   pagesPerSheet,
+  imposePages,
+  orderAsSignatures,
+  onOrderAsSignaturesChange,
   onSheetsPerBookletChange,
   onOptimize
 }: SheetsPerBookletControlProps) {
   return (
     <div>
-      <label htmlFor="sheets-per-booklet" className="block text-sm font-bold text-stone-700 mb-2">
-        Sheets per Booklet (Signature)
-        <span className="block text-xs font-normal text-stone-500 mt-1">Control how many sheets get folded into each booklet</span>
-      </label>
-      <div className="flex items-stretch gap-2 mb-2">
-        <input
-          type="number"
-          id="sheets-per-booklet"
-          min="1"
-          step="1"
-          value={sheetsPerBooklet}
-          onChange={(e) => onSheetsPerBookletChange(e.target.value)}
-          className="w-20 px-3 py-2 bg-white border border-stone-300 rounded focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500 text-stone-800 text-center"
-        />
-        <button
-          type="button"
-          onClick={onOptimize}
-          className="flex items-center gap-2 px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 text-sm font-medium rounded border border-stone-200 transition-colors"
-          title="Find optimal sheet count to minimize blank pages"
-        >
-          <Target size={16} /> Optimize
-        </button>
-      </div>
-      <div className="text-xs text-stone-500">
-        Each booklet = {sheetsPerBooklet * pagesPerSheet} pages
-      </div>
+      <ToggleSwitch
+        id="signature-order-toggle"
+        label="Order by signature"
+        checked={orderAsSignatures}
+        onChange={onOrderAsSignaturesChange}
+        title={orderAsSignatures ? 'Treat sheets as separate signatures' : 'Treat all sheets as one signature'}
+        className="mb-3"
+        labelClassName="text-sm font-bold text-stone-700"
+      />
+      <CollapsiblePanel open={orderAsSignatures}>
+        <label htmlFor="sheets-per-booklet" className="block text-sm font-bold text-stone-700 mb-2">
+          Sheets per Booklet (Signature)
+          <span className="block text-xs font-normal text-stone-500 mt-1">Control how many sheets get folded into each booklet</span>
+        </label>
+        <div className="flex items-stretch gap-2 mb-2">
+          <input
+            type="number"
+            id="sheets-per-booklet"
+            min="1"
+            step="1"
+            value={sheetsPerBooklet}
+            disabled={!orderAsSignatures}
+            onChange={(e) => onSheetsPerBookletChange(e.target.value)}
+            className="w-20 px-3 py-2 bg-white border border-stone-300 rounded focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500 text-stone-800 text-center"
+          />
+          <button
+            type="button"
+            disabled={!orderAsSignatures}
+            onClick={onOptimize}
+            className="flex items-center gap-2 px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 text-sm font-medium rounded border border-stone-200 transition-colors"
+            title="Find optimal sheet count to minimize blank pages"
+          >
+            <Target size={16} /> Optimize
+          </button>
+        </div>
+        <div className="text-xs text-stone-500">
+          Each booklet = {sheetsPerBooklet * pagesPerSheet} pages
+        </div>
+      </CollapsiblePanel>
+      {!orderAsSignatures && imposePages && (
+        <p className="text-xs text-stone-500">All sheets are treated as one signature.</p>
+      )}
     </div>
   )
 }
@@ -212,30 +291,19 @@ function BookCoverControl({
 }: BookCoverControlProps) {
   return (
     <div>
-      <div className="flex items-center gap-3 mb-2">
-        <label className="block text-sm font-bold text-stone-700">
-          Book Cover
-        </label>
-        <button
-          type="button"
-          role="switch"
-          aria-checked={hasCover}
-          onClick={() => onHasCoverChange(!hasCover)}
-          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 ${hasCover ? 'bg-stone-800' : 'bg-stone-200'
-            }`}
-          title={hasCover ? 'Remove cover pages' : 'Add cover pages'}
-        >
-          <span className="sr-only">Use book cover</span>
-          <span
-            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${hasCover ? 'translate-x-6' : 'translate-x-1'
-              }`}
-          />
-        </button>
-      </div>
+      <ToggleSwitch
+        id="book-cover-toggle"
+        label="Book Cover"
+        checked={hasCover}
+        onChange={onHasCoverChange}
+        title={hasCover ? 'Remove cover pages' : 'Add cover pages'}
+        className="mb-2 justify-start"
+        labelClassName="block text-sm font-bold text-stone-700"
+      />
 
       <span className="block text-xs font-normal text-stone-500 mb-2">Add blank pages at beginning and end for gluing the cover</span>
 
-      <div className={`transition-all duration-300 overflow-hidden ${hasCover ? 'max-h-24 opacity-100' : 'max-h-0 opacity-50'}`}>
+      <CollapsiblePanel open={hasCover}>
         <div className="flex items-center gap-2 mb-1">
           <input
             type="number"
@@ -254,7 +322,7 @@ function BookCoverControl({
         <div className="text-xs text-stone-400">
           Total: {coverPages * 2} blank pages ({coverPages} at start, {coverPages} at end)
         </div>
-      </div>
+      </CollapsiblePanel>
     </div>
   )
 }
@@ -268,26 +336,14 @@ function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
   return (
     <div>
       <h3 className="block text-sm font-bold text-stone-700 mb-2">Print Sheet Spacing</h3>
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <label htmlFor="impose-pages-toggle" className="text-sm text-stone-700">Impose pages in PDF</label>
-        <button
-          id="impose-pages-toggle"
-          type="button"
-          role="switch"
-          aria-checked={settings.imposePages}
-          onClick={() => onChange({ imposePages: !settings.imposePages })}
-          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 ${settings.imposePages ? 'bg-stone-800' : 'bg-stone-200'}`}
-          title={settings.imposePages ? 'Leave booklet imposition to the printer' : 'Impose pages in the PDF'}
-        >
-          <span className="sr-only">Impose pages in PDF</span>
-          <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${settings.imposePages ? 'translate-x-6' : 'translate-x-1'}`} />
-        </button>
-      </div>
-      {!settings.imposePages && (
-        <p className="mb-4 text-xs text-stone-500">
-          Pages stay in reading order; use your printer&apos;s booklet setting to arrange them.
-        </p>
-      )}
+      <ToggleSwitch
+        id="impose-pages-toggle"
+        label="Impose pages in PDF"
+        checked={settings.imposePages}
+        onChange={(imposePages) => onChange({ imposePages })}
+        title={settings.imposePages ? 'Leave booklet imposition to the printer' : 'Impose pages in the PDF'}
+        className="mb-4"
+      />
       <label htmlFor="print-paper-type" className="block text-xs text-stone-600 mb-4">
         Print paper
         <select
@@ -357,22 +413,15 @@ function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
           />
         </label>
       </div>
-      <div className="mt-4 flex items-center justify-between gap-3">
-        <label htmlFor="fold-guide-toggle" className="text-sm text-stone-700">Center-fold guide</label>
-        <button
-          id="fold-guide-toggle"
-          type="button"
-          role="switch"
-          disabled={!settings.imposePages}
-          aria-checked={settings.showFoldGuide}
-          onClick={() => onChange({ showFoldGuide: !settings.showFoldGuide })}
-          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 ${settings.showFoldGuide ? 'bg-stone-800' : 'bg-stone-200'}`}
-          title={settings.showFoldGuide ? 'Hide center-fold guide' : 'Show center-fold guide'}
-        >
-          <span className="sr-only">Draw center-fold guide</span>
-          <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${settings.showFoldGuide ? 'translate-x-6' : 'translate-x-1'}`} />
-        </button>
-      </div>
+      <ToggleSwitch
+        id="fold-guide-toggle"
+        label="Center-fold guide"
+        checked={settings.showFoldGuide}
+        onChange={(showFoldGuide) => onChange({ showFoldGuide })}
+        title={settings.showFoldGuide ? 'Hide center-fold guide' : 'Show center-fold guide'}
+        disabled={!settings.imposePages}
+        className="mt-4"
+      />
     </div>
   )
 }
@@ -450,6 +499,9 @@ export default function LayoutControls({
           <SheetsPerBookletControl
             sheetsPerBooklet={sheetsPerBooklet}
             pagesPerSheet={pagesPerSheet}
+            imposePages={printSheet.imposePages}
+            orderAsSignatures={printSheet.orderAsSignatures}
+            onOrderAsSignaturesChange={(value) => onPrintSheetChange({ orderAsSignatures: value })}
             onSheetsPerBookletChange={onSheetsPerBookletChange}
             onOptimize={onOptimize}
           />

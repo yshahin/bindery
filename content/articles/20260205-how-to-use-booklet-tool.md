@@ -54,6 +54,7 @@ The **Booklet Preview** visualize how your signatures will look. You can see:
 When you are satisfied, click **Download Booklet PDF**.
 
 By default, the tool arranges pages in the PDF for printing. Turn off **Impose pages in PDF** to keep selected pages in reading order and use your printer's booklet setting instead.
+With imposition enabled, **Order by signature** groups sheets by signature. Turn it off to ignore the sheets-per-signature setting and impose the entire document as one signature for cut-and-stack printing.
 
 ### Step 5: Printing
 

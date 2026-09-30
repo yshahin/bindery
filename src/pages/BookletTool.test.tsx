@@ -33,7 +33,7 @@ describe('BookletTool', () => {
       selectedPageCount: 0,
       hasCover: true,
       coverPages: 2,
-      printSheet: { imposePages: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
+      printSheet: { imposePages: true, orderAsSignatures: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
       sheetsPerBooklet: 4,
       pagesPerSheet: 4,
       textDirection: 'ltr',
@@ -64,7 +64,7 @@ describe('BookletTool', () => {
 
   it('renders layout controls and results when layout is present', () => {
     const handlePrintSheetChange = vi.fn()
-    vi.mocked(useBookletWorkflowModule.useBookletWorkflow).mockReturnValue({
+    const workflowResult: ReturnType<typeof useBookletWorkflowModule.useBookletWorkflow> = {
       pdfFile: new File([''], 'test.pdf'),
       totalPages: 10,
       layout: {
@@ -94,7 +94,7 @@ describe('BookletTool', () => {
       selectedPageCount: 10,
       hasCover: true,
       coverPages: 2,
-      printSheet: { imposePages: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
+      printSheet: { imposePages: true, orderAsSignatures: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
       sheetsPerBooklet: 4,
       pagesPerSheet: 4,
       textDirection: 'ltr',
@@ -112,9 +112,10 @@ describe('BookletTool', () => {
       handleCoverPagesChange: vi.fn(),
       handlePrintSheetChange,
       exportBooklet: vi.fn(),
-    })
+    }
+    vi.mocked(useBookletWorkflowModule.useBookletWorkflow).mockReturnValue(workflowResult)
 
-    render(
+    const rendered = render(
       <BrowserRouter>
         <BookletTool />
       </BrowserRouter>
@@ -128,18 +129,41 @@ describe('BookletTool', () => {
     expect(screen.getByLabelText('Print paper')).toBeDefined()
     expect(screen.getByRole('group', { name: 'Sheet orientation' })).toBeDefined()
     expect(screen.getByRole('switch', { name: 'Impose pages in PDF' }).getAttribute('aria-checked')).toBe('true')
+    expect(screen.getByRole('switch', { name: 'Order by signature' }).getAttribute('aria-checked')).toBe('true')
     expect(screen.getByRole('switch', { name: 'Center-fold guide' })).toBeDefined()
 
+    fireEvent.click(screen.getByRole('switch', { name: 'Order by signature' }))
     fireEvent.click(screen.getByRole('switch', { name: 'Impose pages in PDF' }))
     fireEvent.click(screen.getByRole('button', { name: 'landscape' }))
     fireEvent.change(screen.getByLabelText('Print paper'), { target: { value: 'a4' } })
     fireEvent.change(screen.getByLabelText('Outer margin (mm)'), { target: { value: '-2' } })
     fireEvent.click(screen.getByRole('switch', { name: 'Center-fold guide' }))
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(1, { imposePages: false })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(2, { orientation: 'landscape' })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(3, { paperType: 'a4' })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(4, { outerMarginMm: -2 })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(5, { showFoldGuide: true })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(1, { orderAsSignatures: false })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(2, { imposePages: false })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(3, { orientation: 'landscape' })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(4, { paperType: 'a4' })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(5, { outerMarginMm: -2 })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(6, { showFoldGuide: true })
+
+    workflowResult.printSheet.orderAsSignatures = false
+    rendered.rerender(
+      <BrowserRouter>
+        <BookletTool />
+      </BrowserRouter>
+    )
+    const hiddenSheetsInput = document.querySelector<HTMLInputElement>('#sheets-per-booklet')
+    expect(hiddenSheetsInput?.disabled).toBe(true)
+    expect(hiddenSheetsInput?.closest('[aria-hidden="true"]')?.classList.contains('max-h-0')).toBe(true)
+    expect(screen.getByText('All sheets are treated as one signature.')).toBeDefined()
+    workflowResult.printSheet.imposePages = false
+    rendered.rerender(
+      <BrowserRouter>
+        <BookletTool />
+      </BrowserRouter>
+    )
+    expect(screen.queryByText('All sheets are treated as one signature.')).toBeNull()
+    expect(screen.queryByText(/Pages stay in reading order/)).toBeNull()
+    expect(screen.queryByText(/Signature grouping applies only/)).toBeNull()
 
     // Check for results
     expect(screen.getByText(/3. Imposition Strategy/i)).toBeDefined()
@@ -160,7 +184,7 @@ describe('BookletTool', () => {
       selectedPageCount: 0,
       hasCover: true,
       coverPages: 2,
-      printSheet: { imposePages: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
+      printSheet: { imposePages: true, orderAsSignatures: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
       sheetsPerBooklet: 4,
       pagesPerSheet: 4,
       textDirection: 'ltr',
@@ -225,7 +249,7 @@ describe('BookletTool', () => {
       selectedPageCount: 10,
       hasCover: true,
       coverPages: 2,
-      printSheet: { imposePages: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 12.7, spineMarginMm: 15.9, showFoldGuide: false },
+      printSheet: { imposePages: true, orderAsSignatures: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 12.7, spineMarginMm: 15.9, showFoldGuide: false },
       sheetsPerBooklet: 4,
       pagesPerSheet: 4,
       textDirection: 'ltr',
@@ -303,7 +327,7 @@ describe('BookletTool', () => {
       selectedPageCount: 10,
       hasCover: true,
       coverPages: 2,
-      printSheet: { imposePages: false, paperType: 'letter', orientation: 'auto', outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
+      printSheet: { imposePages: false, orderAsSignatures: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
       sheetsPerBooklet: 4,
       pagesPerSheet: 4,
       textDirection: 'ltr',
