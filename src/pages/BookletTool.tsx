@@ -175,6 +175,7 @@ export default function BookletTool() {
               <>
                 <ResultsDisplay
                   layout={layout}
+                  orderAsSignatures={printSheet.orderAsSignatures}
                   error={null}
                   totalPages={totalPages}
                   onPrint={handlePrint}

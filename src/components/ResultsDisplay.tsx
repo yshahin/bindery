@@ -48,9 +48,10 @@ function ResultsSummary({ onPrint, onPreview, exporting }: ResultsSummaryProps) 
 
 interface ResultsGridProps {
   layout: BookletLayout
+  orderAsSignatures: boolean
 }
 
-function ResultsGrid({ layout }: ResultsGridProps) {
+function ResultsGrid({ layout, orderAsSignatures }: ResultsGridProps) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
       <div className={`p-4 rounded-lg text-center border ${layout.totalBlankPages === 0 ? 'bg-green-50 border-green-200' : 'bg-amber-50 border-amber-200'}`}>
@@ -64,7 +65,7 @@ function ResultsGrid({ layout }: ResultsGridProps) {
 
       <div className="bg-stone-50 p-4 rounded-lg text-center border border-stone-200">
         <div className="text-xs font-bold text-stone-500 uppercase tracking-wider mb-1">Booklets</div>
-        <div className="text-2xl font-serif font-bold text-stone-800">{layout.totalBooklets}</div>
+        <div className="text-2xl font-serif font-bold text-stone-800">{orderAsSignatures ? layout.totalBooklets : '-'}</div>
       </div>
 
       <div className="bg-stone-50 p-4 rounded-lg text-center border border-stone-200">
@@ -142,6 +143,7 @@ function DetailsBreakdown({ layout, totalPages }: DetailsBreakdownProps) {
 
 interface ResultsDisplayProps {
   layout: BookletLayout | null
+  orderAsSignatures: boolean
   error: string | null
   totalPages: number
   onPrint: () => void
@@ -149,7 +151,7 @@ interface ResultsDisplayProps {
   exporting: boolean
 }
 
-export default function ResultsDisplay({ layout, error, totalPages, onPrint, onPreview, exporting }: ResultsDisplayProps) {
+export default function ResultsDisplay({ layout, orderAsSignatures, error, totalPages, onPrint, onPreview, exporting }: ResultsDisplayProps) {
   if (error) {
     return (
       <div className="bg-red-50 p-6 rounded-xl border border-red-200 text-center">
@@ -166,7 +168,7 @@ export default function ResultsDisplay({ layout, error, totalPages, onPrint, onP
   return (
     <div className="bg-white p-6 rounded-xl paper-shadow border border-stone-100">
       <ResultsSummary onPrint={onPrint} onPreview={onPreview} exporting={exporting} />
-      <ResultsGrid layout={layout} />
+      <ResultsGrid layout={layout} orderAsSignatures={orderAsSignatures} />
       <DetailsBreakdown layout={layout} totalPages={totalPages} />
     </div>
   )

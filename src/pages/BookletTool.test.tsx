@@ -155,6 +155,7 @@ describe('BookletTool', () => {
     expect(hiddenSheetsInput?.disabled).toBe(true)
     expect(hiddenSheetsInput?.closest('[aria-hidden="true"]')?.classList.contains('max-h-0')).toBe(true)
     expect(screen.getByText('All sheets are treated as one signature.')).toBeDefined()
+    expect(screen.getByText('Booklets').nextElementSibling?.textContent).toBe('-')
     workflowResult.printSheet.imposePages = false
     rendered.rerender(
       <BrowserRouter>
