@@ -1,5 +1,6 @@
 import { PDFDocument, rgb } from 'pdf-lib'
 import { calculateBookletLayout, type BookletLayout } from '../utils/bookletCalculator'
+import { calculateHolePositions } from '../utils/holeGuideCalculator'
 
 export const GENERATED_BOOKLET_PDF_SUBJECT = 'bindery-generated-booklet'
 
@@ -13,6 +14,9 @@ export const PRINT_PAPER_SIZES = {
   tabloid: { label: 'US Tabloid (11 × 17 in)', widthMm: 279.4, heightMm: 431.8, system: 'Imperial' },
 } as const
 
+// ponytail: cap at 20 marks per side; named patterns can support denser guides later.
+export const MAX_STITCH_HOLE_COUNT = 20
+
 type PrintPaperType = 'source' | keyof typeof PRINT_PAPER_SIZES
 
 export interface PrintSheetSettings {
@@ -23,9 +27,13 @@ export interface PrintSheetSettings {
   outerMarginMm: number
   spineMarginMm: number
   showFoldGuide: boolean
+  showStitchHoles?: boolean
+  stitchHoleCount?: number
+  stitchTopOffsetMm?: number
+  stitchBottomOffsetMm?: number
 }
 
-export const DEFAULT_PRINT_SHEET_SETTINGS: PrintSheetSettings = {
+export const DEFAULT_PRINT_SHEET_SETTINGS: Required<PrintSheetSettings> = {
   imposePages: true,
   orderAsSignatures: true,
   paperType: 'letter',
@@ -33,6 +41,10 @@ export const DEFAULT_PRINT_SHEET_SETTINGS: PrintSheetSettings = {
   outerMarginMm: 0,
   spineMarginMm: 0,
   showFoldGuide: false,
+  showStitchHoles: false,
+  stitchHoleCount: 5,
+  stitchTopOffsetMm: 20,
+  stitchBottomOffsetMm: 20,
 }
 
 const PREVIEW_OUTER_GUIDE_MM = 12.7
@@ -96,6 +108,23 @@ export async function generateBookletPdf(
     ? width > height
     : height > width
   if (swapDimensions) defaultSize = [height, width]
+
+  const stitchHoleCount = settings.stitchHoleCount ?? DEFAULT_PRINT_SHEET_SETTINGS.stitchHoleCount
+  const stitchTopOffsetMm = settings.stitchTopOffsetMm ?? DEFAULT_PRINT_SHEET_SETTINGS.stitchTopOffsetMm
+  const stitchBottomOffsetMm = settings.stitchBottomOffsetMm ?? DEFAULT_PRINT_SHEET_SETTINGS.stitchBottomOffsetMm
+  const signatureHeightMm = defaultSize[1] / pointsPerMillimeter
+  const canMarkStitchHoles = settings.showStitchHoles === true
+    && Number.isInteger(stitchHoleCount)
+    && stitchHoleCount >= 2
+    && stitchHoleCount <= MAX_STITCH_HOLE_COUNT
+    && Number.isFinite(stitchTopOffsetMm)
+    && stitchTopOffsetMm >= 0
+    && Number.isFinite(stitchBottomOffsetMm)
+    && stitchBottomOffsetMm >= 0
+    && stitchTopOffsetMm + stitchBottomOffsetMm < signatureHeightMm
+  const stitchHolePositions = canMarkStitchHoles
+    ? calculateHolePositions({ signatureHeightMm, topOffsetMm: stitchTopOffsetMm, bottomOffsetMm: stitchBottomOffsetMm, holeCount: stitchHoleCount })
+    : []
 
   const indicesToCopy = new Set<number>()
 
@@ -175,6 +204,16 @@ export async function generateBookletPdf(
           dashArray: [3, 3],
         })
       }
+
+      stitchHolePositions.forEach((positionMm) => {
+        outputPage.drawCircle({
+          x: defaultSize[0] / 2,
+          y: defaultSize[1] - positionMm * pointsPerMillimeter,
+          size: 1.5 * pointsPerMillimeter,
+          borderColor: rgb(0.1, 0.1, 0.1),
+          borderWidth: 0.75,
+        })
+      })
 
       if (settings.orderAsSignatures) {
         const tabWidth = 3 * pointsPerMillimeter

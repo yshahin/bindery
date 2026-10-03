@@ -1,6 +1,11 @@
 import type { ReactNode } from 'react'
 import { type TextDirection } from '../utils/rtlDetector'
-import { PRINT_PAPER_SIZES, type PrintSheetSettings } from '../hooks/usePdfGeneration'
+import {
+  DEFAULT_PRINT_SHEET_SETTINGS,
+  MAX_STITCH_HOLE_COUNT,
+  PRINT_PAPER_SIZES,
+  type PrintSheetSettings,
+} from '../hooks/usePdfGeneration'
 import { RotateCw, RefreshCw, Target, ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface ToggleSwitchProps {
@@ -333,6 +338,11 @@ interface PrintSheetControlProps {
 }
 
 function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
+  const showStitchHoles = settings.showStitchHoles ?? DEFAULT_PRINT_SHEET_SETTINGS.showStitchHoles
+  const stitchHoleCount = settings.stitchHoleCount ?? DEFAULT_PRINT_SHEET_SETTINGS.stitchHoleCount
+  const stitchTopOffsetMm = settings.stitchTopOffsetMm ?? DEFAULT_PRINT_SHEET_SETTINGS.stitchTopOffsetMm
+  const stitchBottomOffsetMm = settings.stitchBottomOffsetMm ?? DEFAULT_PRINT_SHEET_SETTINGS.stitchBottomOffsetMm
+
   return (
     <div>
       <h3 className="block text-sm font-bold text-stone-700 mb-2">Print Sheet Spacing</h3>
@@ -422,6 +432,70 @@ function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
         disabled={!settings.imposePages}
         className="mt-4"
       />
+      <ToggleSwitch
+        id="stitch-hole-marks-toggle"
+        label="Stitch-hole marks"
+        checked={showStitchHoles}
+        onChange={(showStitchHoles) => onChange({ showStitchHoles })}
+        title={showStitchHoles ? 'Hide stitch-hole marks' : 'Show stitch-hole marks'}
+        disabled={!settings.imposePages}
+        className="mt-4"
+      />
+      <CollapsiblePanel open={settings.imposePages && showStitchHoles}>
+        <div className="grid grid-cols-3 gap-2 mt-3">
+          <label htmlFor="stitch-hole-count" className="block text-xs text-stone-600">
+            Stitch-hole count
+            <input
+              id="stitch-hole-count"
+              type="number"
+              min="2"
+              max={MAX_STITCH_HOLE_COUNT}
+              step="1"
+              value={stitchHoleCount}
+              disabled={!settings.imposePages || !showStitchHoles}
+              onChange={(event) => {
+                const value = Number(event.target.value)
+                if (Number.isInteger(value) && value >= 2 && value <= MAX_STITCH_HOLE_COUNT) {
+                  onChange({ stitchHoleCount: value })
+                }
+              }}
+              className="mt-1 w-full px-2 py-2 bg-white border border-stone-300 rounded text-sm text-stone-800 text-center"
+            />
+          </label>
+          <label htmlFor="stitch-top-offset-mm" className="block text-xs text-stone-600">
+            Top offset (mm)
+            <input
+              id="stitch-top-offset-mm"
+              type="number"
+              min="0"
+              step="0.5"
+              value={stitchTopOffsetMm}
+              disabled={!settings.imposePages || !showStitchHoles}
+              onChange={(event) => {
+                const value = Number(event.target.value)
+                if (Number.isFinite(value) && value >= 0) onChange({ stitchTopOffsetMm: value })
+              }}
+              className="mt-1 w-full px-2 py-2 bg-white border border-stone-300 rounded text-sm text-stone-800 text-center"
+            />
+          </label>
+          <label htmlFor="stitch-bottom-offset-mm" className="block text-xs text-stone-600">
+            Bottom offset (mm)
+            <input
+              id="stitch-bottom-offset-mm"
+              type="number"
+              min="0"
+              step="0.5"
+              value={stitchBottomOffsetMm}
+              disabled={!settings.imposePages || !showStitchHoles}
+              onChange={(event) => {
+                const value = Number(event.target.value)
+                if (Number.isFinite(value) && value >= 0) onChange({ stitchBottomOffsetMm: value })
+              }}
+              className="mt-1 w-full px-2 py-2 bg-white border border-stone-300 rounded text-sm text-stone-800 text-center"
+            />
+          </label>
+        </div>
+      </CollapsiblePanel>
     </div>
   )
 }

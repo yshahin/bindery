@@ -2,6 +2,12 @@ import { describe, expect, it } from 'vitest'
 import { PDFDocument } from 'pdf-lib'
 import { createBookletWorkflowModule } from './bookletWorkflow'
 
+function toArrayBuffer(bytes: Uint8Array): ArrayBuffer {
+  const arrayBuffer = new ArrayBuffer(bytes.byteLength)
+  new Uint8Array(arrayBuffer).set(bytes)
+  return arrayBuffer
+}
+
 async function createPdfFile(pageCount: number, name: string): Promise<File> {
   const pdf = await PDFDocument.create()
 
@@ -10,7 +16,7 @@ async function createPdfFile(pageCount: number, name: string): Promise<File> {
   }
 
   const bytes = await pdf.save()
-  return new File([bytes], name, { type: 'application/pdf' })
+  return new File([toArrayBuffer(bytes)], name, { type: 'application/pdf' })
 }
 
 describe('createBookletWorkflowModule', () => {
@@ -37,6 +43,10 @@ describe('createBookletWorkflowModule', () => {
       outerMarginMm: 0,
       spineMarginMm: 0,
       showFoldGuide: false,
+      showStitchHoles: false,
+      stitchHoleCount: 5,
+      stitchTopOffsetMm: 20,
+      stitchBottomOffsetMm: 20,
     })
     expect(snapshot.configuration.textDirection).toEqual({
       choice: 'auto',
@@ -82,6 +92,10 @@ describe('createBookletWorkflowModule', () => {
       outerMarginMm: 12,
       spineMarginMm: 6,
       showFoldGuide: true,
+      showStitchHoles: false,
+      stitchHoleCount: 5,
+      stitchTopOffsetMm: 20,
+      stitchBottomOffsetMm: 20,
     })
     expect(snapshot.bookletLayout).toMatchObject({
       totalPages: 16,
@@ -95,7 +109,15 @@ describe('createBookletWorkflowModule', () => {
     const workflow = createBookletWorkflowModule(async () => 'ltr')
     await workflow.load(await createPdfFile(8, 'settings.pdf'))
 
-    workflow.revise({ printSheet: { spineMarginMm: 7 } })
+    workflow.revise({
+      printSheet: {
+        spineMarginMm: 7,
+        showStitchHoles: true,
+        stitchHoleCount: 7,
+        stitchTopOffsetMm: 18,
+        stitchBottomOffsetMm: 22,
+      },
+    })
     const snapshot = workflow.revise({ sheetsPerBooklet: 3 })
 
     expect(snapshot.configuration.printSheet).toEqual({
@@ -106,6 +128,10 @@ describe('createBookletWorkflowModule', () => {
       outerMarginMm: 0,
       spineMarginMm: 7,
       showFoldGuide: false,
+      showStitchHoles: true,
+      stitchHoleCount: 7,
+      stitchTopOffsetMm: 18,
+      stitchBottomOffsetMm: 22,
     })
   })
 
@@ -133,7 +159,7 @@ describe('createBookletWorkflowModule', () => {
     await workflow.load(await createPdfFile(12, 'chapter.pdf'))
     const exported = await workflow.export()
 
-    const snapshot = await workflow.load(new File([exported.pdfBytes], exported.fileName, {
+    const snapshot = await workflow.load(new File([toArrayBuffer(exported.pdfBytes)], exported.fileName, {
       type: 'application/pdf',
     }))
 

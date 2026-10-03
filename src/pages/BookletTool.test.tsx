@@ -131,6 +131,7 @@ describe('BookletTool', () => {
     expect(screen.getByRole('switch', { name: 'Impose pages in PDF' }).getAttribute('aria-checked')).toBe('true')
     expect(screen.getByRole('switch', { name: 'Order by signature' }).getAttribute('aria-checked')).toBe('true')
     expect(screen.getByRole('switch', { name: 'Center-fold guide' })).toBeDefined()
+    expect(screen.getByRole('switch', { name: 'Stitch-hole marks' }).getAttribute('aria-checked')).toBe('false')
 
     fireEvent.click(screen.getByRole('switch', { name: 'Order by signature' }))
     fireEvent.click(screen.getByRole('switch', { name: 'Impose pages in PDF' }))
@@ -138,12 +139,33 @@ describe('BookletTool', () => {
     fireEvent.change(screen.getByLabelText('Print paper'), { target: { value: 'a4' } })
     fireEvent.change(screen.getByLabelText('Outer margin (mm)'), { target: { value: '-2' } })
     fireEvent.click(screen.getByRole('switch', { name: 'Center-fold guide' }))
+    fireEvent.click(screen.getByRole('switch', { name: 'Stitch-hole marks' }))
     expect(handlePrintSheetChange).toHaveBeenNthCalledWith(1, { orderAsSignatures: false })
     expect(handlePrintSheetChange).toHaveBeenNthCalledWith(2, { imposePages: false })
     expect(handlePrintSheetChange).toHaveBeenNthCalledWith(3, { orientation: 'landscape' })
     expect(handlePrintSheetChange).toHaveBeenNthCalledWith(4, { paperType: 'a4' })
     expect(handlePrintSheetChange).toHaveBeenNthCalledWith(5, { outerMarginMm: -2 })
     expect(handlePrintSheetChange).toHaveBeenNthCalledWith(6, { showFoldGuide: true })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(7, { showStitchHoles: true })
+
+    workflowResult.printSheet.showStitchHoles = true
+    rendered.rerender(
+      <BrowserRouter>
+        <BookletTool />
+      </BrowserRouter>
+    )
+    expect(screen.getByLabelText('Stitch-hole count')).toBeDefined()
+    expect(screen.getByLabelText('Stitch-hole count')).toHaveProperty('value', '5')
+    expect(screen.getByLabelText('Top offset (mm)')).toHaveProperty('value', '20')
+    expect(screen.getByLabelText('Bottom offset (mm)')).toHaveProperty('value', '20')
+    fireEvent.change(screen.getByLabelText('Stitch-hole count'), { target: { value: '21' } })
+    expect(handlePrintSheetChange).not.toHaveBeenCalledWith({ stitchHoleCount: 21 })
+    fireEvent.change(screen.getByLabelText('Stitch-hole count'), { target: { value: '6' } })
+    fireEvent.change(screen.getByLabelText('Top offset (mm)'), { target: { value: '24' } })
+    fireEvent.change(screen.getByLabelText('Bottom offset (mm)'), { target: { value: '26' } })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(8, { stitchHoleCount: 6 })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(9, { stitchTopOffsetMm: 24 })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(10, { stitchBottomOffsetMm: 26 })
 
     workflowResult.printSheet.orderAsSignatures = false
     rendered.rerender(

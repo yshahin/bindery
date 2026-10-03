@@ -15,10 +15,11 @@ const mockGetPage = vi.fn().mockReturnValue({ getSize: mockGetSize })
 const mockOutputPages: Array<{
   drawPage: ReturnType<typeof vi.fn>
   drawLine: ReturnType<typeof vi.fn>
+  drawCircle: ReturnType<typeof vi.fn>
   drawRectangle: ReturnType<typeof vi.fn>
 }> = []
 const mockAddPage = vi.fn(() => {
-  const page = { drawPage: vi.fn(), drawLine: vi.fn(), drawRectangle: vi.fn() }
+  const page = { drawPage: vi.fn(), drawLine: vi.fn(), drawCircle: vi.fn(), drawRectangle: vi.fn() }
   mockOutputPages.push(page)
   return page
 })
@@ -123,6 +124,7 @@ describe('generateBookletPdf', () => {
     expect(mockOutputPages[1].drawPage.mock.calls.map(([page]) => page.source.index)).toEqual([1])
     expect(mockOutputPages[0].drawLine).not.toHaveBeenCalled()
     expect(mockOutputPages[1].drawLine).not.toHaveBeenCalled()
+    expect(mockOutputPages.every((page) => page.drawCircle.mock.calls.length === 0)).toBe(true)
 
     expect(pdfBytes).toEqual(new Uint8Array([1, 2, 3]))
   })
@@ -364,6 +366,31 @@ describe('generateBookletPdf', () => {
       dashArray: [3, 3],
     }))
     expect(mockOutputPages[1].drawLine).toHaveBeenCalledTimes(1)
+  })
+
+  it('marks configured stitch-hole locations along the center fold', async () => {
+    await generateBookletPdf(new ArrayBuffer(10), createLayout([1, 2, 3, 4]), {
+      imposePages: true,
+      orderAsSignatures: true,
+      paperType: 'source',
+      orientation: 'portrait',
+      outerMarginMm: 0,
+      spineMarginMm: 0,
+      showFoldGuide: false,
+      showStitchHoles: true,
+      stitchHoleCount: 3,
+      stitchTopOffsetMm: 20,
+      stitchBottomOffsetMm: 20,
+    })
+
+    const expectedYPositions = [792 - 20 * 72 / 25.4, 396, 20 * 72 / 25.4]
+    for (const page of mockOutputPages) {
+      expect(page.drawCircle).toHaveBeenCalledTimes(3)
+      expect(page.drawCircle.mock.calls.map(([mark]) => mark.x)).toEqual([306, 306, 306])
+      page.drawCircle.mock.calls.forEach(([mark], index) => {
+        expect(mark.y).toBeCloseTo(expectedYPositions[index])
+      })
+    }
   })
 
   it('applies negative outer and spine margins to page placement', async () => {
