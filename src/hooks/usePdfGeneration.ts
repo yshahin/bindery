@@ -1,6 +1,8 @@
 import { PDFDocument, rgb } from 'pdf-lib'
 import { calculateBookletLayout, type BookletLayout } from '../utils/bookletCalculator'
 
+export const GENERATED_BOOKLET_PDF_SUBJECT = 'bindery-generated-booklet'
+
 export const PRINT_PAPER_SIZES = {
   a3: { label: 'A3 (297 × 420 mm)', widthMm: 297, heightMm: 420, system: 'Metric' },
   a4: { label: 'A4 (210 × 297 mm)', widthMm: 210, heightMm: 297, system: 'Metric' },
@@ -47,6 +49,7 @@ export async function generateBookletPdf(
 
   const sourcePdf = await PDFDocument.load(pdfData)
   const bookletPdf = await PDFDocument.create()
+  bookletPdf.setSubject(GENERATED_BOOKLET_PDF_SUBJECT)
   const pointsPerMillimeter = 72 / 25.4
   const pageRangeOffset = Math.max(0, (layout.rangeStart ?? 1) - 1)
   const sourcePages = sourcePdf.getPages()

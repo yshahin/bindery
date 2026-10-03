@@ -128,6 +128,19 @@ describe('createBookletWorkflowModule', () => {
     expect(exportedSize.height).toBeCloseTo(612)
   })
 
+  it('rejects a generated booklet PDF when it is loaded as a source', async () => {
+    const workflow = createBookletWorkflowModule(async () => 'ltr')
+    await workflow.load(await createPdfFile(12, 'chapter.pdf'))
+    const exported = await workflow.export()
+
+    const snapshot = await workflow.load(new File([exported.pdfBytes], exported.fileName, {
+      type: 'application/pdf',
+    }))
+
+    expect(snapshot.phase).toBe('failed')
+    expect(snapshot.error?.code).toBe('generated-file')
+  })
+
   it('exports original pages in reading order when imposition is left to the printer', async () => {
     const workflow = createBookletWorkflowModule(async () => 'ltr')
     await workflow.load(await createPdfFile(12, 'chapter.pdf'))

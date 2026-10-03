@@ -11,6 +11,7 @@ import {
 } from '../utils/rtlDetector'
 import {
   DEFAULT_PRINT_SHEET_SETTINGS,
+  GENERATED_BOOKLET_PDF_SUBJECT,
   generateBookletPdf,
   type PrintSheetSettings,
 } from '../hooks/usePdfGeneration'
@@ -21,6 +22,7 @@ type PrintRangeIntent = { kind: 'all' } | { kind: 'custom'; start: number; end: 
 
 type WorkflowErrorCode =
   | 'invalid-file'
+  | 'generated-file'
   | 'pdf-load-failed'
 
 export interface WorkflowError {
@@ -256,6 +258,17 @@ export function createBookletWorkflowModule(
         pdfData = await readFileData(file)
         sourceFileName = file.name
         const pdf = await PDFDocument.load(pdfData)
+        if (pdf.getSubject() === GENERATED_BOOKLET_PDF_SUBJECT) {
+          pdfData = null
+          sourceFileName = null
+          snapshot = {
+            ...createEmptySnapshot(),
+            phase: 'failed',
+            error: toWorkflowError('generated-file', 'Generated booklet PDFs cannot be loaded as source files.'),
+          }
+          return snapshot
+        }
+
         const totalPages = pdf.getPageCount()
         const detectedDirection = await detectTextDirection(pdfData.slice(0), file.name)
         snapshot = createReadySnapshot({

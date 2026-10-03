@@ -38,6 +38,7 @@ const mockBookletPdf = {
   copyPages: vi.fn(async (_sourcePdf: typeof mockSourcePdf, indices: number[]) =>
     indices.map((index) => mockSourcePages[index])),
   embedPages: mockEmbedPages,
+  setSubject: vi.fn(),
   save: mockSave,
 }
 
