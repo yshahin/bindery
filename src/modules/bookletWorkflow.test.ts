@@ -45,8 +45,8 @@ describe('createBookletWorkflowModule', () => {
       showFoldGuide: false,
       showStitchHoles: false,
       stitchHoleCount: 5,
-      stitchTopOffsetMm: 20,
-      stitchBottomOffsetMm: 20,
+      stitchTopOffsetMm: 12.7,
+      stitchBottomOffsetMm: 12.7,
     })
     expect(snapshot.configuration.textDirection).toEqual({
       choice: 'auto',
@@ -94,8 +94,8 @@ describe('createBookletWorkflowModule', () => {
       showFoldGuide: true,
       showStitchHoles: false,
       stitchHoleCount: 5,
-      stitchTopOffsetMm: 20,
-      stitchBottomOffsetMm: 20,
+      stitchTopOffsetMm: 12.7,
+      stitchBottomOffsetMm: 12.7,
     })
     expect(snapshot.bookletLayout).toMatchObject({
       totalPages: 16,

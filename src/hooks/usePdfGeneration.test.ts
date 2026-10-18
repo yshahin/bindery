@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { addPreviewMarginGuides, generateBookletPdf } from './usePdfGeneration'
+import { addPreviewMarginGuides, DEFAULT_PRINT_SHEET_SETTINGS, generateBookletPdf } from './usePdfGeneration'
 import { PDFDocument } from 'pdf-lib'
 import { calculateBookletLayout, type BookletLayout } from '../utils/bookletCalculator'
 
@@ -366,6 +366,27 @@ describe('generateBookletPdf', () => {
       dashArray: [3, 3],
     }))
     expect(mockOutputPages[1].drawLine).toHaveBeenCalledTimes(1)
+  })
+
+  it('aligns default stitch-hole endpoints with the top and bottom margin guides', async () => {
+    const bytes = await generateBookletPdf(new ArrayBuffer(10), createLayout([1, 2, 3, 4]), {
+      ...DEFAULT_PRINT_SHEET_SETTINGS,
+      paperType: 'source',
+      orientation: 'portrait',
+      showStitchHoles: true,
+    })
+    await addPreviewMarginGuides(bytes)
+
+    const horizontalGuides = mockSourcePages[0].drawLine.mock.calls
+      .map(([line]) => line)
+      .filter((line) => line.start.y === line.end.y)
+    expect(horizontalGuides).toHaveLength(2)
+    for (const page of mockOutputPages) {
+      const marks = page.drawCircle.mock.calls.map(([mark]) => mark)
+      expect(marks).toHaveLength(5)
+      expect(marks[0].y).toBeCloseTo(horizontalGuides[1].start.y)
+      expect(marks[marks.length - 1].y).toBeCloseTo(horizontalGuides[0].start.y)
+    }
   })
 
   it('marks configured stitch-hole locations along the center fold', async () => {

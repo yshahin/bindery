@@ -33,6 +33,9 @@ export interface PrintSheetSettings {
   stitchBottomOffsetMm?: number
 }
 
+const PREVIEW_OUTER_GUIDE_MM = 12.7
+const PREVIEW_SPINE_GUIDE_MM = 15.9
+
 export const DEFAULT_PRINT_SHEET_SETTINGS: Required<PrintSheetSettings> = {
   imposePages: true,
   orderAsSignatures: true,
@@ -43,12 +46,9 @@ export const DEFAULT_PRINT_SHEET_SETTINGS: Required<PrintSheetSettings> = {
   showFoldGuide: false,
   showStitchHoles: false,
   stitchHoleCount: 5,
-  stitchTopOffsetMm: 20,
-  stitchBottomOffsetMm: 20,
+  stitchTopOffsetMm: PREVIEW_OUTER_GUIDE_MM,
+  stitchBottomOffsetMm: PREVIEW_OUTER_GUIDE_MM,
 }
-
-const PREVIEW_OUTER_GUIDE_MM = 12.7
-const PREVIEW_SPINE_GUIDE_MM = 15.9
 
 export async function generateBookletPdf(
   pdfData: ArrayBuffer,
@@ -209,7 +209,7 @@ export async function generateBookletPdf(
         outputPage.drawCircle({
           x: defaultSize[0] / 2,
           y: defaultSize[1] - positionMm * pointsPerMillimeter,
-          size: 1.5 * pointsPerMillimeter,
+          size: 0.75 * pointsPerMillimeter,
           borderColor: rgb(0.1, 0.1, 0.1),
           borderWidth: 0.75,
         })
