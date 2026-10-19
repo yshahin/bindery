@@ -354,6 +354,15 @@ function PrintSheetControl({ settings, onChange }: PrintSheetControlProps) {
         title={settings.imposePages ? 'Leave booklet imposition to the printer' : 'Impose pages in the PDF'}
         className="mb-4"
       />
+      <ToggleSwitch
+        id="reverse-print-order-toggle"
+        label="Reverse print order"
+        checked={settings.reversePrintOrder ?? false}
+        onChange={(reversePrintOrder) => onChange({ reversePrintOrder })}
+        title="Print pages in reverse order"
+        disabled={!settings.imposePages}
+        className="mb-4"
+      />
       <label htmlFor="print-paper-type" className="block text-xs text-stone-600 mb-4">
         Print paper
         <select

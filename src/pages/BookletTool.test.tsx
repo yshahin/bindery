@@ -94,7 +94,7 @@ describe('BookletTool', () => {
       selectedPageCount: 10,
       hasCover: true,
       coverPages: 2,
-      printSheet: { imposePages: true, orderAsSignatures: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false },
+      printSheet: { imposePages: true, orderAsSignatures: true, paperType: 'letter', orientation: 'auto', outerMarginMm: 0, spineMarginMm: 0, showFoldGuide: false, stitchTopOffsetMm: 20, stitchBottomOffsetMm: 20 },
       sheetsPerBooklet: 4,
       pagesPerSheet: 4,
       textDirection: 'ltr',
@@ -130,10 +130,12 @@ describe('BookletTool', () => {
     expect(screen.getByRole('group', { name: 'Sheet orientation' })).toBeDefined()
     expect(screen.getByRole('switch', { name: 'Impose pages in PDF' }).getAttribute('aria-checked')).toBe('true')
     expect(screen.getByRole('switch', { name: 'Order by signature' }).getAttribute('aria-checked')).toBe('true')
+    expect(screen.getByRole('switch', { name: 'Reverse print order' }).getAttribute('aria-checked')).toBe('false')
     expect(screen.getByRole('switch', { name: 'Center-fold guide' })).toBeDefined()
     expect(screen.getByRole('switch', { name: 'Stitch-hole marks' }).getAttribute('aria-checked')).toBe('false')
 
     fireEvent.click(screen.getByRole('switch', { name: 'Order by signature' }))
+    fireEvent.click(screen.getByRole('switch', { name: 'Reverse print order' }))
     fireEvent.click(screen.getByRole('switch', { name: 'Impose pages in PDF' }))
     fireEvent.click(screen.getByRole('button', { name: 'landscape' }))
     fireEvent.change(screen.getByLabelText('Print paper'), { target: { value: 'a4' } })
@@ -141,12 +143,13 @@ describe('BookletTool', () => {
     fireEvent.click(screen.getByRole('switch', { name: 'Center-fold guide' }))
     fireEvent.click(screen.getByRole('switch', { name: 'Stitch-hole marks' }))
     expect(handlePrintSheetChange).toHaveBeenNthCalledWith(1, { orderAsSignatures: false })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(2, { imposePages: false })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(3, { orientation: 'landscape' })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(4, { paperType: 'a4' })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(5, { outerMarginMm: -2 })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(6, { showFoldGuide: true })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(7, { showStitchHoles: true })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(2, { reversePrintOrder: true })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(3, { imposePages: false })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(4, { orientation: 'landscape' })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(5, { paperType: 'a4' })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(6, { outerMarginMm: -2 })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(7, { showFoldGuide: true })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(8, { showStitchHoles: true })
 
     workflowResult.printSheet.showStitchHoles = true
     rendered.rerender(
@@ -163,9 +166,9 @@ describe('BookletTool', () => {
     fireEvent.change(screen.getByLabelText('Stitch-hole count'), { target: { value: '6' } })
     fireEvent.change(screen.getByLabelText('Top offset (mm)'), { target: { value: '24' } })
     fireEvent.change(screen.getByLabelText('Bottom offset (mm)'), { target: { value: '26' } })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(8, { stitchHoleCount: 6 })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(9, { stitchTopOffsetMm: 24 })
-    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(10, { stitchBottomOffsetMm: 26 })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(9, { stitchHoleCount: 6 })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(10, { stitchTopOffsetMm: 24 })
+    expect(handlePrintSheetChange).toHaveBeenNthCalledWith(11, { stitchBottomOffsetMm: 26 })
 
     workflowResult.printSheet.orderAsSignatures = false
     rendered.rerender(
@@ -187,6 +190,7 @@ describe('BookletTool', () => {
     expect(screen.queryByText('All sheets are treated as one signature.')).toBeNull()
     expect(screen.queryByText(/Pages stay in reading order/)).toBeNull()
     expect(screen.queryByText(/Signature grouping applies only/)).toBeNull()
+    expect(screen.getByRole('switch', { name: 'Reverse print order' })).toHaveProperty('disabled', true)
 
     // Check for results
     expect(screen.getByText(/3. Imposition Strategy/i)).toBeDefined()

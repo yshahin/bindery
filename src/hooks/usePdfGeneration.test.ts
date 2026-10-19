@@ -297,6 +297,32 @@ describe('generateBookletPdf', () => {
     expect(mockOutputPages.every((page) => page.drawRectangle.mock.calls.length === 0)).toBe(true)
   })
 
+  it('reverses the order of printed sheets when requested', async () => {
+    const layout = calculateBookletLayout(12, 3, 4)
+
+    await generateBookletPdf(new ArrayBuffer(10), layout, {
+      imposePages: true,
+      orderAsSignatures: true,
+      reversePrintOrder: true,
+      paperType: 'source',
+      orientation: 'landscape',
+      outerMarginMm: 0,
+      spineMarginMm: 0,
+      showFoldGuide: false,
+    })
+
+    const printedPageNumbers = mockOutputPages.map((page) =>
+      page.drawPage.mock.calls.map(([embeddedPage]) => embeddedPage.source.index + 1))
+    expect(printedPageNumbers).toEqual([
+      [6, 7], [8, 5],
+      [4, 9], [10, 3],
+      [2, 11], [12, 1],
+    ])
+    const firstSideDraws = mockOutputPages[0].drawPage.mock.calls
+    expect(firstSideDraws[0][1].x).toBeLessThan(firstSideDraws[1][1].x)
+    expect(printedPageNumbers.at(-1)).toContain(1)
+  })
+
   it.each([
     { paperType: 'source' as const, orientation: 'portrait' as const, sourceSize: { width: 792, height: 612 }, expectedSize: [612, 792] },
     { paperType: 'source' as const, orientation: 'landscape' as const, sourceSize: { width: 612, height: 792 }, expectedSize: [792, 612] },

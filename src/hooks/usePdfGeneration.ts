@@ -22,6 +22,7 @@ type PrintPaperType = 'source' | keyof typeof PRINT_PAPER_SIZES
 export interface PrintSheetSettings {
   imposePages: boolean
   orderAsSignatures: boolean
+  reversePrintOrder?: boolean
   paperType: PrintPaperType
   orientation: 'auto' | 'portrait' | 'landscape'
   outerMarginMm: number
@@ -39,6 +40,7 @@ const PREVIEW_SPINE_GUIDE_MM = 15.9
 export const DEFAULT_PRINT_SHEET_SETTINGS: Required<PrintSheetSettings> = {
   imposePages: true,
   orderAsSignatures: true,
+  reversePrintOrder: false,
   paperType: 'letter',
   orientation: 'auto',
   outerMarginMm: 0,
@@ -156,11 +158,12 @@ export async function generateBookletPdf(
       sheets.push({ sheet, bookletIndex })
     }
   }
+  const orderedSheets = settings.reversePrintOrder ? [...sheets].reverse() : sheets
 
   const outerMargin = (Number.isFinite(settings.outerMarginMm) ? settings.outerMarginMm : 0) * pointsPerMillimeter
   const spineMargin = (Number.isFinite(settings.spineMarginMm) ? settings.spineMarginMm : 0) * pointsPerMillimeter
 
-  for (const { sheet, bookletIndex } of sheets) {
+  for (const { sheet, bookletIndex } of orderedSheets) {
     const pagesPerSide = Math.ceil(sheet.length / 2)
     const columns = pagesPerSide <= 1 ? 1 : pagesPerSide <= 4 ? 2 : 4
     const rows = Math.ceil(pagesPerSide / columns)
@@ -169,7 +172,10 @@ export async function generateBookletPdf(
     const cellWidth = (defaultSize[0] - outerMargin * 2 - gutterWidth) / columns
     const cellHeight = (defaultSize[1] - outerMargin * 2) / rows
 
-    for (const sidePages of [sheet.slice(0, pagesPerSide), sheet.slice(pagesPerSide)]) {
+    const sides = [sheet.slice(0, pagesPerSide), sheet.slice(pagesPerSide)]
+    if (settings.reversePrintOrder) sides.reverse()
+
+    for (const sidePages of sides) {
       const outputPage = bookletPdf.addPage(defaultSize)
 
       sidePages.forEach((pageNum, pageIndex) => {
